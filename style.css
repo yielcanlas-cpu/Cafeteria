@@ -1,0 +1,641 @@
+/* =========================================================
+   1. VARIABLES & RESET
+   ========================================================= */
+
+/* Variables: change a color here and it updates everywhere */
+:root {
+  --red: #e02d2f;        /* header, buttons */
+  --red-soft: #e44d4d;   /* profile banner, edit buttons */
+  --gray: #6b6b6b;       /* sidebar text */
+  --header-h: 80px;      /* height of the red header */
+  --sidebar-w: 240px;    /* width of the sidebar */
+  --cart-w: 280px;       /* width of the cart panel on the right */
+  --font-title: "Chewy", "Comic Sans MS", cursive;
+  --font-body: "Itim", "Comic Sans MS", cursive;
+}
+
+/* border-box = padding and border are counted INSIDE an element's width.
+   Much easier to reason about sizes. */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: #000;
+  background: #fff;
+}
+
+h1, h2, p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+
+/* =========================================================
+   2. HEADER
+   ========================================================= */
+.header {
+  position: fixed;          /* stays at the top while scrolling */
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: var(--red);
+  display: flex;            /* puts children in a row */
+  align-items: center;      /* centers them vertically */
+  gap: 16px;
+  padding: 0 20px;
+  z-index: 20;              /* sits above everything else */
+}
+
+.menu-btn {
+  width: 56px; height: 56px;
+  border-radius: 50%;       /* 50% radius = perfect circle */
+  border: none;
+  background: #000;
+  display: grid;
+  place-items: center;      /* centers the icon in the circle */
+  padding: 0;
+}
+
+.logo {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+.search {
+  flex: 1;                  /* takes up the leftover space */
+  min-width: 0;             /* lets it shrink on small screens */
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: 30px;
+  padding: 4px 16px;
+}
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;            /* removes the default blue outline */
+  font-family: inherit;
+  font-size: 1.3rem;
+}
+.search-icon { width: 26px; height: 26px; }
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.45);   /* see-through white */
+  color: #fff;
+  border-radius: 40px;
+  padding: 8px 20px 8px 8px;
+}
+.avatar-small {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  overflow: hidden;         /* crops the photo into a circle */
+}
+.avatar-small img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+
+/* =========================================================
+   3. SIDEBAR
+   ========================================================= */
+.sidebar {
+  position: fixed;
+  top: var(--header-h);
+  bottom: 0;
+  left: 0;
+  width: var(--sidebar-w);
+  background: #fff;
+  border-right: 2px solid #000;
+  padding: 10px;
+  overflow-y: auto;
+  z-index: 10;
+  transition: transform 0.25s;   /* smooth slide when toggled */
+}
+
+/* DESKTOP: pressing the hamburger adds class "toggled" to <body>,
+   which hides the sidebar and lets the content use the full width */
+.toggled .sidebar { transform: translateX(-100%); }
+.toggled .main { margin-left: 0; }
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  border-radius: 40px;
+  font-size: 1.4rem;
+  color: var(--gray);
+}
+.nav-link:hover { background: #f3f3f3; }
+
+/* The highlighted page: red pill with white text */
+.nav-link.active {
+  background: var(--red);
+  color: #fff;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;      /* fits the whole icon without stretching it */
+  flex-shrink: 0;
+}
+
+/* The Home pill is red, so its icon must be white.
+   "filter" turns ANY image white, so you can use any icon colour you like. */
+.nav-link.active .icon { filter: brightness(0) invert(1); }
+
+/* Tiny icons that sit inside a line of text (arrows, calendar, pin...) */
+.inline-icon {
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.15em;  /* lines the icon up with the letters */
+}
+
+.nav-heading {
+  margin: 28px 0 8px 6px;
+  font-size: 1.4rem;
+  color: var(--gray);
+}
+
+
+/* =========================================================
+   4. MAIN CONTENT
+   ========================================================= */
+.main {
+  margin-left: var(--sidebar-w);                /* leave room for the sidebar */
+  margin-right: var(--cart-w);                  /* leave room for the cart panel */
+  padding: calc(var(--header-h) + 20px) 24px 40px;
+  max-width: 1000px;
+}
+
+.welcome {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  margin-bottom: 14px;
+}
+
+/* ----- Carousel (banner) ----- */
+.carousel {
+  position: relative;       /* lets the "Order Now" button sit inside it */
+  height: 230px;
+  border-radius: 22px;
+  overflow: hidden;         /* hides anything sticking out of the rounded corners */
+  box-shadow: 8px 10px 14px rgba(0, 0, 0, 0.3);
+}
+.slide {
+  position: absolute;       /* all slides stacked on top of each other */
+  inset: 0;                 /* shortcut for top/right/bottom/left = 0 */
+  display: grid;
+  place-items: center;
+  font-size: 5rem;
+  opacity: 0;               /* hidden by default... */
+  transition: opacity 0.6s; /* ...and fades in/out smoothly */
+}
+.slide.active { opacity: 1; } /* ...except the active one */
+
+/* BANNER PHOTOS: fill the whole banner. "cover" crops the extra
+   instead of stretching or leaving empty gaps. */
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.slide-1 { background: linear-gradient(135deg, #6b4a2b, #b8863f); }
+.slide-2 { background: linear-gradient(135deg, #8a2b1a, #d9692e); }
+.slide-3 { background: linear-gradient(135deg, #3b2a1e, #a96d3b); }
+
+.order-now {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  left: 10px; bottom: 12px;
+  background: #d00000;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 8px 22px;
+  font-size: 1.5rem;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 10px 0 30px;
+}
+.dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: #000;
+}
+.dot.active { background: var(--red); }
+
+/* ----- Section titles ----- */
+.section-head {
+  display: flex;
+  justify-content: space-between;   /* title left, "View all" right */
+  align-items: baseline;
+  margin: 10px 0 12px;
+}
+.section-head h2 {
+  font-family: var(--font-title);
+  font-size: 2rem;
+}
+.view-all { font-size: 1.2rem; margin-right: 20px; }
+.view-all:hover { text-decoration: underline; }
+
+/* ----- Food rows ----- */
+.row {
+  display: flex;
+  flex-wrap: wrap;          /* items drop to the next line if no space */
+  gap: 16px;
+  align-items: flex-start;  /* cards line up at the top even if a caption wraps to 2 lines */
+  margin-bottom: 30px;
+}
+
+.food {
+  width: 120px;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: center;
+}
+.food .thumb {
+  display: grid;
+  place-items: center;
+  height: 110px;
+  font-size: 3.2rem;
+  background: #ffe3c4;
+  border-radius: 18px;
+  overflow: hidden;         /* crops the photo to the rounded corners */
+  box-shadow: 8px 10px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s;
+}
+.food:hover .thumb { transform: scale(1.06); }  /* small "pop" on hover */
+.food:active .thumb { transform: scale(0.96); } /* small "press" on click */
+
+.food .caption {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+/* FOOD PHOTOS: fill the frame (same idea as the banner).
+   Without these rules a photo shows at its original huge size. */
+.food .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* crop to fit, never stretch */
+  display: block;
+}
+
+/* Bigger cards for the Bundle row */
+.food.big { width: 160px; }
+.food.big .thumb { height: 160px; font-size: 4rem; background: #e6d3ff; }
+
+/* ----- Sulit Deals banner ----- */
+.deal {
+  position: relative;
+  height: 140px;
+  overflow: hidden;          /* crops the photo to the rounded corners */
+  border-radius: 22px;
+  background: linear-gradient(135deg, #f5b042, #e8873a);
+  box-shadow: 8px 10px 14px rgba(0, 0, 0, 0.3);
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+/* DEAL PHOTO: stretched over the whole banner. "cover" crops the extra
+   instead of squashing the picture, so any photo size works. */
+.deal-text {
+  position: absolute;
+  inset: 0;                  /* top/right/bottom/left = 0: covers the whole banner */
+}
+.deal-text img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;   /* which part to keep: try "top" or "bottom" if needed */
+  display: block;
+}
+
+/* "20% OFF" sits on top of the photo; the shadow keeps it readable */
+.deal-off {
+  position: absolute;
+  top: 8px; left: 14px;
+  z-index: 1;
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+
+/* =========================================================
+   5. CART PANEL (right side, portrait)
+   ========================================================= */
+.cart {
+  position: fixed;
+  top: var(--header-h);      /* starts under the red header */
+  right: 0;
+  bottom: 0;
+  width: var(--cart-w);
+  background: #fff;
+  border-left: 2px solid #000;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;    /* title on top, list in the middle, totals at the bottom */
+  z-index: 10;
+  transition: transform 0.25s;
+}
+
+.cart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.cart-title { font-family: var(--font-title); font-size: 1.8rem; }
+.cart-title span { color: var(--gray); font-size: 1.2rem; }
+.cart-close { display: none; background: none; border: none; padding: 4px; }
+
+/* The list of foods. flex: 1 = takes ALL the free space, which pushes
+   the totals down to the bottom of the panel. */
+.cart-items {
+  flex: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;          /* scrolls if there are many items */
+}
+.cart-items li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;   /* name | price | remove button */
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+.item-name { display: block; font-size: 1.1rem; }
+.item-qty { display: block; font-size: 0.85rem; color: var(--gray); }
+.item-price { font-size: 1.05rem; }
+
+.remove-btn {
+  display: grid;
+  place-items: center;
+  width: 26px; height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #f1f1f1;
+}
+.remove-btn:hover { background: #e3e3e3; }
+.remove-btn img { width: 12px; height: 12px; }
+
+/* Message shown while the cart is empty */
+.cart-empty {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #999;
+  font-size: 1.1rem;
+}
+
+/* Totals and buttons */
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 2px solid #000;
+}
+.cart-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.15rem;
+  color: var(--gray);
+}
+.cart-total {
+  font-family: var(--font-title);
+  font-size: 1.9rem;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+.btn {
+  width: 100%;               /* full width of the panel */
+  border: none;
+  border-radius: 30px;
+  padding: 10px;
+  font-size: 1.25rem;
+  color: #fff;
+}
+.btn-red { background: var(--red); }
+.btn-outline { background: #fff; color: var(--red); border: 2px solid var(--red); }
+.btn:disabled { background: #b5b5b5; cursor: not-allowed; }   /* gray when the cart is empty */
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--gray);
+  font-size: 1rem;
+  text-decoration: underline;
+}
+.btn-link:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* The round cart button for phones (hidden on bigger screens) */
+.cart-fab {
+  display: none;
+  position: fixed;
+  right: 18px; bottom: 18px;
+  width: 60px; height: 60px;
+  border: none;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  z-index: 30;
+  place-items: center;
+}
+.cart-fab .icon { width: 28px; height: 28px; }
+.fab-count {
+  position: absolute;
+  top: -4px; right: -4px;
+  min-width: 24px; height: 24px;
+  border-radius: 12px;
+  background: #000;
+  color: #fff;
+  font-size: 0.9rem;
+  display: grid;
+  place-items: center;
+}
+
+/* Makes sure the "hidden" attribute always hides an element */
+[hidden] { display: none !important; }
+
+
+/* =========================================================
+   6. PROFILE PAGE
+   ========================================================= */
+.profile-page { background: #fff; }
+
+.profile {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 14px;
+  font-size: 1.2rem;
+}
+.back-link:hover { text-decoration: underline; }
+
+.profile-banner {
+  height: 220px;
+  background: var(--red-soft);
+  border: 6px solid #555;
+  border-radius: 50px;
+}
+
+/* Avatar on the left, name + bio on the right */
+.profile-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding-left: 16px;
+  margin-top: -120px;        /* negative margin pulls it UP over the banner */
+}
+
+.avatar-wrap {
+  position: relative;        /* so the green dot can sit on its corner */
+  flex-shrink: 0;            /* never let the avatar get squished */
+}
+.avatar-big {
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  border: 6px solid #000;
+  background: #f0d9cf;
+  display: grid;
+  place-items: center;
+  font-size: 6rem;
+  overflow: hidden;          /* crops a real <img> into the circle */
+}
+.avatar-big img { width: 100%; height: 100%; object-fit: cover; }
+
+.online-dot {
+  position: absolute;
+  right: 14px; bottom: 14px;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: #00c060;
+}
+
+.profile-text {
+  flex: 1;
+  margin-top: 130px;         /* pushes the name below the banner */
+}
+.profile-name {
+  font-family: var(--font-title);
+  font-size: 3rem;
+  line-height: 1.1;
+}
+
+.bio {
+  min-height: 90px;
+  margin-top: 6px;
+  padding: 16px 22px;
+  border: 5px solid #000;
+  border-radius: 40px;
+  font-size: 1.6rem;
+  outline: none;
+}
+/* Show the word "Bio" in the box while it's empty */
+.bio:empty::before {
+  content: attr(data-placeholder);
+  color: #000;
+}
+.bio:focus { border-color: var(--red); }
+
+/* Info rows under the avatar */
+.info { margin-top: 24px; }
+.info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 60px;
+  margin-bottom: 14px;
+}
+.info-item {
+  font-size: 1.2rem;
+  margin-bottom: 14px;
+}
+.info-label { color: #d00000; }
+
+.edit-btn {
+  background: var(--red-soft);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 2px 14px;
+  font-size: 0.9rem;
+  margin-left: 6px;
+}
+
+/* Highlight a field while you're editing it */
+[contenteditable="true"].editing {
+  outline: 2px dashed var(--red);
+  padding: 0 4px;
+}
+
+
+/* =========================================================
+   7. RESPONSIVE (phones and small screens)
+   Anything inside this block only applies when the screen
+   is 800px wide or less.
+   ========================================================= */
+@media (max-width: 800px) {
+  /* PHONE: the sidebar is hidden by default and the "toggled" class
+     now means the opposite: show it */
+  .sidebar { transform: translateX(-100%); }
+  .toggled .sidebar { transform: translateX(0); }
+
+  .main { margin-left: 0; margin-right: 0; padding: calc(var(--header-h) + 20px) 16px 100px; }
+
+  .header { gap: 10px; padding: 0 12px; }
+  .logo { display: none; }       /* no room for the logo text on phones */
+  .user-name { display: none; }   /* only show the avatar on small screens */
+  .search { margin: 0; }
+
+  /* CART on phones: hidden off the right edge until the round button is pressed */
+  .cart {
+    top: 0;
+    width: min(320px, 90%);
+    transform: translateX(100%);
+    z-index: 40;
+  }
+  /* the shadow only appears while the panel is open */
+  .cart-open .cart { transform: translateX(0); box-shadow: -6px 0 16px rgba(0, 0, 0, 0.25); }
+  .cart-close { display: block; }
+  .cart-fab { display: grid; }
+
+  /* Profile: stack avatar above the name */
+  .profile-head { flex-direction: column; align-items: flex-start; margin-top: -90px; }
+  .avatar-big { width: 170px; height: 170px; font-size: 4.5rem; }
+  .profile-text { margin-top: 0; width: 100%; }
+  .profile-name { font-size: 2.2rem; }
+}

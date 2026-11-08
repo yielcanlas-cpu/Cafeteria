@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile · MCC Canteen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Itim&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<!-- The class "profile-page" lets style.css style this page differently -->
+<body class="profile-page">
+
+  <div class="profile">
+    <a href="index.html" class="back-link"><img class="inline-icon" src="img/icons/arrow-left.svg" alt=""> Back to home</a>
+
+    <!-- Big red banner at the top -->
+    <div class="profile-banner"></div>
+
+    <!-- Avatar (left) + name and bio (right) -->
+    <div class="profile-head">
+      <div class="avatar-wrap">
+        <!-- To use your photo: change src="img/avatar.svg" to src="img/me.jpg" -->
+        <div class="avatar-big"><img src="img/avatar.svg" alt="Kim Minjeong"></div>
+        <!-- The green "online" dot -->
+        <span class="online-dot"></span>
+      </div>
+
+      <div class="profile-text">
+        <h1 class="profile-name">Kim Minjeong</h1>
+        <!--
+          contenteditable="true" lets you type right inside this box.
+          data-placeholder is shown (by CSS) while the box is empty.
+        -->
+        <div class="bio" id="bio" contenteditable="true" data-placeholder="Bio"></div>
+      </div>
+    </div>
+
+    <!-- Info rows -->
+    <div class="info">
+      <div class="info-row">
+        <span class="info-item"><img class="inline-icon" src="img/icons/calendar.svg" alt=""> Joined in November 2026</span>
+        <span class="info-item">
+          <img class="inline-icon" src="img/icons/pin.svg" alt=""> <span id="location">Mabalacat City, Pampanga</span>
+          <!-- data-target tells script.js WHICH text this button edits -->
+          <button class="edit-btn" data-target="location">Edit</button>
+        </span>
+      </div>
+
+      <p class="info-item">
+        <span class="info-label">Email Address:</span>
+        <span id="email">minjeongmasarap@gmail.com</span>
+        <button class="edit-btn" data-target="email">Edit</button>
+      </p>
+
+      <p class="info-item">
+        <span class="info-label">Number:</span>
+        <span id="number">09112233445</span>
+        <button class="edit-btn" data-target="number">Edit</button>
+      </p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

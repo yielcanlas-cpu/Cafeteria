@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Makes the page scale properly on phones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MCC Canteen</title>
+
+  <!-- Playfair Display = the fancy serif font used for the banner text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="landing.css">
+</head>
+<body>
+
+  <!-- ===================================================================
+       HOW TO CHANGE A PICTURE: edit only the link inside src="..."
+         logo        -> logo.png
+         banner      -> img/hero.jpg
+         card icons  -> img/icons/landing-*.svg
+       =================================================================== -->
+
+  <!-- Everything sits inside .page (the white card in the middle) -->
+  <div class="page">
+
+    <!-- ============ HEADER ============ -->
+    <header class="header">
+      <a href="landing.html" class="brand">
+        <img class="brand-logo" src="logo.png" alt="Mabalacat City College logo">
+        <span class="brand-name">MCC CANTEEN</span>
+      </a>
+
+      <!-- Top links. "active" = the lighter pill behind "Offers" -->
+      <nav class="nav">
+        <a href="#" class="nav-link active">Offers</a>
+        <a href="#" class="nav-link">Updates</a>
+        <a href="#overview" class="nav-link">About</a>
+        <a href="#" class="nav-link">Contact us</a>
+        <a href="order.html" class="nav-link">Login/Sign up</a>
+      </nav>
+
+      <!-- Round white button: landing.js opens/closes the dropdown with it -->
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <img src="img/icons/landing-list.svg" alt="">
+      </button>
+
+      <!-- Dropdown menu (hidden until the round button is pressed) -->
+      <div class="dropdown" id="dropdown" hidden>
+        <a href="index.html">Dashboard</a>
+        <a href="order.html">Order Now</a>
+        <a href="profile.html">My Profile</a>
+        <a href="admin.php">Staff</a>
+        <!-- These 5 only show on phones, where the top links are hidden -->
+        <a href="#" class="phone-only">Offers</a>
+        <a href="#" class="phone-only">Updates</a>
+        <a href="#overview" class="phone-only">About</a>
+        <a href="#" class="phone-only">Contact us</a>
+        <a href="order.html" class="phone-only">Login/Sign up</a>
+      </div>
+    </header>
+
+    <main class="content">
+
+      <!-- ============ HERO BANNER ============ -->
+      <section class="hero">
+        <img class="hero-img" src="img/hero.jpg" alt="Food at MCC Canteen">
+        <h1 class="hero-title">Busog kana, hassle-free pa!</h1>
+      </section>
+
+      <!-- ============ 4 QUICK BUTTONS ============ -->
+      <section class="quick">
+        <a href="index.html" class="quick-card">
+          <img src="img/icons/landing-menu.svg" alt="">
+          <span>Menu</span>
+        </a>
+        <a href="order.html" class="quick-card">
+          <img src="img/icons/landing-order.svg" alt="">
+          <span>Order Now</span>
+        </a>
+        <a href="#overview" class="quick-card">
+          <img src="img/icons/landing-about.svg" alt="">
+          <span>About Us</span>
+        </a>
+        <!-- data-toast = the message landing.js shows (the app doesn't exist yet) -->
+        <a href="#" class="quick-card" data-toast="The MCC Canteen app is coming soon!">
+          <img src="img/icons/landing-app.svg" alt="">
+          <span>Get app</span>
+        </a>
+      </section>
+
+      <!-- ============ OVERVIEW ============ -->
+      <section class="overview" id="overview">
+        <h2>Overview</h2>
+        <p>
+          MCC Canteen is a cafeteria management website designed to make food selection
+          and ordering easier and more convenient for students and staff. It enables users
+          to browse the available menu, view food items and their prices, and conveniently
+          place orders through the website. Our objective is to provide a simple,
+          accessible, and user-friendly platform that makes cafeteria transactions more
+          organized and efficient, giving students and staff a hassle-free food ordering
+          experience.
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Small message that pops up at the bottom (used by "Get app") -->
+  <div class="toast" id="toast" hidden></div>
+
+  <!-- Load the JavaScript LAST so the elements above already exist -->
+  <script src="landing.js"></script>
+</body>
+</html>

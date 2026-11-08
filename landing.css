@@ -1,0 +1,234 @@
+/* =========================================================
+   landing.css  -  styles for landing.html only
+   ========================================================= */
+
+/* Variables: change a color here and it updates everywhere */
+:root {
+  --red: #bf1e2e;
+  --page-bg: #eef0f8;       /* light lavender behind the white card */
+  --font-serif: "Times New Roman", Times, serif;
+  --font-sans: Arial, Helvetica, sans-serif;
+}
+
+/* border-box = padding is counted INSIDE an element's width */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  font-family: var(--font-sans);
+  color: #000;
+}
+h1, h2, p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+[hidden] { display: none !important; }  /* makes the "hidden" attribute always win */
+
+
+/* =========================================================
+   1. PAGE + HEADER
+   ========================================================= */
+
+/* The white card in the middle of the screen */
+.page {
+  max-width: 1240px;
+  margin: 0 auto;
+  background: #fff;
+  min-height: 100vh;
+}
+
+.header {
+  position: sticky;          /* stays at the top while you scroll */
+  top: 0;
+  z-index: 20;
+  display: flex;             /* children in a row */
+  align-items: center;       /* centered vertically */
+  gap: 14px;
+  height: 60px;
+  padding: 0 24px 0 4px;
+  background: var(--red);
+  color: #fff;
+  font-family: var(--font-serif);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-right: auto;        /* pushes everything else to the right */
+}
+.brand-logo {
+  width: 54px; height: 54px;
+  border-radius: 12px;
+  object-fit: contain;       /* shows the whole logo without cropping */
+  background: #fff;
+}
+.brand-name { font-size: 1.05rem; font-weight: bold; letter-spacing: 0.5px; }
+
+.nav { display: flex; align-items: center; gap: 6px; }
+.nav-link {
+  padding: 8px 24px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+}
+.nav-link:hover { background: rgba(255, 255, 255, 0.15); }
+.nav-link.active {           /* the lighter pill behind the selected link */
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Round white button on the right */
+.menu-btn {
+  width: 38px; height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+.menu-btn img { width: 22px; height: 22px; }
+
+/* Dropdown under the round button */
+.dropdown {
+  position: absolute;        /* floats over the page, positioned from .header */
+  top: 100%;
+  right: 20px;
+  width: 210px;
+  padding: 8px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  font-family: var(--font-sans);
+}
+.dropdown a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #222;
+}
+.dropdown a:hover { background: #fbe9eb; color: var(--red); }
+.phone-only { display: none !important; }   /* hidden on big screens */
+
+
+/* =========================================================
+   2. HERO BANNER
+   ========================================================= */
+.content { padding: 0 26px 40px; }
+
+.hero {
+  position: relative;        /* lets the title sit on top of the photo */
+  height: 233px;
+  margin-top: 12px;
+  border-radius: 18px;
+  overflow: hidden;          /* crops the photo to the rounded corners */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;         /* fills the banner, crops extra, never stretches */
+  display: block;
+}
+/* Dark fade at the bottom so the white text is easy to read */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.1) 60%);
+}
+.hero-title {
+  position: absolute;
+  left: 36px; bottom: 22px;
+  z-index: 1;                /* above the dark fade */
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 2.2rem;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+
+/* =========================================================
+   3. QUICK BUTTONS
+   ========================================================= */
+.quick {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* 4 equal columns */
+  gap: 48px;
+  padding: 16px 24px 0;
+}
+.quick-card {
+  display: flex;
+  flex-direction: column;    /* icon on top, label below */
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 116px;
+  background: #fff;
+  border: 1px solid var(--red);
+  border-radius: 30px;
+  box-shadow: 6px 8px 10px rgba(0, 0, 0, 0.25);
+  color: var(--red);
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.quick-card img { width: 62px; height: 62px; }
+.quick-card:hover {
+  transform: translateY(-4px);               /* small "lift" on hover */
+  box-shadow: 6px 12px 14px rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================================================
+   4. OVERVIEW
+   ========================================================= */
+.overview {
+  margin-top: 40px;
+  padding: 14px 4px 0;
+  border-top: 1px solid #999;                /* the thin gray line */
+  scroll-margin-top: 80px;                   /* keeps the title clear of the sticky header */
+}
+.overview h2 { font-size: 1.2rem; margin-bottom: 2px; }
+.overview p {
+  max-width: 1080px;
+  font-size: 1.28rem;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   5. TOAST (little message at the bottom)
+   ========================================================= */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);               /* centers it horizontally */
+  padding: 12px 24px;
+  border-radius: 30px;
+  background: #222;
+  color: #fff;
+  z-index: 50;
+}
+
+
+/* =========================================================
+   6. RESPONSIVE (screens 800px wide or less)
+   ========================================================= */
+@media (max-width: 800px) {
+  .nav { display: none; }                    /* top links move into the dropdown */
+  .phone-only { display: block !important; }
+
+  .header { padding-right: 14px; }
+  .content { padding: 0 14px 30px; }
+
+  .hero { height: 190px; }
+  .hero-title { font-size: 1.5rem; left: 20px; bottom: 16px; }
+
+  .quick { grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 16px 4px 0; }
+  .quick-card { height: 104px; font-size: 1.05rem; }
+  .quick-card img { width: 50px; height: 50px; }
+
+  .overview p { font-size: 1.05rem; }
+}

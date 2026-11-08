@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- This line makes the page scale properly on phones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MCC Canteen</title>
+
+  <!-- Fonts from Google Fonts: "Chewy" for headings, "Itim" for body text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Itim&display=swap" rel="stylesheet">
+
+  <!-- Link our stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ===================================================================
+       HOW TO CHANGE ANY PICTURE ON THIS PAGE
+       Every picture is an <img> tag. Just change the link inside src="...".
+         <img src="img/YOUR-PHOTO.jpg" alt="short description">
+       Icons are in img/icons/  ·  food photos are in img/
+       =================================================================== -->
+
+  <!-- ============ HEADER (red bar at the top) ============ -->
+  <header class="header">
+    <!-- Hamburger button: script.js opens/closes the sidebar with it -->
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu"><img class="icon" src="img/icons/menu.svg" alt="Menu"></button>
+    <h1 class="logo">MCC CANTEEN</h1>
+
+    <!-- Search box: script.js filters the food items while you type -->
+    <div class="search">
+      <input type="text" id="searchInput" placeholder="Search">
+      <img class="search-icon" src="img/icons/search.svg" alt="Search">
+    </div>
+
+    <!-- Clicking the user chip goes to the profile page -->
+    <a href="profile.html" class="user-chip">
+      <span class="avatar-small"><img src="img/avatar.svg" alt="Kim Minjeong"></span>
+      <span class="user-name">Kim Minjeong <img class="inline-icon" src="img/icons/chevron.svg" alt=""></span>
+    </a>
+  </header>
+
+  <!-- ============ SIDEBAR (left navigation) ============ -->
+  <nav class="sidebar" id="sidebar">
+    <!-- "active" class = the red highlighted pill -->
+    <a href="#" class="nav-link active"><img class="icon" src="img/icons/home.svg" alt=""> Home</a>
+    <a href="#" class="nav-link"><img class="icon" src="img/icons/delivery.svg" alt=""> Delivery</a>
+    <a href="#" class="nav-link"><img class="icon" src="img/icons/categories.svg" alt=""> Categories</a>
+    <a href="#" class="nav-link"><img class="icon" src="img/icons/orders.svg" alt=""> Orders</a>
+    <a href="#" class="nav-link"><img class="icon" src="img/icons/favorites.svg" alt=""> Favorites</a>
+    <a href="#" class="nav-link"><img class="icon" src="img/icons/messages.svg" alt=""> Messages</a>
+    <a href="#" class="nav-link"><img class="icon" src="img/icons/notification.svg" alt=""> Notification</a>
+
+    <p class="nav-heading">Others</p>
+    <a href="#" class="nav-link"><img class="icon" src="img/icons/settings.svg" alt=""> Settings</a>
+    <a href="#" class="nav-link"><img class="icon" src="img/icons/help.svg" alt=""> Help Center</a>
+  </nav>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="main">
+    <h2 class="welcome">Welcome, Kim Minjeong!</h2>
+
+    <!-- Banner carousel: 3 slides, only the one with class "active" shows -->
+    <section class="carousel" id="carousel">
+      <div class="slide slide-1 active"><img src="img/download (2).jpg" alt="Canteen"></div>
+      <div class="slide slide-2"><img src="img/download (3).jpg" alt="Canteen"></div>
+      <div class="slide slide-3"><img src="img/banner3.jpg" alt="Canteen"></div>
+
+      <button class="order-now" id="orderNowBtn">Order Now <img class="inline-icon" src="img/icons/arrow-right.svg" alt=""></button>
+    </section>
+    <!-- The little dots under the banner (script.js creates them) -->
+    <div class="dots" id="dots"></div>
+
+    <!-- ---------- Students Choice ---------- -->
+    <section id="students-choice">
+      <div class="section-head">
+        <h2>Students Choice</h2>
+        <a href="#" class="view-all">View all</a>
+      </div>
+
+      <div class="row">
+        <!--
+          Each food item is a <button> so it's clickable and keyboard friendly.
+          data-name and data-price store the info that script.js reads.
+
+          TO CHANGE A PHOTO: only edit the text inside src="..."
+          example:  <img src="img/my-photo.jpg" alt="Name of the food">
+        -->
+        <button class="food" data-name="Kwek-kwek" data-price="5">
+          <span class="thumb"><img src="img/Kwek-kwek.jpg" alt="Kwek-kwek"></span>
+          <span class="caption">Kwek-kwek</span>
+        </button>
+        <button class="food" data-name="Turon" data-price="15">
+          <span class="thumb"><img src="img/Turon(Banana Wrapped in Lumpia Wrapper).jpg" alt="Turon"></span>
+          <span class="caption">Turon</span>
+        </button>
+        <button class="food" data-name="Iced Tea" data-price="15">
+          <span class="thumb"><img src="img/sago at gulaman.jpg" alt="Iced Tea"></span>
+          <span class="caption">Iced Tea</span>
+        </button>
+        <button class="food" data-name="Chicken Katsu" data-price="60">
+          <span class="thumb"><img src="img/Chicken Katsu With Cheese Sauce.jpg" alt="Katsu"></span>
+          <span class="caption">Chicken Katsu</span>
+        </button>
+        <button class="food" data-name="Kare-kare" data-price="60">
+          <span class="thumb"><img src="img/Crispy Pork Kare- Kare.jpg" alt="Kare-kare"></span>
+          <span class="caption">Kare-kare</span>
+        </button>
+        <button class="food" data-name="Ham & Cheese" data-price="60">
+          <span class="thumb"><img src="img/ham&cheese.jpg" alt="Ham & Cheese"></span>
+          <span class="caption">Ham & Cheese</span>
+        </button>
+        <button class="food" data-name="Red Tea" data-price="60">
+          <span class="thumb"><img src="img/redtea.jpg" alt="Red Tea"></span>
+          <span class="caption">Red Tea</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ---------- Bundle ---------- -->
+    <section>
+      <div class="section-head">
+        <h2>Bundle</h2>
+        <a href="#" class="view-all">View all</a>
+      </div>
+
+      <!-- "big" makes these cards larger than the ones above -->
+      <div class="row">
+        <button class="food big" data-name="Milk Tea Duo" data-price="90">
+          <span class="thumb"><img src="img/placeholder.svg" alt="Milk Tea Duo"></span>
+          <span class="caption">Milk Tea Duo</span>
+        </button>
+        <button class="food big" data-name="Rice meal + Coke" data-price="85">
+          <span class="thumb"><img src="img/download (4).jpg" alt="Rice meal + Coke"></span>
+          <span class="caption">Rice meal + Coke</span>
+        </button>
+        <button class="food big" data-name="Coffee + Fries" data-price="200">
+          <span class="thumb"><img src="img/download (5).jpg" alt="Coffee + Fries"></span>
+          <span class="caption">Coffee + Fries</span>
+        </button>
+        <button class="food big" data-name="Rice meal + Coke" data-price="85">
+          <span class="thumb"><img src="img/download (4).jpg" alt="Rice meal + Coke"></span>
+          <span class="caption">Rice meal + Coke</span>
+        </button>
+        <button class="food big" data-name="Rice meal + Coke" data-price="85">
+          <span class="thumb"><img src="img/download (4).jpg" alt="Rice meal + Coke"></span>
+          <span class="caption">Rice meal + Coke</span>
+          
+        </button>
+      </div>
+    </section>
+
+    <!-- ---------- Sulit Deals ---------- -->
+    <section>
+      <div class="section-head">
+        <h2>Sulit Deals</h2>
+      </div>
+      <div class="deal">
+        <span class="deal-off">20% OFF</span>
+        <span class="deal-text"><img src="img/buffet.jpg" alt="Buffet"></span>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ CART PANEL (stuck to the right side) ============ -->
+  <aside class="cart" id="cart">
+    <div class="cart-head">
+      <h2 class="cart-title">Your Order <span id="itemCount">(0)</span></h2>
+      <!-- Close button: only visible on phones -->
+      <button class="cart-close" id="cartClose" aria-label="Close order">
+        <img class="icon" src="img/icons/x.svg" alt="Close">
+      </button>
+    </div>
+
+    <!-- script.js fills this list with one <li> per food in the cart -->
+    <ul class="cart-items" id="cartItems"></ul>
+    <p class="cart-empty" id="cartEmpty">No items yet.<br>Tap a food to add it.</p>
+
+    <!-- Totals + buttons, always at the bottom of the panel -->
+    <div class="cart-summary">
+      <div class="cart-row"><span>Sub total</span><span id="subtotal">Php0.00</span></div>
+      <div class="cart-row cart-total"><span>Total</span><span id="total">Php0.00</span></div>
+
+      <!-- "disabled" = gray and unclickable until something is in the cart -->
+      <button class="btn btn-red" id="confirmBtn" disabled>Confirm Order</button>
+      <button class="btn btn-outline" id="orderMoreBtn">Order More</button>
+      <button class="btn-link" id="cancelBtn" disabled>Cancel Order</button>
+    </div>
+  </aside>
+
+  <!-- Round cart button: only visible on phones, opens the panel -->
+  <button class="cart-fab" id="cartFab" aria-label="Open order">
+    <img class="icon" src="img/icons/cart.svg" alt="Order">
+    <span class="fab-count" id="fabCount">0</span>
+  </button>
+
+  <!-- Load our JavaScript LAST so the page elements already exist -->
+  <script src="script.js"></script>
+</body>
+</html>
