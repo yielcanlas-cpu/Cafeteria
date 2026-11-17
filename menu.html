@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Makes the page scale properly on phones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menu · MCC Canteen</title>
+  <link rel="stylesheet" href="common.css">
+  <!-- landing.css has the header (the red bar) that this page shares with landing.html -->
+  <link rel="stylesheet" href="landing.css">
+  <link rel="stylesheet" href="menu.css">
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+
+  <!-- ===================================================================
+       HOW TO CHANGE A FOOD PHOTO: edit only the link inside src="..."
+         <img src="img/YOUR-PHOTO.jpg" alt="Name of the food">
+       Photos that still say img/placeholder.svg are waiting for your picture.
+
+       HOW TO ADD A FOOD: copy one <figure class="dish"> ... </figure> block
+       and paste it inside the same row (inside <div class="track">).
+       =================================================================== -->
+
+  <div class="page">
+
+    <!-- ============ HEADER ============ -->
+    <header class="header">
+      <a href="landing.html" class="brand">
+        <img class="brand-logo" src="logo.png" alt="Mabalacat City College logo">
+        <span class="brand-name">MCC CANTEEN</span>
+      </a>
+      <nav class="nav">
+        <a href="offers.html" class="nav-link">Offers</a>
+        <a href="contact.html" class="nav-link">Contact us</a>
+        <!-- common.js turns this into a Back button when you are logged in or came from "View all" -->
+        <a href="login.html" class="nav-link" data-auth-link="back">Login/Sign up</a>
+      </nav>
+    </header>
+
+    <main class="menu-page">
+      <h1 class="menu-title">Menu</h1>
+
+      <!-- ---------- Rice Meal ---------- -->
+      <section class="category">
+        <h2 class="category-title">Rice Meal</h2>
+        <div class="carousel-row">
+          <button class="arrow" data-dir="-1" aria-label="Scroll Rice Meal left"><img src="img/icons/menu-prev.svg" alt=""></button>
+          <div class="track">
+          <figure class="dish">
+            <img src="img/Crispy Pork Kare- Kare.jpg" alt="Kare-kare">
+            <figcaption>Kare-kare</figcaption>
+          </figure>
+          <figure class="dish">
+            <img src="img/sisig.jpg" alt="Sisig">
+            <figcaption>Sisig</figcaption>
+          </figure>
+          <figure class="dish">
+            <img src="img/bicol-express.jpg" alt="Bicol Express">
+            <figcaption>Bicol Express</figcaption>
+          </figure>
+          <figure class="dish">
+            <img src="img/sinigang.jpg" alt="Sinigang">
+            <figcaption>Sinigang</figcaption>
+          </figure>
+          <figure class="dish">
+            <img src="img/tinola.jpg" alt="Tinola">
+            <figcaption>Tinola</figcaption>
+          </figure>
+          </div>
+          <button class="arrow" data-dir="1" aria-label="Scroll Rice Meal right"><img src="img/icons/menu-next.svg" alt=""></button>
+        </div>
+      </section>
+
+      <!-- ---------- Meryenda ---------- -->
+      <section class="category">
+        <h2 class="category-title">Meryenda</h2>
+        <div class="carousel-row">
+          <button class="arrow" data-dir="-1" aria-label="Scroll Meryenda left"><img src="img/icons/menu-prev.svg" alt=""></button>
+          <div class="track">
+          <figure class="dish">
+            <img src="img/Kwek-kwek.jpg" alt="Kwek-kwek">
+            <figcaption>Kwek-kwek</figcaption>
+          </figure>
+          <figure class="dish">
+            <img src="img/fried-isaw.jpg" alt="Fried isaw">
+            <figcaption>Fried isaw</figcaption>
+          </figure>
+          <figure class="dish">
+            <img src="img/lumpiang-gulay.jpg" alt="Lumpiang Gulay">
+            <figcaption>Lumpiang Gulay</figcaption>
+          </figure>
+          <figure class="dish">
+            <img src="img/Turon(Banana Wrapped in Lumpia Wrapper).jpg" alt="Turon">
+            <figcaption>Turon</figcaption>
+          </figure>
+          <figure class="dish">
+            <img src="img/maruya.jpg" alt="Maruya">
+            <figcaption>Maruya</figcaption>
+          </figure>
+          </div>
+          <button class="arrow" data-dir="1" aria-label="Scroll Meryenda right"><img src="img/icons/menu-next.svg" alt=""></button>
+        </div>
+      </section>
+
+      <!-- ---------- Drinks ---------- -->
+      <section class="category">
+        <h2 class="category-title">Drinks</h2>
+        <div class="carousel-row">
+          <button class="arrow" data-dir="-1" aria-label="Scroll Drinks left"><img src="img/icons/menu-prev.svg" alt=""></button>
+          <div class="track cols-4">
+          <figure class="dish">
+            <img src="img/download (1).jpg" alt="Iced Tea">
+            <figcaption>Iced Tea</figcaption>
+          </figure>
+          <figure class="dish">
+            <img src="img/redtea.jpg" alt="Red Tea">
+            <figcaption>Red Tea</figcaption>
+          </figure>
+          <figure class="dish">
+            <img src="img/sago at gulaman.jpg" alt="Gulaman">
+            <figcaption>Gulaman</figcaption>
+          </figure>
+          <figure class="dish">
+            <img src="img/melon.jpg" alt="Melon">
+            <figcaption>Melon</figcaption>
+          </figure>
+          </div>
+          <button class="arrow" data-dir="1" aria-label="Scroll Drinks right"><img src="img/icons/menu-next.svg" alt=""></button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="common.js"></script>
+  <script src="menu.js"></script>
+</body>
+</html>

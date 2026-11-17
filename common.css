@@ -1,0 +1,40 @@
+/* =========================================================
+   common.css  -  small styles shared by several pages
+   ========================================================= */
+
+/* Makes sure the "hidden" attribute always hides an element */
+[hidden] { display: none !important; }
+
+/* While a page is checking who is logged in, show nothing
+   (so you never see a flash of the page before being sent to login) */
+body.checking { visibility: hidden; }
+
+/* ----- Toast: the little message at the bottom ----- */
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);   /* centers it horizontally */
+  max-width: min(520px, 92vw);
+  padding: 12px 24px;
+  border-radius: 30px;
+  background: #222;
+  color: #fff;
+  font: 1rem Arial, Helvetica, sans-serif;
+  text-align: center;
+  z-index: 100;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* ----- Order status badges (used on the dashboard and the staff page) ----- */
+.badge {
+  display: inline-block;
+  padding: 2px 12px;
+  border-radius: 999px;
+  font: bold 0.8rem Arial, Helvetica, sans-serif;
+  background: #fff3cd;           /* Preparing = yellow */
+  color: #7a5a00;
+}
+.badge.Ready     { background: #dbeafe; color: #1e4fa3; }
+.badge.Delivered { background: #d6f5dd; color: #11672b; }
+.badge.Cancelled { background: #eee;    color: #777; }

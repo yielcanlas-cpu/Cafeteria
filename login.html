@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in · MCC Canteen</title>
+
+  <!-- Playfair Display = the serif font of the title, Lexend = the rest -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+
+  <!-- ===================================================================
+       HOW TO CHANGE A PICTURE: edit only the link inside src="..."
+         background photo -> img/login-bg.jpg   (put your own campus photo there)
+         logo             -> img/mcc-canteen-logo.svg
+       =================================================================== -->
+
+  <!-- ============ RED BAR ============ -->
+  <header class="topbar">
+    <a href="landing.html" class="brand">
+      <img class="brand-logo" src="img/mcc-canteen-logo.svg" alt="MCC Canteen logo">
+      <span>MCC Canteen</span>
+    </a>
+  </header>
+
+  <!-- ============ BACKGROUND + LOGIN CARD ============ -->
+  <main class="stage">
+    <img class="stage-bg" src="img/login-bg.jpg" alt="">
+
+    <div class="card">
+      <img class="card-logo" src="img/mcc-canteen-logo.svg" alt="">
+      <h1>MCC Canteen</h1>
+
+      <!-- Two pill buttons: login.js shows one form at a time -->
+      <div class="tabs">
+        <button class="tab active" id="tabLogin" type="button">Log in</button>
+        <button class="tab" id="tabSignup" type="button">Sign up</button>
+      </div>
+
+      <!-- ---------- LOG IN ---------- -->
+      <form id="loginForm" autocomplete="on">
+        <div class="field">
+          <label for="loginEmail">Email or Number</label>
+          <div class="input-wrap">
+            <input id="loginEmail" type="text" name="email" placeholder="@gmail.com" autocomplete="username" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <div class="input-wrap">
+            <input id="loginPassword" type="password" name="password" placeholder="password" autocomplete="current-password" required>
+            <!-- The eye shows / hides the password (login.js) -->
+            <button class="eye" type="button" aria-label="Show password"><img src="img/icons/eye.svg" alt=""></button>
+          </div>
+        </div>
+
+        <a href="#" class="forgot" id="forgotLink">Forgot password?</a>
+
+        <div class="form-bottom">
+          <hr>
+          <button class="submit" type="submit">Log in</button>
+        </div>
+      </form>
+
+      <!-- ---------- SIGN UP ---------- -->
+      <form id="signupForm" autocomplete="on" hidden>
+        <div class="field">
+          <label for="signupName">Full name</label>
+          <div class="input-wrap">
+            <input id="signupName" type="text" name="name" placeholder="name" maxlength="60" autocomplete="name" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="signupEmail">Email or Number</label>
+          <div class="input-wrap">
+            <input id="signupEmail" type="text" name="email" placeholder="email or number" autocomplete="username" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="signupPassword">Password</label>
+          <div class="input-wrap">
+            <input id="signupPassword" type="password" name="password" placeholder="min 8 characters" minlength="8" autocomplete="new-password" required>
+            <button class="eye" type="button" aria-label="Show password"><img src="img/icons/eye.svg" alt=""></button>
+          </div>
+        </div>
+
+        <div class="form-bottom">
+          <hr>
+          <button class="submit" type="submit">Create now</button>
+        </div>
+      </form>
+
+      <!-- Error messages appear here -->
+      <p class="error" id="authError" role="alert"></p>
+    </div>
+  </main>
+
+  <script src="common.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

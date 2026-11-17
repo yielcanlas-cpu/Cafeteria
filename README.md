@@ -1,54 +1,89 @@
-# MCC Canteen (merged project)
+# MCC Canteen
 
-Two parts in one folder:
+A canteen website: a landing page, a public menu, an ordering dashboard for students,
+and a staff page that holds and manages ALL orders. PHP + MySQL (runs on Laragon).
 
-| Part | Files | What it is |
+## Pages
+
+| Page | Who | What it is |
 |---|---|---|
-| **Dashboard** (your design) | `index.html`, `profile.html`, `style.css`, `script.js`, `img/` | Sidebar, banner, food cards, right-side order panel, profile page. Static HTML/CSS/JS. |
-| **Landing page** | `landing.html`, `landing.css`, `landing.js`, `img/hero.jpg`, `img/icons/landing-*.svg` | Welcome page: banner, 4 quick buttons (Menu, Order Now, About Us, Get app) and overview. |
-| **Ordering system** (backend) | `order.html`, `canteen.css`, `app.js`, `api.php`, `db.php`, `config.php`, `admin.php`, `logo.png` | Login / sign up, room delivery, order history, staff screen. PHP + MySQL. |
+| `landing.html` | everyone | Welcome page (banner, Menu / Order Now / About Us / Get app) |
+| `menu.html` | everyone | The menu, in rows: Rice Meal, Meryenda, Drinks |
+| `login.html` | everyone | Log in / Sign up (with your email **or mobile number**) |
+| `index.html` | students | **Main menu (dashboard)**: browse food, fill the order panel, confirm |
+| `offers.html` | everyone | Offers. **10% off for new customers** has a first-time-customer check (log in, answer Yes, Submit) |
+| `contact.html` | everyone | "Stay Connected" form; staff read and reply on the staff page |
+| `profile.html` | logged-in | Name, email, join date; location, phone and bio are saved |
+| `admin.html` | staff only | Every student's orders; move them Preparing -> Ready -> Delivered, or cancel |
 
-`index.html` is the dashboard. The ordering system's old `index.html` is now `order.html`,
-and its old `style.css` is now `canteen.css` (so it does not overwrite the dashboard's `style.css`).
+After logging in:
+- a **student** goes to `index.html` (the main menu),
+- the **staff account** goes to `admin.html`.
+
+Opening `index.html` or `profile.html` while logged out sends you to the login page first.
+
+## New in this version
+- **First-order discount**: the student presses Submit on `offers.html`; `api.php` checks the order history
+  (no order yet, cancelled ones don't count) and only then switches on 10% off the next order. It works once.
+  The percent is `FIRST_ORDER_DISCOUNT_PERCENT` in `config.php`. Orders now store `discount`.
+- **View all** opens `menu.html?from=app`: no Login/Sign up, a **Back** button instead. The logo goes to the
+  logged-in person's home (student `index.html`, staff `admin.html`); guests still go to the landing page.
+- Dashboard sidebar now works: Delivery, Offers, Favorites (heart on each food), Messages, Notification, Help Center (`panels.js`).
+- Landing: Offers, Updates, Contact us and Get app (install instructions) all have content.
+- Staff page: **Messages** tab to reply to students; orders show the discount.
+- Offer text lives at the top of `offers.js`. New photos are in `img/` (from the Canva design).
+
+## Login page
+- Sign up with an **email or a mobile number** (09123456789, 9123456789 and +63 912 345 6789 all count as the same number). Password: at least 8 characters.
+- Log in with the same email or number. The eye shows or hides the password.
+- "Forgot password?" only shows a message for now (there is no reset by email yet).
+- Background photo: `img/login-bg.jpg` is the campus photo from your Canva design; the red tint is added by `--tint` in `auth.css`.
+- Logo: `img/mcc-canteen-logo.svg` (used on the login page). Landing, menu and staff pages still use `logo.png`.
 
 ## Run it with Laragon
 1. Open Laragon and click **Start All** (Apache + MySQL must both be running).
 2. Copy this whole folder into `C:\laragon\www\`.
-3. Open:
-   - `http://localhost/Mcc-Canteen/landing.html` -> landing page
-   - `http://localhost/Mcc-Canteen/`            -> dashboard
-   - `http://localhost/Mcc-Canteen/order.html`  -> students: log in and place an order
-   - `http://localhost/Mcc-Canteen/admin.php`   -> staff: see and deliver orders
+3. Open `http://localhost/Mcc-Canteen/landing.html`
+   (use your folder's name if it is different).
 
-The dashboard works by just opening `index.html`. The ordering system and staff page need Laragon
-(PHP + MySQL), so they will not work with VS Code Live Server alone.
+Do not use VS Code Live Server or double-click the files: PHP only runs through Laragon.
 
-The database `canteen` and its tables (`users`, `orders`, `order_items`) are created automatically
-the first time the ordering system is used. Laragon's default MySQL login is user `root`, no password
-(already set in `config.php`).
+The database `canteen` and its tables are created (and upgraded, if you have an older
+copy) automatically the first time the site is used. `canteen.sql` is optional: import it
+only if you want to start with a clean database (it REBUILDS the tables, so it deletes
+the orders and accounts already stored in them).
 
-## Student flow (order.html)
-1. Create an account or log in
-2. Pick foods from the menu (+ / -)
-3. Type the room, e.g. `MB 101`
-4. See the subtotal, press **Place order**
+## The staff account
+It is created automatically the first time the site is used. Settings are in `config.php`:
 
-## Staff (admin.php)
-Lists new orders with room, items and total. Press **Mark delivered**.
-Default password is `canteen123`. **Change `ADMIN_PASSWORD` in `config.php` before sharing this.**
+    ADMIN_EMAIL    = admin@mcc.local
+    ADMIN_PASSWORD = canteen123
+
+Log in with these on `login.html` and you land on the staff page.
+**Change `ADMIN_PASSWORD` in `config.php` BEFORE the first run** (it is only used when the
+account is created; editing it later does not change an existing account).
+
+On the staff page you can: see all orders (new ones pop up by themselves every 15 seconds),
+filter them, search by order number / name / room, mark them Ready or Delivered, cancel them,
+reopen them, and delete finished ones. Students can cancel their own order while it is
+still "Preparing".
 
 ## Change the menu
-- Ordering system: edit the `$MENU` array at the top of `api.php`.
-- Dashboard: edit the `.food` buttons in `index.html` (`data-name`, `data-price`, photo in `img/`).
+Two places must agree:
+1. `api.php` - the `$MENU` list (id, name, **price**). The server only trusts these prices.
+2. `index.html` - each food button has `data-id="..."` matching the id above, and its photo.
 
-## Note
-The dashboard's cart is not connected to `api.php` / the database yet. Orders placed on the
-dashboard are not saved; only orders placed through `order.html` are.
+A food button whose `data-id` is not in `$MENU` is greyed out and cannot be ordered.
+`menu.html` is only a showcase (photos and names); edit it separately.
 
 ## Troubleshooting
-- **"Server error" / "PHP is not running" when logging in or creating an account:**
-  the page was not opened through Laragon. Do not use VS Code Live Server or double-click the file.
-  Start Laragon (**Start All**), then open `http://localhost/Mcc-Canteen/order.html`.
-  (If your folder has a different name, use that name in the address.)
-- **"Cannot connect to MySQL":** open Laragon and click **Start All**.
-- **Tables have the wrong columns:** re-import `canteen.sql` (it rebuilds the tables).
+- **"Server error" / "PHP is not running"**: open the page through Laragon, not Live Server.
+- **"Cannot connect to MySQL"**: open Laragon and click **Start All**.
+- **Tables have the wrong columns**: import `canteen.sql` (rebuilds the tables).
+
+## Files
+- Pages: `landing.html`, `menu.html`, `login.html`, `index.html`, `profile.html`, `admin.html`
+- Scripts: `common.js` (shared helpers), `script.js` (dashboard), `login.js`, `profile.js`, `admin.js`, `landing.js`, `menu.js`
+- Styles: `common.css`, `style.css` (dashboard + profile), `landing.css`, `menu.css`, `auth.css`, `admin.css`
+- Backend: `api.php`, `db.php`, `config.php`, `canteen.sql`
+- Pictures: `logo.png`, `img/` (food photos), `img/icons/` (icons)

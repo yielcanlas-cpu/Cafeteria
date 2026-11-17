@@ -31,7 +31,7 @@ button { font-family: inherit; cursor: pointer; }
 
 /* The white card in the middle of the screen */
 .page {
-  max-width: 1240px;
+  max-width: 100%;   /* <-- delete this line, or change it to: max-width: 100%; */
   margin: 0 auto;
   background: #fff;
   min-height: 100vh;

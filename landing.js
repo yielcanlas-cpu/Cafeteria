@@ -86,16 +86,40 @@ document.querySelectorAll('.quick-card[href^="#"], .dropdown a[href^="#"]').forE
    Any element with data-toast="message" shows that message.
    --------------------------------------------------------- */
 const toast = document.querySelector("#toast");
-let toastTimer;                                    // remembers the timer so we can reset it
+let landingToastTimer;                                    // remembers the timer so we can reset it
 
 document.querySelectorAll("[data-toast]").forEach(function (item) {
   item.addEventListener("click", function () {
     toast.textContent = item.dataset.toast;        // reads data-toast="..." from the HTML
     toast.hidden = false;
 
-    clearTimeout(toastTimer);                      // restart the timer if clicked again
-    toastTimer = setTimeout(function () {
+    clearTimeout(landingToastTimer);                      // restart the timer if clicked again
+    landingToastTimer = setTimeout(function () {
       toast.hidden = true;                         // hide again after 2.5 seconds
     }, 2500);
   });
+});
+
+
+/* ---------------------------------------------------------
+   5. WINDOWS  (the "Get app" card opens one)
+   Any element with data-open="windowId" opens that window.
+   The X button, the dark area, or the Escape key closes it.
+   --------------------------------------------------------- */
+document.querySelectorAll("[data-open]").forEach(function (opener) {
+  opener.addEventListener("click", function (event) {
+    event.preventDefault();
+    document.querySelector("#" + opener.dataset.open).hidden = false;
+  });
+});
+
+document.querySelectorAll(".modal").forEach(function (modal) {
+  modal.addEventListener("click", function (event) {
+    // clicked the dark area or an X button (not the white card)
+    if (event.target === modal || event.target.closest("[data-close]")) modal.hidden = true;
+  });
+});
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") document.querySelectorAll(".modal").forEach(function (modal) { modal.hidden = true; });
 });

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Offers · MCC Canteen</title>
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="landing.css">
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+
+  <!-- ===================================================================
+       HOW TO CHANGE AN OFFER: open offers.js and edit the OFFERS list at the top
+       (title, picture, text). The pictures are in img/offer-*.jpg
+       =================================================================== -->
+
+  <div class="page">
+
+    <!-- ============ HEADER ============ -->
+    <header class="header">
+      <a href="landing.html" class="brand">
+        <img class="brand-logo" src="logo.png" alt="Mabalacat City College logo">
+        <span class="brand-name">MCC CANTEEN</span>
+      </a>
+      <nav class="nav">
+        <a href="offers.html" class="nav-link active">Offers</a>
+        <a href="contact.html" class="nav-link">Contact us</a>
+        <!-- common.js turns this into a Back button once you are logged in -->
+        <a href="login.html" class="nav-link" data-auth-link="back">Login/Sign up</a>
+      </nav>
+    </header>
+
+    <main class="page-main">
+      <h1 class="page-title">Offers</h1>
+
+      <!-- ---------- ALL OFFERS ---------- -->
+      <section id="offerList">
+        <p class="offers-lead">Try our featured meal at a special price!</p>
+        <div class="offer-grid" id="offerGrid"></div>
+      </section>
+
+      <!-- ---------- ONE OFFER (offers.js fills it) ---------- -->
+      <section id="offerDetail" hidden>
+        <a href="#" class="offer-back" id="offerBack">&larr; All offers</a>
+        <div class="offer-detail">
+          <img id="offerImg" src="img/placeholder.svg" alt="">
+          <div class="offer-info">
+            <h2 id="offerTitle"></h2>
+            <p class="offer-text" id="offerText"></p>
+            <p class="offer-extra" id="offerExtra"></p>
+            <div class="offer-action" id="offerAction"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="common.js"></script>
+  <script src="offers.js"></script>
+</body>
+</html>

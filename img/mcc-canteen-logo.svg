@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- MCC Canteen logo (drawn as a vector so it stays sharp at any size) -->
+  <!-- gear ring: a gray disc with a dashed ring around it makes the teeth -->
+  <circle cx="50" cy="50" r="47.6" fill="none" stroke="#4a4745" stroke-width="4.6" stroke-dasharray="3.2 3.2"/>
+  <circle cx="50" cy="50" r="45.5" fill="#4a4745"/>
+  <circle cx="50" cy="50" r="42.5" fill="#bf1e2e"/>
+
+  <!-- the words curve along these two invisible paths -->
+  <defs>
+    <path id="top"    d="M17.2,58.2 A34,34 0 1 1 82.8,58.2"/>
+    <path id="bottom" d="M28.4,81 A38,38 0 0 0 71.6,81"/>
+  </defs>
+  <text font-family="Georgia, 'Times New Roman', serif" font-weight="bold" font-size="6.9" fill="#fff" letter-spacing="0.3">
+    <textPath href="#top" startOffset="50%" text-anchor="middle">MABALACAT CITY COLLEGE</textPath>
+  </text>
+  <text font-family="Georgia, 'Times New Roman', serif" font-weight="bold" font-size="6" fill="#fff" letter-spacing="0.4">
+    <textPath href="#bottom" startOffset="50%" text-anchor="middle">CANTEEN</textPath>
+  </text>
+
+  <!-- inner ring + the house with a fork and a spoon -->
+  <circle cx="50" cy="50" r="26.5" fill="#4a4745"/>
+  <circle cx="50" cy="50" r="24.5" fill="#bf1e2e"/>
+  <path d="M50 29.5 L68.5 46 L63.5 46 L63.5 69 L36.5 69 L36.5 46 L31.5 46 Z" fill="#fff"/>
+  <rect x="58" y="32" width="4.6" height="9" fill="#fff"/>
+  <g stroke="#bf1e2e" stroke-width="1.5" stroke-linecap="round" fill="none">
+    <path d="M42.2 49v6M45 49v6M47.8 49v6M45 55v13"/>       <!-- fork  -->
+    <path d="M55.2 59v9"/>                                  <!-- spoon handle -->
+  </g>
+  <ellipse cx="55.2" cy="54" rx="2.7" ry="4" fill="#bf1e2e"/>   <!-- spoon bowl -->
+</svg>

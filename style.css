@@ -58,9 +58,10 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 .logo {
-  font-family: var(--font-title);
+  font-family: "Google Sans", sans-serif;
   font-size: 2rem;
   letter-spacing: 1px;
+  color: #fff;
 }
 
 .search {
@@ -85,14 +86,19 @@ button { font-family: inherit; cursor: pointer; }
 }
 .search-icon { width: 26px; height: 26px; }
 
+.user-menu { position: relative; }
 .user-chip {
+  border: 0;                 /* it is a <button> now, so reset its default look */
+  font: inherit;
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.45);   /* see-through white */
-  color: #fff;
+  background: rgba(70, 70, 70, 0.45);   /* see-through white */
+  color: #000000;
   border-radius: 40px;
   padding: 8px 20px 8px 8px;
+  margin-bottom: 8px;
 }
 .avatar-small {
   width: 48px; height: 48px;
@@ -179,7 +185,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 .welcome {
-  font-family: var(--font-title);
+  font-family: "Google Sans", sans-serif;
   font-size: 2rem;
   margin-bottom: 14px;
 }
@@ -253,7 +259,7 @@ button { font-family: inherit; cursor: pointer; }
   margin: 10px 0 12px;
 }
 .section-head h2 {
-  font-family: var(--font-title);
+  font-family: "Google Sans", sans-serif;
   font-size: 2rem;
 }
 .view-all { font-size: 1.2rem; margin-right: 20px; }
@@ -369,7 +375,7 @@ button { font-family: inherit; cursor: pointer; }
   align-items: center;
   margin-bottom: 8px;
 }
-.cart-title { font-family: var(--font-title); font-size: 1.8rem; }
+.cart-title { font-family: "Google Sans", sans-serif; font-size: 1.8rem; }
 .cart-title span { color: var(--gray); font-size: 1.2rem; }
 .cart-close { display: none; background: none; border: none; padding: 4px; }
 
@@ -391,7 +397,25 @@ button { font-family: inherit; cursor: pointer; }
   border-bottom: 1px solid #eee;
 }
 .item-name { display: block; font-size: 1.1rem; }
-.item-qty { display: block; font-size: 0.85rem; color: var(--gray); }
+.item-qty {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+.qty { min-width: 1.2em; text-align: center; color: #000; }
+.qty-btn {
+  width: 22px; height: 22px;
+  padding: 0;
+  border: 1.5px solid var(--red);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--red);
+  font-size: 1rem;
+  line-height: 1;
+}
+.qty-btn:hover { background: var(--red); color: #fff; }
 .item-price { font-size: 1.05rem; }
 
 .remove-btn {
@@ -431,7 +455,7 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--gray);
 }
 .cart-total {
-  font-family: var(--font-title);
+  font-family: "Google Sans", sans-serif;
   font-size: 1.9rem;
   color: #000;
   margin-bottom: 4px;
@@ -488,6 +512,92 @@ button { font-family: inherit; cursor: pointer; }
 [hidden] { display: none !important; }
 
 
+/* ----- User menu (opens from the name chip) ----- */
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 190px;
+  padding: 8px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 30;
+}
+.user-dropdown a,
+.user-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: #222;
+  font: inherit;
+  font-size: 1.1rem;
+  text-align: left;
+  cursor: pointer;
+}
+.user-dropdown a:hover,
+.user-dropdown button:hover { background: #fbe9eb; color: var(--red); }
+
+/* A food that api.php does not know about cannot be ordered */
+.food:disabled { cursor: not-allowed; }
+.food.unavailable { opacity: 0.45; filter: grayscale(1); }
+
+/* ----- Room + note fields in the cart ----- */
+.cart-fields { display: flex; flex-direction: column; gap: 8px; }
+.cart-fields input {
+  width: 100%;
+  padding: 8px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 20px;
+  font: inherit;
+  font-size: 1rem;
+}
+.cart-fields input:focus { outline: none; border-color: var(--red); }
+
+/* ----- My Orders window ----- */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 60;
+}
+.modal-card {
+  width: 100%;
+  max-width: 480px;
+  max-height: 82vh;
+  overflow-y: auto;
+  padding: 20px 22px;
+  background: #fff;
+  border-radius: 22px;
+}
+.modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.modal-head h2 { font-family: var(--font-title); font-size: 1.8rem; }
+.modal-close { background: none; border: 0; padding: 4px; }
+
+.orders-list { list-style: none; margin: 0; padding: 0; }
+.orders-list li { padding: 14px 0; border-bottom: 1px solid #eee; }
+.order-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-size: 1.15rem; }
+.order-items { font-size: 1.05rem; }
+.order-meta { margin-top: 2px; color: var(--gray); font-size: 0.95rem; }
+.orders-empty { padding: 30px 0; text-align: center; color: #999; font-size: 1.1rem; }
+.order-cancel {
+  margin-top: 8px;
+  padding: 4px 14px;
+  border: 1.5px solid var(--red);
+  border-radius: 20px;
+  background: #fff;
+  color: var(--red);
+  font-size: 0.95rem;
+}
+.order-cancel:hover { background: var(--red); color: #fff; }
+
+
 /* =========================================================
    6. PROFILE PAGE
    ========================================================= */
@@ -499,11 +609,27 @@ button { font-family: inherit; cursor: pointer; }
   padding: 24px 20px 60px;
 }
 
-.back-link {
-  display: inline-block;
+.profile-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 14px;
-  font-size: 1.2rem;
 }
+.back-link { display: inline-block; font-size: 1.2rem; }
+.logout-link {
+  padding: 6px 18px;
+  border: 2px solid var(--red);
+  border-radius: 20px;
+  background: #fff;
+  color: var(--red);
+  font-family: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.logout-link:hover { background: var(--red); color: #fff; }
+
+/* Gray hint text inside an empty editable field */
+.info-item [data-placeholder]:empty::before { content: attr(data-placeholder); color: #999; }
 .back-link:hover { text-decoration: underline; }
 
 .profile-banner {
@@ -639,3 +765,112 @@ button { font-family: inherit; cursor: pointer; }
   .profile-text { margin-top: 0; width: 100%; }
   .profile-name { font-size: 2.2rem; }
 }
+
+
+/* =========================================================
+   7. NEW: first-order discount, favorites, and the panel windows
+   ========================================================= */
+
+/* ----- discount line + hint in the cart ----- */
+.cart-discount { color: #11672b; }
+.promo-hint {
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: #fff3cd;
+  color: #7a5a00;
+  font-size: 0.95rem;
+  text-align: center;
+}
+.promo-hint a { color: var(--red); text-decoration: underline; }
+
+/* ----- the logo is a link ----- */
+.logo a { color: inherit; }
+
+/* ----- red dot beside "Notification" ----- */
+.nav-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
+
+/* ----- the heart on every food ----- */
+.food { position: relative; }
+.fav {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  color: var(--red);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.fav:hover { transform: scale(1.12); }
+.fav:focus-visible { outline: 3px solid #000; }
+
+/* ----- panel windows (Delivery, Favorites, Messages, Notification, Help Center) ----- */
+.panel-card { max-width: 520px; }
+.panel-empty { padding: 26px 0; text-align: center; color: #999; font-size: 1.1rem; }
+.panel-sub { margin: 18px 0 6px; font-family: var(--font-title); font-size: 1.25rem; font-weight: normal; }
+
+/* Delivery */
+.track-card { padding: 14px 0 12px; border-bottom: 1px solid #eee; }
+.steps { display: flex; margin: 16px 0 8px; padding: 0; list-style: none; }
+.steps li { flex: 1; position: relative; padding-top: 24px; text-align: center; font-size: 0.95rem; color: #aaa; }
+.steps li::before { content: ""; position: absolute; top: 3px; left: 50%; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: #ddd; z-index: 1; }
+.steps li::after { content: ""; position: absolute; top: 9px; left: -50%; width: 100%; height: 4px; background: #ddd; }
+.steps li:first-child::after { display: none; }
+.steps li.reached { color: #222; }
+.steps li.reached::before, .steps li.reached::after { background: var(--red); }
+.steps li.current { font-weight: bold; }
+.track-text { margin: 8px 0 4px; font-size: 1.05rem; }
+.mini-row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 1rem; }
+
+/* Favorites */
+.fav-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #eee; }
+.fav-row img { width: 56px; height: 56px; border-radius: 12px; object-fit: cover; }
+.fav-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.mini-btn {
+  padding: 6px 14px;
+  border: 1.5px solid var(--red);
+  border-radius: 20px;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.95rem;
+}
+.mini-btn:hover:not(:disabled) { filter: brightness(0.9); }
+.mini-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.mini-btn.ghost { background: #fff; color: var(--red); }
+
+/* Messages */
+.msg-form label { display: block; margin-top: 10px; font-size: 1rem; }
+.msg-form input, .msg-form textarea {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 16px;
+  font: inherit;
+}
+.msg-form textarea { min-height: 84px; resize: vertical; }
+.msg-form input:focus, .msg-form textarea:focus { outline: none; border-color: var(--red); }
+.send-btn { margin-top: 12px; padding: 8px 22px; font-size: 1.05rem; }
+.msg-card { padding: 12px 0; border-bottom: 1px solid #eee; }
+.msg-card p { margin: 4px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.msg-reply { margin-top: 6px; padding: 8px 12px; border-radius: 14px; background: #fbe9eb; }
+.msg-reply b { color: var(--red); }
+.msg-wait { margin-top: 4px; color: #999; font-size: 0.95rem; }
+
+/* Notification */
+.notif { padding: 12px 0; border-bottom: 1px solid #eee; font-size: 1.05rem; }
+.notif-link { color: var(--red); text-decoration: underline; }
+
+/* Help Center */
+.faq { padding: 10px 0; border-bottom: 1px solid #eee; }
+.faq summary { cursor: pointer; font-size: 1.1rem; }
+.faq p { margin-top: 8px; color: var(--gray); font-size: 1.02rem; line-height: 1.45; }
+.help-contact { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; margin-top: 18px; padding: 14px 16px; border-radius: 16px; background: #f6f6f6; }
+.help-contact .mini-btn { margin-top: 8px; }

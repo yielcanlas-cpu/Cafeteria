@@ -6,13 +6,19 @@
   <title>Profile · MCC Canteen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Itim&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="common.css">
   <link rel="stylesheet" href="style.css">
 </head>
-<!-- The class "profile-page" lets style.css style this page differently -->
-<body class="profile-page">
+<!-- "profile-page" lets style.css style this page differently.
+     "checking" hides the page until we know who is logged in. -->
+<body class="profile-page checking">
 
   <div class="profile">
-    <a href="index.html" class="back-link"><img class="inline-icon" src="img/icons/arrow-left.svg" alt=""> Back to home</a>
+    <div class="profile-top">
+      <!-- profile.js sets where this goes (student -> dashboard, staff -> staff page) -->
+      <a href="index.html" class="back-link" id="backLink"><img class="inline-icon" src="img/icons/arrow-left.svg" alt=""> Back to home</a>
+      <button class="logout-link" id="logoutBtn" type="button">Log out</button>
+    </div>
 
     <!-- Big red banner at the top -->
     <div class="profile-banner"></div>
@@ -20,47 +26,51 @@
     <!-- Avatar (left) + name and bio (right) -->
     <div class="profile-head">
       <div class="avatar-wrap">
-        <!-- To use your photo: change src="img/avatar.svg" to src="img/me.jpg" -->
-        <div class="avatar-big"><img src="img/avatar.svg" alt="Kim Minjeong"></div>
+        <!-- To use a photo: change src="img/avatar.svg" to src="img/me.jpg" -->
+        <div class="avatar-big"><img src="img/avatar.svg" alt="Profile photo"></div>
         <!-- The green "online" dot -->
         <span class="online-dot"></span>
       </div>
 
       <div class="profile-text">
-        <h1 class="profile-name">Kim Minjeong</h1>
+        <h1 class="profile-name" id="profileName">&nbsp;</h1>
         <!--
           contenteditable="true" lets you type right inside this box.
           data-placeholder is shown (by CSS) while the box is empty.
+          profile.js saves it to the database when you click away.
         -->
-        <div class="bio" id="bio" contenteditable="true" data-placeholder="Bio"></div>
+        <div class="bio" id="bio" contenteditable="true" data-placeholder="Bio" role="textbox" aria-label="Bio"></div>
       </div>
     </div>
 
     <!-- Info rows -->
     <div class="info">
       <div class="info-row">
-        <span class="info-item"><img class="inline-icon" src="img/icons/calendar.svg" alt=""> Joined in November 2026</span>
+        <span class="info-item"><img class="inline-icon" src="img/icons/calendar.svg" alt=""> <span id="joined">Joined</span></span>
         <span class="info-item">
-          <img class="inline-icon" src="img/icons/pin.svg" alt=""> <span id="location">Mabalacat City, Pampanga</span>
-          <!-- data-target tells script.js WHICH text this button edits -->
+          <img class="inline-icon" src="img/icons/pin.svg" alt="">
+          <span id="location" data-placeholder="Add your location"></span>
+          <!-- data-target tells profile.js WHICH text this button edits -->
           <button class="edit-btn" data-target="location">Edit</button>
         </span>
       </div>
 
-      <p class="info-item">
+      <!-- The email is your login, so it cannot be edited here.
+           (Hidden by profile.js when you signed up with a mobile number instead.) -->
+      <p class="info-item" id="emailRow">
         <span class="info-label">Email Address:</span>
-        <span id="email">minjeongmasarap@gmail.com</span>
-        <button class="edit-btn" data-target="email">Edit</button>
+        <span id="email"></span>
       </p>
 
       <p class="info-item">
         <span class="info-label">Number:</span>
-        <span id="number">09112233445</span>
+        <span id="number" data-placeholder="Add your phone number"></span>
         <button class="edit-btn" data-target="number">Edit</button>
       </p>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="common.js"></script>
+  <script src="profile.js"></script>
 </body>
 </html>

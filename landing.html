@@ -11,6 +11,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="landing.css">
+  <link rel="stylesheet" href="pages.css">
+
+  <!-- Lets phones "install" the website as an app (see the Get app window below) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#bf1e2e">
+  <link rel="apple-touch-icon" href="img/icon-192.png">
 </head>
 <body>
 
@@ -33,11 +39,12 @@
 
       <!-- Top links. "active" = the lighter pill behind "Offers" -->
       <nav class="nav">
-        <a href="#" class="nav-link active">Offers</a>
-        <a href="#" class="nav-link">Updates</a>
+        <a href="offers.html" class="nav-link">Offers</a>
+        <a href="#updates" class="nav-link">Updates</a>
         <a href="#overview" class="nav-link">About</a>
-        <a href="#" class="nav-link">Contact us</a>
-        <a href="order.html" class="nav-link">Login/Sign up</a>
+        <a href="contact.html" class="nav-link">Contact us</a>
+        <!-- common.js turns this into "Home" once you are logged in -->
+        <a href="login.html" class="nav-link" data-auth-link="home">Login/Sign up</a>
       </nav>
 
       <!-- Round white button: landing.js opens/closes the dropdown with it -->
@@ -47,16 +54,16 @@
 
       <!-- Dropdown menu (hidden until the round button is pressed) -->
       <div class="dropdown" id="dropdown" hidden>
-        <a href="index.html">Dashboard</a>
-        <a href="order.html">Order Now</a>
+        <a href="menu.html">Menu</a>
+        <a href="index.html">Order Now</a>
         <a href="profile.html">My Profile</a>
-        <a href="admin.php">Staff</a>
+        <a href="admin.html">Staff</a>
         <!-- These 5 only show on phones, where the top links are hidden -->
-        <a href="#" class="phone-only">Offers</a>
-        <a href="#" class="phone-only">Updates</a>
+        <a href="offers.html" class="phone-only">Offers</a>
+        <a href="#updates" class="phone-only">Updates</a>
         <a href="#overview" class="phone-only">About</a>
-        <a href="#" class="phone-only">Contact us</a>
-        <a href="order.html" class="phone-only">Login/Sign up</a>
+        <a href="contact.html" class="phone-only">Contact us</a>
+        <a href="login.html" class="phone-only" data-auth-link="home">Login/Sign up</a>
       </div>
     </header>
 
@@ -70,11 +77,11 @@
 
       <!-- ============ 4 QUICK BUTTONS ============ -->
       <section class="quick">
-        <a href="index.html" class="quick-card">
+        <a href="menu.html" class="quick-card">
           <img src="img/icons/landing-menu.svg" alt="">
           <span>Menu</span>
         </a>
-        <a href="order.html" class="quick-card">
+        <a href="index.html" class="quick-card">
           <img src="img/icons/landing-order.svg" alt="">
           <span>Order Now</span>
         </a>
@@ -82,8 +89,8 @@
           <img src="img/icons/landing-about.svg" alt="">
           <span>About Us</span>
         </a>
-        <!-- data-toast = the message landing.js shows (the app doesn't exist yet) -->
-        <a href="#" class="quick-card" data-toast="The MCC Canteen app is coming soon!">
+        <!-- data-open = the id of the window landing.js opens (how to install the app) -->
+        <a href="#" class="quick-card" data-open="appModal">
           <img src="img/icons/landing-app.svg" alt="">
           <span>Get app</span>
         </a>
@@ -103,13 +110,73 @@
         </p>
       </section>
 
+      <!-- ============ UPDATES ============ -->
+      <section class="updates" id="updates">
+        <h2>Updates</h2>
+        <div class="update-list">
+          <article class="update-card">
+            <img src="img/open-banner.jpg" alt="Take-out bags from MCC Canteen">
+            <div class="update-body">
+              <span class="update-tag">New</span>
+              <h3>We are now open!</h3>
+              <p>
+                Greetings MCCians, we're finally open! MCC Canteen is now officially available to
+                serve students and staff with a more convenient and hassle-free cafeteria
+                experience. Explore our website, check out our menu, and enjoy a more convenient
+                way to satisfy your cravings!
+              </p>
+              <a href="menu.html" class="red-btn">See the menu</a>
+            </div>
+          </article>
+
+          <article class="update-card">
+            <img src="img/deals-banner.jpg" alt="Special offers">
+            <div class="update-body">
+              <span class="update-tag">Offer</span>
+              <h3>10% off for new customers</h3>
+              <p>
+                New to MCC Canteen? Enjoy 10% off your first purchase. Create an account,
+                confirm that you are a first-time customer on the Offers page, and the discount
+                is applied to your first order.
+              </p>
+              <a href="offers.html#first-time" class="red-btn">Get the offer</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
     </main>
+  </div>
+
+  <!-- ============ GET APP WINDOW ============ -->
+  <div class="modal" id="appModal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="appTitle">
+      <div class="modal-head">
+        <h2 id="appTitle">Get the app</h2>
+        <button class="modal-close" type="button" data-close aria-label="Close">&times;</button>
+      </div>
+      <p>Put MCC Canteen on your phone's home screen. It opens like an app, with no download from a store.</p>
+      <h3>Android (Chrome)</h3>
+      <ol class="how-to">
+        <li>Open this website in <b>Chrome</b>.</li>
+        <li>Tap the <b>&#8942;</b> menu at the top right.</li>
+        <li>Tap <b>Install app</b> (or <b>Add to Home screen</b>).</li>
+      </ol>
+      <h3>iPhone (Safari)</h3>
+      <ol class="how-to">
+        <li>Open this website in <b>Safari</b>.</li>
+        <li>Tap the <b>Share</b> button.</li>
+        <li>Tap <b>Add to Home Screen</b>.</li>
+      </ol>
+    </div>
   </div>
 
   <!-- Small message that pops up at the bottom (used by "Get app") -->
   <div class="toast" id="toast" hidden></div>
 
   <!-- Load the JavaScript LAST so the elements above already exist -->
+  <script src="common.js"></script>
   <script src="landing.js"></script>
+  <script>setupPublicHeader();</script>
 </body>
 </html>

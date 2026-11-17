@@ -7,10 +7,16 @@
 --                           (you do NOT need to create or select a database first)
 --    Command line:          mysql -u root < canteen.sql
 --
---  WARNING: this REBUILDS the tables users, orders and order_items.
+--  WARNING: this REBUILDS the tables users, orders, order_items and messages.
 --  If they already exist in the "canteen" database they are deleted and
 --  recreated, so any orders/accounts already stored in them are lost.
 --  (Export them first with phpMyAdmin > Export if you want to keep them.)
+--
+--  IMPORTING IS OPTIONAL: the website creates and upgrades these tables by
+--  itself the first time it is used. Import only if you want to start fresh.
+--
+--  The staff (admin) account is created automatically by the website the first
+--  time it is used. Its email and password are set in config.php.
 -- =====================================================================
 
 -- 1. Create the database (if it does not exist yet) and use it
@@ -26,18 +32,24 @@ SET NAMES utf8mb4;
 -- 2. Remove old versions of the tables so they are rebuilt with the right columns.
 --    (Foreign key checks are switched off so the order of dropping does not matter.)
 SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `messages`;
 DROP TABLE IF EXISTS `order_items`;
 DROP TABLE IF EXISTS `orders`;
 DROP TABLE IF EXISTS `users`;
 SET FOREIGN_KEY_CHECKS = 1;
 
 
--- 3. Table: users  (student accounts)
+-- 3. Table: users  (student accounts + the staff account)
 CREATE TABLE `users` (
   `id`            INT          NOT NULL AUTO_INCREMENT,
   `name`          VARCHAR(60)  NOT NULL,
   `email`         VARCHAR(120) NOT NULL,
   `password_hash` VARCHAR(255) NOT NULL,
+  `role`          ENUM('student','admin') NOT NULL DEFAULT 'student',
+  `phone`         VARCHAR(20)  NOT NULL DEFAULT '',
+  `location`      VARCHAR(80)  NOT NULL DEFAULT '',
+  `bio`           VARCHAR(200) NOT NULL DEFAULT '',
+  `promo_claimed_at` TIMESTAMP NULL DEFAULT NULL,   -- when the student passed the first-time-customer check
   `created_at`    TIMESTAMP    NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
@@ -52,7 +64,8 @@ CREATE TABLE `orders` (
   `room`       VARCHAR(10)   NOT NULL,
   `note`       VARCHAR(120)  NOT NULL DEFAULT '',
   `subtotal`   DECIMAL(10,2) NOT NULL,
-  `status`     ENUM('Preparing','Delivered') NOT NULL DEFAULT 'Preparing',
+  `discount`   DECIMAL(10,2) NOT NULL DEFAULT 0,      -- first-order promo (subtotal - discount = total)
+  `status`     ENUM('Preparing','Ready','Delivered','Cancelled') NOT NULL DEFAULT 'Preparing',
   `created_at` TIMESTAMP     NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -77,7 +90,25 @@ CREATE TABLE `order_items` (
   DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
--- 6. Existing accounts
+-- 5b. Table: messages  (contact page + the students' Messages window; staff reply here)
+CREATE TABLE `messages` (
+  `id`         INT           NOT NULL AUTO_INCREMENT,
+  `user_id`    INT           NULL,
+  `name`       VARCHAR(60)   NOT NULL,
+  `email`      VARCHAR(120)  NOT NULL,
+  `subject`    VARCHAR(100)  NOT NULL DEFAULT '',
+  `message`    VARCHAR(1000) NOT NULL,
+  `reply`      VARCHAR(1000) NULL,
+  `replied_at` TIMESTAMP     NULL DEFAULT NULL,
+  `created_at` TIMESTAMP     NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- 6. Existing accounts (students)
 --    Delete this whole block if you want an empty database.
 INSERT INTO `users` (`id`, `name`, `email`, `password_hash`, `created_at`) VALUES
 (1, 'asdads', 'jath@gmail.com', '$2y$10$XdDzkPSxj9nvtFQj8dKpuO4AVu0SJtxIr70qvf5gQN6J7ylnhiaqq', '2026-11-01 08:00:31'),

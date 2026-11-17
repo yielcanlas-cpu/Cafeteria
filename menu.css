@@ -1,0 +1,115 @@
+/* =========================================================
+   menu.css  -  the menu page (menu.html)
+   The red header comes from landing.css. This file styles
+   the food rows underneath it.
+   ========================================================= */
+
+.menu-page {
+  position: relative;          /* lets the "Menu" title sit in the top-left corner */
+  padding: 24px 40px 60px;
+}
+
+/* "Menu" in the top-left corner */
+.menu-title {
+  position: absolute;
+  top: 28px;
+  left: 46px;
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+/* ----- one category: a title, then a row of foods ----- */
+.category { margin-bottom: 30px; }
+
+.category-title {
+  margin-bottom: 30px;         /* space between the title and the photos */
+  text-align: center;
+  color: var(--red);           /* --red comes from landing.css */
+  font-size: 1.25rem;
+}
+
+.carousel-row {
+  display: flex;               /* arrow | foods | arrow, in a row */
+  align-items: center;
+  gap: 6px;
+}
+
+/* The < and > buttons */
+.arrow {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  background: none;
+  display: grid;
+  place-items: center;
+}
+.arrow img { width: 22px; height: 22px; }
+.arrow:disabled { opacity: 0.3; cursor: default; }    /* nothing more to scroll that way */
+
+/* ----- the foods ----- */
+.track {
+  --want: 5;                   /* how many foods this row would like to show at once... */
+  --max: 5;                    /* ...but never more than the screen can fit (changed below) */
+  flex: 1;
+  min-width: 0;                /* lets the row shrink instead of pushing the page wider */
+  display: flex;
+  overflow-x: auto;            /* the row scrolls sideways when there are more foods than fit */
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;       /* hide the scrollbar (Firefox) */
+  scroll-behavior: smooth;
+  /* the soft shadows around the photos need room, or they get cropped */
+  padding: 44px 0 50px;
+  margin: -44px 0 -50px;
+}
+.track::-webkit-scrollbar { display: none; }          /* hide the scrollbar (Chrome, Safari) */
+.track.cols-4 { --want: 4; }                          /* the Drinks row has 4 foods */
+
+.dish {
+  flex: 0 0 calc(100% / min(var(--want), var(--max)));   /* equal width for each food */
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scroll-snap-align: start;
+}
+.dish img {
+  width: min(138px, 82%);
+  aspect-ratio: 138 / 118;
+  object-fit: cover;           /* fills the frame, crops extra, never stretches the photo */
+  border-radius: 16px;
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s;
+}
+.dish:hover img { transform: scale(1.05); }
+
+.dish figcaption {
+  margin-top: 16px;
+  color: var(--red);
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+/* =========================================================
+   RESPONSIVE  -  fewer foods fit on smaller screens, so the
+   arrows start to work
+   ========================================================= */
+@media (max-width: 1000px) {
+  .track { --max: 4; }
+}
+@media (max-width: 800px) {
+  .menu-page { padding: 18px 12px 40px; }
+  .dish img { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22); }   /* smaller shadow so the row does not crop it */
+  .menu-title { position: static; margin-bottom: 8px; padding-left: 8px; }
+  .track { --max: 3; }
+  .nav { display: flex; }                  /* keep the 3 links visible (landing.css hides them on phones) */
+  .nav-link { padding: 8px 12px; }
+}
+@media (max-width: 520px) {
+  .track { --max: 2; }
+  .brand-name { display: none; }
+  .nav-link { padding: 8px 10px; font-size: 0.85rem; }
+}

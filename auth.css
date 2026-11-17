@@ -1,0 +1,210 @@
+/* =========================================================
+   auth.css  -  the login / sign up page (login.html)
+   ========================================================= */
+:root {
+  --red: #bf1e2e;
+  --card: #4a4745;               /* the dark gray card */
+  /* The dark red tint over the campus photo (img/login-bg.jpg is the plain photo).
+     To change how strong the red is, change the two 0.xx numbers. */
+  --tint: linear-gradient(rgba(150, 20, 45, 0.55), rgba(70, 5, 25, 0.65));
+  --font-title: "Playfair Display", Georgia, serif;
+  --font-body: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;        /* red bar on top, the photo fills the rest */
+  font-family: var(--font-body);
+  color: #fff;
+}
+button { font-family: inherit; cursor: pointer; }
+
+
+/* =========================================================
+   1. RED BAR
+   ========================================================= */
+.topbar {
+  display: flex;
+  align-items: center;
+  height: 62px;
+  padding: 0 14px;
+  background: var(--red);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+.brand-logo { width: 46px; height: 46px; }
+
+
+/* =========================================================
+   2. BACKGROUND PHOTO + RED TINT
+   ========================================================= */
+.stage {
+  position: relative;            /* the photo and tint are placed inside this box */
+  flex: 1;
+  display: grid;
+  place-items: center;           /* centers the card */
+  padding: 100px 12px 8px;       /* more room on top = the card sits a little below the middle */
+  overflow: hidden;
+}
+.stage-bg {
+  position: absolute;
+  inset: 0;                      /* top/right/bottom/left = 0: covers the whole area */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;             /* fills the area, crops extra, never stretches */
+  object-position: center 58%;   /* which part of the photo stays visible when it must be cropped */
+  z-index: 0;                    /* bottom layer: the photo */
+}
+.stage::before {                 /* the dark red tint on top of the photo */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--tint);
+  z-index: 1;                    /* middle layer: the red tint */
+}
+
+
+/* =========================================================
+   3. THE CARD
+   ========================================================= */
+.card {
+  position: relative;
+  z-index: 2;                    /* top layer: the card */
+  display: flex;
+  flex-direction: column;        /* logo, title, tabs, then the form fills the rest */
+  width: 357px;
+  max-width: 100%;
+  min-height: 430px;             /* both tabs have the same height */
+  padding: 13px 14px 14px;
+  border: 2px solid #5b5755;
+  border-radius: 34px;
+  background: var(--card);
+  text-align: center;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+}
+.card-logo { width: 42px; height: 42px; align-self: center; }
+.card h1 {
+  margin: 2px 0 12px;
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* ----- the two pill buttons: Log in / Sign up ----- */
+.tabs { display: flex; gap: 15px; margin-bottom: 12px; }
+.tab {
+  flex: 1;
+  height: 52px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;              /* not selected: white */
+  color: #777;
+  font-size: 1.05rem;
+  font-weight: 400;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.35);
+}
+.tab.active { background: var(--red); color: #fff; }      /* selected: red */
+
+/* ----- the fields ----- */
+form {
+  flex: 1;                       /* the form takes the rest of the card's height */
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.form-bottom { margin-top: auto; }   /* pushes the line + button to the bottom of the card */
+.field { margin-bottom: 12px; }
+.field label {
+  display: block;
+  margin: 0 0 3px 9px;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+.input-wrap { position: relative; }
+.input-wrap input {
+  display: block;
+  width: 100%;
+  height: 37px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: #222;
+  font: inherit;
+  font-size: 0.92rem;
+  box-shadow: 0 5px 9px rgba(0, 0, 0, 0.35);
+}
+.input-wrap input::placeholder { color: #8b8b8b; font-weight: 500; }
+.input-wrap input:focus { outline: 3px solid rgba(255, 255, 255, 0.55); }
+.input-wrap input[type="password"],
+.input-wrap input.shown { padding-right: 46px; }          /* room for the eye */
+
+/* the eye that shows / hides the password */
+.eye {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);   /* centers it vertically */
+  padding: 4px;
+  border: 0;
+  background: none;
+  display: grid;
+  place-items: center;
+}
+.eye img { width: 20px; height: 20px; }
+
+.forgot {
+  display: inline-block;
+  margin: 6px 0 0 8px;
+  color: #fff;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+.forgot:hover { text-decoration: underline; }
+
+hr {
+  margin: 12px 12px 6px;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.submit {
+  display: block;
+  width: 152px;
+  height: 36px;
+  margin: 0 auto;
+  border: 0;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+}
+.submit:hover:not(:disabled) { background: #a3182a; }
+.submit:disabled { opacity: 0.6; cursor: wait; }
+
+.error:empty { display: none; }       /* no gap while there is no message */
+.error {
+  margin: 8px 8px 0;
+  color: #ffb3b3;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+@media (max-width: 420px) {
+  .brand { font-size: 1.25rem; }
+  .tabs { gap: 10px; }
+}

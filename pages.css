@@ -1,0 +1,184 @@
+/* =========================================================
+   pages.css  -  styles for the public pages that sit under the red bar:
+   offers.html, contact.html, and the new parts of landing.html / menu.html.
+   Needs landing.css loaded first (it has the header and the colours).
+   ========================================================= */
+
+/* ----- BACK BUTTON (replaces "Login/Sign up" when you are logged in) ----- */
+.back-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.3); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); }
+.back-btn img { width: 18px; height: 18px; filter: brightness(0) invert(1); }   /* the arrow icon is black: make it white */
+
+/* ----- shared page title ("Offers") ----- */
+.page-main { padding: 24px 40px 70px; }
+.page-title { margin-bottom: 18px; font-size: 1.5rem; font-weight: bold; }
+
+/* =========================================================
+   OFFERS
+   ========================================================= */
+.offers-lead {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #000;
+  text-align: center;
+  font-size: 1.15rem;
+}
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 250px));
+  justify-content: space-between;
+  gap: 28px;
+  max-width: 900px;
+  margin: 30px auto 0;
+}
+.offer-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.offer-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5.2;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+  transition: transform 0.2s;
+}
+.offer-card:hover img { transform: translateY(-5px); }
+.offer-card span { margin-top: 14px; font-weight: bold; font-size: 1.05rem; }
+
+/* the page for one offer */
+.offer-detail { display: flex; gap: 40px; align-items: stretch; max-width: 960px; margin: 10px auto 0; }
+.offer-detail > img {
+  flex: 0 0 min(250px, 38%);
+  width: min(250px, 38%);
+  align-self: flex-start;
+  aspect-ratio: 4 / 5.2;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+}
+.offer-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.offer-info h2 { padding: 6px 4px 12px; border-bottom: 1px solid #000; font-size: 1.7rem; }
+.offer-text { margin-top: 14px; color: #7a7a7a; font-weight: bold; font-size: 1.05rem; line-height: 1.45; }
+.offer-extra { margin-top: 12px; color: #444; line-height: 1.5; }
+.offer-action { margin-top: auto; padding-top: 28px; }
+.offer-action h3 { margin-bottom: 8px; font-size: 1rem; }
+.offer-note { margin-top: 12px; color: #888; font-style: italic; font-size: 0.95rem; }
+.offer-back { display: inline-block; margin-bottom: 14px; color: var(--red); font-weight: bold; }
+.offer-back:hover { text-decoration: underline; }
+
+.yesno { display: flex; gap: 10px; margin-bottom: 14px; }
+.yesno label { cursor: pointer; }
+.yesno input { position: absolute; opacity: 0; pointer-events: none; }
+.yesno span {
+  display: inline-block;
+  min-width: 84px;
+  padding: 8px 20px;
+  border: 2px solid var(--red);
+  border-radius: 999px;
+  text-align: center;
+  color: var(--red);
+  font-weight: bold;
+}
+.yesno input:checked + span { background: var(--red); color: #fff; }
+.yesno input:focus-visible + span { outline: 3px solid #f3b3ba; outline-offset: 2px; }
+
+.red-btn {
+  display: inline-block;
+  min-width: 120px;
+  padding: 10px 30px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+.red-btn:hover:not(:disabled) { background: #a3182a; }
+.red-btn:disabled { opacity: 0.6; cursor: wait; }
+
+.status-box { padding: 14px 18px; border-radius: 14px; font-weight: bold; line-height: 1.4; }
+.status-box.good { background: #d6f5dd; color: #11672b; }
+.status-box.bad  { background: #eee; color: #555; }
+.status-box a { text-decoration: underline; }
+
+/* =========================================================
+   CONTACT  ("Stay Connected")
+   ========================================================= */
+.stay { max-width: 900px; margin: 0 auto; text-align: center; }
+.stay h1 { font-size: 1.6rem; }
+.stay > p { margin-top: 6px; font-size: 0.95rem; }
+.contact-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 40px;
+  border: 1px solid #333;
+  border-radius: 30px;
+  overflow: hidden;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.contact-form { padding: 28px 30px 30px; background: var(--red); color: #fff; }
+.contact-form label { display: block; margin: 10px 0 4px 6px; font-weight: bold; font-size: 0.9rem; }
+.contact-form input, .contact-form textarea {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 22px;
+  background: #fff;
+  color: #222;
+  font: inherit;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.contact-form textarea { min-height: 110px; resize: vertical; }
+.contact-form input:focus, .contact-form textarea:focus { outline: 3px solid rgba(255, 255, 255, 0.6); }
+.contact-form .send {
+  display: block;
+  margin: 20px auto 0;
+  padding: 9px 44px;
+  border: 0;
+  border-radius: 999px;
+  background: #8c8785;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.35);
+}
+.contact-form .send:hover:not(:disabled) { background: #6f6a68; }
+.contact-form .send:disabled { opacity: 0.6; cursor: wait; }
+.form-msg { margin-top: 12px; text-align: center; font-weight: bold; min-height: 1.2em; }
+.contact-info { padding: 30px; background: #8c8785; color: #fff; }
+.contact-info h2 { margin-bottom: 8px; text-align: center; font-size: 1.15rem; }
+.contact-info > p { margin: 0 auto 28px; max-width: 280px; text-align: center; font-size: 0.9rem; }
+.info-row { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; font-weight: bold; font-size: 0.95rem; word-break: break-word; }
+.info-row i { flex: 0 0 34px; height: 34px; border-radius: 50%; background: #fff; display: grid; place-items: center; }
+.info-row svg { width: 18px; height: 18px; fill: #8c8785; }
+
+/* =========================================================
+   LANDING: Updates section + install window
+   ========================================================= */
+.updates { margin-top: 40px; padding: 14px 4px 0; border-top: 1px solid #999; scroll-margin-top: 80px; }
+.updates h2 { font-size: 1.2rem; margin-bottom: 14px; }
+.update-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+.update-card { display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22); }
+.update-card img { width: 100%; height: 190px; object-fit: cover; display: block; }
+.update-body { padding: 16px 20px 20px; }
+.update-tag { display: inline-block; margin-bottom: 8px; padding: 2px 12px; border-radius: 999px; background: #fbe9eb; color: var(--red); font-size: 0.8rem; font-weight: bold; }
+.update-body h3 { margin-bottom: 8px; font-size: 1.3rem; }
+.update-body p { color: #444; line-height: 1.5; font-size: 0.98rem; }
+.update-body .red-btn { margin-top: 14px; }
+
+.modal { position: fixed; inset: 0; display: grid; place-items: center; padding: 16px; background: rgba(0, 0, 0, 0.5); z-index: 60; }
+.modal-card { width: 100%; max-width: 480px; max-height: 84vh; overflow-y: auto; padding: 22px 24px; background: #fff; border-radius: 22px; }
+.modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.modal-head h2 { font-family: "Playfair Display", Georgia, serif; font-size: 1.6rem; }
+.modal-close { background: none; border: 0; padding: 6px; font-size: 1.4rem; line-height: 1; color: #555; }
+.how-to { margin: 0 0 14px; padding-left: 20px; line-height: 1.6; }
+.how-to b { color: var(--red); }
+
+@media (max-width: 800px) {
+  .page-main { padding: 18px 14px 50px; }
+  .offer-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .offer-card span { font-size: 0.85rem; }
+  .offer-detail { flex-direction: column; gap: 20px; }
+  .offer-detail > img { width: 60%; flex-basis: auto; align-self: center; }
+  .contact-card { grid-template-columns: 1fr; }
+  .update-list { grid-template-columns: 1fr; }
+}
