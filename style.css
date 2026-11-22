@@ -4,8 +4,8 @@
 
 /* Variables: change a color here and it updates everywhere */
 :root {
-  --red: #e02d2f;        /* header, buttons */
-  --red-soft: #e44d4d;   /* profile banner, edit buttons */
+  --red: #bf1e2e;    /* header, buttons */
+  --red: #bf1e2e;   /* profile banner, edit buttons */
   --gray: #6b6b6b;       /* sidebar text */
   --header-h: 80px;      /* height of the red header */
   --sidebar-w: 240px;    /* width of the sidebar */
@@ -64,27 +64,28 @@ button { font-family: inherit; cursor: pointer; }
   color: #fff;
 }
 
+/* Search bar matches the design used on menu.html */
 .search {
-  flex: 1;                  /* takes up the leftover space */
-  min-width: 0;             /* lets it shrink on small screens */
-  max-width: 420px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
-  background: #fff;
-  border: 3px solid #000;
-  border-radius: 30px;
-  padding: 4px 16px;
+
+  margin-left: 1000px;
+  margin-top: 0;
 }
-.search input {
-  flex: 1;
-  min-width: 0;
-  border: none;
-  outline: none;            /* removes the default blue outline */
-  font-family: inherit;
-  font-size: 1.3rem;
+
+.search .menu-search {
+  width: 260px;
+  max-width: 100%;
+  padding: 5px 10px 5px 32px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff url("img/icons/search.svg") no-repeat 9px center / 14px;
+  font-size: 0.9rem;
 }
-.search-icon { width: 26px; height: 26px; }
+
+.search .menu-search:focus {
+  outline: 2px solid #fff;
+}
 
 .user-menu { position: relative; }
 .user-chip {
@@ -439,7 +440,12 @@ button { font-family: inherit; cursor: pointer; }
   color: #999;
   font-size: 1.1rem;
 }
-
+ .about-text {
+  padding: 0 24px 0 4px;
+  background: var(--red);
+  color: #fff;
+  font-family: "Google Sans", sans-serif;;
+ }
 /* Totals and buttons */
 .cart-summary {
   display: flex;
@@ -599,137 +605,6 @@ button { font-family: inherit; cursor: pointer; }
 
 
 /* =========================================================
-   6. PROFILE PAGE
-   ========================================================= */
-.profile-page { background: #fff; }
-
-.profile {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 24px 20px 60px;
-}
-
-.profile-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
-.back-link { display: inline-block; font-size: 1.2rem; }
-.logout-link {
-  padding: 6px 18px;
-  border: 2px solid var(--red);
-  border-radius: 20px;
-  background: #fff;
-  color: var(--red);
-  font-family: inherit;
-  font-size: 1.1rem;
-  cursor: pointer;
-}
-.logout-link:hover { background: var(--red); color: #fff; }
-
-/* Gray hint text inside an empty editable field */
-.info-item [data-placeholder]:empty::before { content: attr(data-placeholder); color: #999; }
-.back-link:hover { text-decoration: underline; }
-
-.profile-banner {
-  height: 220px;
-  background: var(--red-soft);
-  border: 6px solid #555;
-  border-radius: 50px;
-}
-
-/* Avatar on the left, name + bio on the right */
-.profile-head {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  padding-left: 16px;
-  margin-top: -120px;        /* negative margin pulls it UP over the banner */
-}
-
-.avatar-wrap {
-  position: relative;        /* so the green dot can sit on its corner */
-  flex-shrink: 0;            /* never let the avatar get squished */
-}
-.avatar-big {
-  width: 220px; height: 220px;
-  border-radius: 50%;
-  border: 6px solid #000;
-  background: #f0d9cf;
-  display: grid;
-  place-items: center;
-  font-size: 6rem;
-  overflow: hidden;          /* crops a real <img> into the circle */
-}
-.avatar-big img { width: 100%; height: 100%; object-fit: cover; }
-
-.online-dot {
-  position: absolute;
-  right: 14px; bottom: 14px;
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  background: #00c060;
-}
-
-.profile-text {
-  flex: 1;
-  margin-top: 130px;         /* pushes the name below the banner */
-}
-.profile-name {
-  font-family: var(--font-title);
-  font-size: 3rem;
-  line-height: 1.1;
-}
-
-.bio {
-  min-height: 90px;
-  margin-top: 6px;
-  padding: 16px 22px;
-  border: 5px solid #000;
-  border-radius: 40px;
-  font-size: 1.6rem;
-  outline: none;
-}
-/* Show the word "Bio" in the box while it's empty */
-.bio:empty::before {
-  content: attr(data-placeholder);
-  color: #000;
-}
-.bio:focus { border-color: var(--red); }
-
-/* Info rows under the avatar */
-.info { margin-top: 24px; }
-.info-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px 60px;
-  margin-bottom: 14px;
-}
-.info-item {
-  font-size: 1.2rem;
-  margin-bottom: 14px;
-}
-.info-label { color: #d00000; }
-
-.edit-btn {
-  background: var(--red-soft);
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  padding: 2px 14px;
-  font-size: 0.9rem;
-  margin-left: 6px;
-}
-
-/* Highlight a field while you're editing it */
-[contenteditable="true"].editing {
-  outline: 2px dashed var(--red);
-  padding: 0 4px;
-}
-
-
-/* =========================================================
    7. RESPONSIVE (phones and small screens)
    Anything inside this block only applies when the screen
    is 800px wide or less.
@@ -758,12 +633,6 @@ button { font-family: inherit; cursor: pointer; }
   .cart-open .cart { transform: translateX(0); box-shadow: -6px 0 16px rgba(0, 0, 0, 0.25); }
   .cart-close { display: block; }
   .cart-fab { display: grid; }
-
-  /* Profile: stack avatar above the name */
-  .profile-head { flex-direction: column; align-items: flex-start; margin-top: -90px; }
-  .avatar-big { width: 170px; height: 170px; font-size: 4.5rem; }
-  .profile-text { margin-top: 0; width: 100%; }
-  .profile-name { font-size: 2.2rem; }
 }
 
 
@@ -874,3 +743,5 @@ button { font-family: inherit; cursor: pointer; }
 .faq p { margin-top: 8px; color: var(--gray); font-size: 1.02rem; line-height: 1.45; }
 .help-contact { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; margin-top: 18px; padding: 14px 16px; border-radius: 16px; background: #f6f6f6; }
 .help-contact .mini-btn { margin-top: 8px; }
+
+

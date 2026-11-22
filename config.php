@@ -11,14 +11,14 @@ const DB_PASS = '';
 // ---------------------------------------------------------------
 // The staff account that holds and manages ALL orders.
 // It is created automatically the first time the site is used.
-// Log in with it on login.html and you land on the staff page (admin.html).
+// Log in with it on login.html and you land on the staff page (staff.html).
 //
 // CHANGE THE PASSWORD BEFORE THE FIRST RUN. (It is only used when the
 // account is created. Changing it later here does not change an existing account.)
 // ---------------------------------------------------------------
 const ADMIN_NAME     = 'Canteen Admin';
 const ADMIN_EMAIL    = 'admin@mcc.local';
-const ADMIN_PASSWORD = 'canteen123';
+const ADMIN_PASSWORD = '123456';
 
 // ---------------------------------------------------------------
 // The "10% off for new customers" promo (see offers.html).

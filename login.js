@@ -3,7 +3,7 @@
 
    After a successful login each account goes to its own home:
      student  ->  index.html  (the main menu / dashboard)
-     staff    ->  admin.html  (all orders)
+     staff    ->  staff.html  (all orders)
    ========================================================= */
 
 const tabLogin = document.querySelector("#tabLogin");
@@ -20,10 +20,10 @@ const authError = document.querySelector("#authError");
    so nobody can use this page to send you to another website.
    --------------------------------------------------------- */
 function destinationFor(user) {
-  if (user.role === "admin") return "admin.html";
+  if (user.role === "admin") return "staff.html";
 
   const next = new URLSearchParams(location.search).get("next") || "";
-  const looksSafe = /^[A-Za-z0-9_-]+\.html(#[A-Za-z0-9_-]+)?$/.test(next) && !next.startsWith("login.html") && !next.startsWith("admin.html");
+  const looksSafe = /^[A-Za-z0-9_-]+\.html(#[A-Za-z0-9_-]+)?$/.test(next) && !next.startsWith("login.html") && !next.startsWith("staff.html");
   return looksSafe ? next : "index.html";
 }
 

@@ -1,115 +1,90 @@
 /* =========================================================
    menu.css  -  the menu page (menu.html)
-   The red header comes from landing.css. This file styles
-   the food rows underneath it.
+   The red header bar comes from landing.css. This file styles the
+   search box + Back to Home in it, and the tabs and food cards below.
    ========================================================= */
 
-.menu-page {
-  position: relative;          /* lets the "Menu" title sit in the top-left corner */
-  padding: 24px 40px 60px;
+:root {
+  --font-title: "Chewy", "Comic Sans MS", cursive;
+  --font-body: "Itim", "Comic Sans MS", cursive;
 }
 
-/* "Menu" in the top-left corner */
-.menu-title {
-  position: absolute;
-  top: 28px;
-  left: 46px;
-  font-size: 1.6rem;
-  font-weight: normal;
-}
 
-/* ----- one category: a title, then a row of foods ----- */
-.category { margin-bottom: 30px; }
+/* ----- header: search box + Back to Home ----- */
+.menu-tools { display: flex; align-items: center; gap: 28px; }
 
-.category-title {
-  margin-bottom: 30px;         /* space between the title and the photos */
-  text-align: center;
-  color: var(--red);           /* --red comes from landing.css */
-  font-size: 1.25rem;
+.menu-search {
+  width: 260px; max-width: 100%;
+  padding: 5px 10px 5px 32px;
+  border: 1px solid #ccc; border-radius: 4px;
+  background: #fff url("img/icons/search.svg") no-repeat 9px center / 14px;
+  font-size: 0.9rem;
 }
+.menu-search:focus { outline: 2px solid #fff; }
 
-.carousel-row {
-  display: flex;               /* arrow | foods | arrow, in a row */
-  align-items: center;
-  gap: 6px;
+.back-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+  color: #fff; font: bold 0.95rem var(--font-body); white-space: nowrap;
 }
+.back-pill img { width: 22px; filter: brightness(0) invert(1); }      /* white arrow */
+.back-pill:hover { background: rgba(255, 255, 255, 0.6); }
 
-/* The < and > buttons */
-.arrow {
-  flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  border: 0;
-  background: none;
-  display: grid;
-  place-items: center;
+
+/* ----- title ----- */
+.menu-page { padding: 44px 40px 70px; text-align: center; font-family: var(--font-body); }
+.menu-eyebrow { color: var(--red); font: 1.25rem var(--font-title); }
+.menu-heading { margin: 4px 0 26px; font: normal 2rem var(--font-title); }
+
+
+/* ----- category tabs ----- */
+.menu-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 34px; }
+.menu-tab {
+  padding: 8px 20px;
+  border: 0; border-radius: 22px;
+  background: none; color: #000; font: 1.1rem var(--font-title);
 }
-.arrow img { width: 22px; height: 22px; }
-.arrow:disabled { opacity: 0.3; cursor: default; }    /* nothing more to scroll that way */
+.menu-tab:hover { color: var(--red); }
+.menu-tab.active { background: var(--red); color: #fff; box-shadow: 0 6px 14px rgba(191, 30, 46, 0.35); }
+
 
 /* ----- the foods ----- */
-.track {
-  --want: 5;                   /* how many foods this row would like to show at once... */
-  --max: 5;                    /* ...but never more than the screen can fit (changed below) */
-  flex: 1;
-  min-width: 0;                /* lets the row shrink instead of pushing the page wider */
-  display: flex;
-  overflow-x: auto;            /* the row scrolls sideways when there are more foods than fit */
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;       /* hide the scrollbar (Firefox) */
-  scroll-behavior: smooth;
-  /* the soft shadows around the photos need room, or they get cropped */
-  padding: 44px 0 50px;
-  margin: -44px 0 -50px;
+.dish-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 34px 26px;
+  max-width: 1020px;
+  margin: 36px auto 0;
 }
-.track::-webkit-scrollbar { display: none; }          /* hide the scrollbar (Chrome, Safari) */
-.track.cols-4 { --want: 4; }                          /* the Drinks row has 4 foods */
-
-.dish {
-  flex: 0 0 calc(100% / min(var(--want), var(--max)));   /* equal width for each food */
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  scroll-snap-align: start;
-}
+.dish { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 0; }
 .dish img {
-  width: min(138px, 82%);
-  aspect-ratio: 138 / 118;
-  object-fit: cover;           /* fills the frame, crops extra, never stretches the photo */
-  border-radius: 16px;
-  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s;
+  width: 100%; max-width: 193px; aspect-ratio: 193 / 183;
+  border-radius: 14px; object-fit: cover;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
 }
-.dish:hover img { transform: scale(1.05); }
+.dish figcaption { color: var(--red); font: 1.15rem var(--font-title); }
+.order-btn {
+  padding: 8px 20px;
+  border-radius: 22px;
+  background: var(--red); color: #fff; font: 1rem var(--font-title);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+.order-btn:hover { background: #8e0000; }
 
-.dish figcaption {
-  margin-top: 16px;
-  color: var(--red);
-  font-size: 0.85rem;
-  font-weight: bold;
-  text-align: center;
-}
+.menu-empty { margin-top: 40px; color: #777; font-size: 1.2rem; }
 
 
-/* =========================================================
-   RESPONSIVE  -  fewer foods fit on smaller screens, so the
-   arrows start to work
-   ========================================================= */
-@media (max-width: 1000px) {
-  .track { --max: 4; }
-}
-@media (max-width: 800px) {
-  .menu-page { padding: 18px 12px 40px; }
-  .dish img { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22); }   /* smaller shadow so the row does not crop it */
-  .menu-title { position: static; margin-bottom: 8px; padding-left: 8px; }
-  .track { --max: 3; }
-  .nav { display: flex; }                  /* keep the 3 links visible (landing.css hides them on phones) */
-  .nav-link { padding: 8px 12px; }
-}
-@media (max-width: 520px) {
-  .track { --max: 2; }
-  .brand-name { display: none; }
-  .nav-link { padding: 8px 10px; font-size: 0.85rem; }
+/* ----- phones ----- */
+@media (max-width: 700px) {
+  .header { flex-wrap: wrap; height: auto; gap: 8px; padding: 4px 14px 10px 4px; }   /* landing.css fixes the height at 60px */
+  .menu-tools { flex: 1 1 100%; gap: 10px; }
+  .back-pill { padding: 6px 12px; font-size: 0.85rem; }
+  .menu-search { flex: 1; width: auto; min-width: 0; }
+  .menu-page { padding: 30px 16px 60px; }
+  .menu-heading { font-size: 1.6rem; }
+  .menu-tabs { gap: 6px; }
+  .dish-grid { grid-template-columns: repeat(2, 1fr); gap: 26px 14px; }
 }

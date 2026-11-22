@@ -203,25 +203,44 @@ try {
         // ----- profile -----
         case 'profile': {
             $user = require_login();
-            $st = db()->prepare('SELECT id, name, email, role, phone, location, bio, created_at FROM users WHERE id = ?');
+            $st = db()->prepare('SELECT id, name, email, role, phone, location, bio, birthdate, created_at FROM users WHERE id = ?');
             $st->execute([$user['id']]);
             $p = $st->fetch();
             $p['id'] = (int)$p['id'];
             out(['profile' => $p]);
         }
 
+        // Only the fields that are sent get changed (the profile page does not send the phone).
         case 'update_profile': {
             $user = require_login();
             $b = body();
-            $phone    = mb_substr(trim((string)($b['phone'] ?? '')), 0, 20);
-            $location = mb_substr(trim((string)($b['location'] ?? '')), 0, 80);
-            $bio      = mb_substr(trim((string)($b['bio'] ?? '')), 0, 200);
+            $st = db()->prepare('SELECT name, phone, location, bio, birthdate FROM users WHERE id = ?');
+            $st->execute([$user['id']]);
+            $cur = $st->fetch();
+
+            $pick = function (string $key, int $max) use ($b, $cur) {
+                return array_key_exists($key, $b) ? mb_substr(trim((string)$b[$key]), 0, $max) : (string)$cur[$key];
+            };
+            $name      = $pick('name', 50);
+            $phone     = $pick('phone', 20);
+            $location  = $pick('location', 80);
+            $bio       = $pick('bio', 200);
+            $birthdate = $pick('birthdate', 10);
+
+            if ($name === '') out(['error' => 'Name cannot be empty.'], 422);
             if ($phone !== '' && !preg_match('/^[0-9+\-\s()]{5,20}$/', $phone)) {
                 out(['error' => 'Enter a valid phone number.'], 422);
             }
-            db()->prepare('UPDATE users SET phone = ?, location = ?, bio = ? WHERE id = ?')
-                ->execute([$phone, $location, $bio, $user['id']]);
-            out(['ok' => true, 'phone' => $phone, 'location' => $location, 'bio' => $bio]);
+            if ($birthdate !== '') {
+                $d = DateTime::createFromFormat('Y-m-d', $birthdate);
+                if (!$d || $d->format('Y-m-d') !== $birthdate || $d > new DateTime('today')) {
+                    out(['error' => 'Enter a valid birthdate.'], 422);
+                }
+            }
+            db()->prepare('UPDATE users SET name = ?, phone = ?, location = ?, bio = ?, birthdate = NULLIF(?, \'\') WHERE id = ?')
+                ->execute([$name, $phone, $location, $bio, $birthdate, $user['id']]);
+            out(['ok' => true, 'name' => $name, 'phone' => $phone, 'location' => $location, 'bio' => $bio,
+                 'birthdate' => $birthdate === '' ? null : $birthdate]);
         }
 
         // ----- first-order promo -----

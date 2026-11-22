@@ -9,6 +9,9 @@
   <!-- Playfair Display = the fancy serif font used for the banner text -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="landing.css">
   <link rel="stylesheet" href="pages.css">
@@ -16,7 +19,7 @@
   <!-- Lets phones "install" the website as an app (see the Get app window below) -->
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#bf1e2e">
-  <link rel="apple-touch-icon" href="img/icon-192.png">
+  <link rel="apple-touch-icon" href="img/mcc_logo.png">
 </head>
 <body>
 
@@ -33,31 +36,27 @@
     <!-- ============ HEADER ============ -->
     <header class="header">
       <a href="landing.html" class="brand">
-        <img class="brand-logo" src="logo.png" alt="Mabalacat City College logo">
+        <img class="brand-logo" src="img/logo.png" alt="Mabalacat City College logo">
         <span class="brand-name">MCC CANTEEN</span>
       </a>
 
       <!-- Top links. "active" = the lighter pill behind "Offers" -->
       <nav class="nav">
         <a href="offers.html" class="nav-link">Offers</a>
-        <a href="#updates" class="nav-link">Updates</a>
-        <a href="#overview" class="nav-link">About</a>
         <a href="contact.html" class="nav-link">Contact us</a>
         <!-- common.js turns this into "Home" once you are logged in -->
-        <a href="login.html" class="nav-link" data-auth-link="home">Login/Sign up</a>
-      </nav>
+        <a href="login.html" class="nav-link" data-auth-link="home">Login</a>
+        <a href="signup.html" class="nav-link" data-auth-link="home">Sign up</a>
+        
 
-      <!-- Round white button: landing.js opens/closes the dropdown with it -->
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
-        <img src="img/icons/landing-list.svg" alt="">
-      </button>
+      </nav>
 
       <!-- Dropdown menu (hidden until the round button is pressed) -->
       <div class="dropdown" id="dropdown" hidden>
         <a href="menu.html">Menu</a>
         <a href="index.html">Order Now</a>
         <a href="profile.html">My Profile</a>
-        <a href="admin.html">Staff</a>
+        <a href="staff.html">Canteen Staff</a>
         <!-- These 5 only show on phones, where the top links are hidden -->
         <a href="offers.html" class="phone-only">Offers</a>
         <a href="#updates" class="phone-only">Updates</a>
@@ -85,15 +84,12 @@
           <img src="img/icons/landing-order.svg" alt="">
           <span>Order Now</span>
         </a>
-        <a href="#overview" class="quick-card">
+        <a href="about-us.html" class="quick-card">
           <img src="img/icons/landing-about.svg" alt="">
           <span>About Us</span>
         </a>
         <!-- data-open = the id of the window landing.js opens (how to install the app) -->
-        <a href="#" class="quick-card" data-open="appModal">
-          <img src="img/icons/landing-app.svg" alt="">
-          <span>Get app</span>
-        </a>
+
       </section>
 
       <!-- ============ OVERVIEW ============ -->

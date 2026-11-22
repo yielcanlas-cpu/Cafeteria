@@ -1,0 +1,45 @@
+html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: Arial, sans-serif; }
+
+  header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center;
+           justify-content: space-between; padding: 0 24px; height: 58px; background: #c01f2f; color: #fff; }
+  .brand { display: flex; align-items: center; gap: 12px; font-family: serif; font-weight: bold; }
+  .brand img { width: 40px; height: 40px; border-radius: 50%; }
+  nav { display: flex; gap: 16px; font-family: serif; }
+  nav a { color: #fff; text-decoration: none; padding: 10px 24px; border-radius: 20px; }
+  nav a.active, nav a:hover { background: rgba(255,255,255,.35); }
+
+  /* scroll-margin keeps the heading visible below the sticky header */
+  #about-us { scroll-margin-top: 70px; padding: 16px 24px 32px; }
+  #about-us h2 { margin: 8px 0 16px; font-size: 22px; }
+
+  .carousel { display: flex; align-items: center; gap: 8px; }
+  .arrow { border: 0; background: none; font-size: 18px; font-weight: bold; cursor: pointer; }
+  .track { flex: 1; display: flex; gap: 100px; overflow-x: auto; scroll-snap-type: x mandatory;
+           scrollbar-width: none; padding: 16px 8px 24px; }
+  .track::-webkit-scrollbar { display: none; }
+  .track img { flex: 0 0 calc((100% - 200px) / 3); height: 218px; object-fit: cover; border-radius: 16px;
+               scroll-snap-align: start; box-shadow: 0 10px 40px rgba(0,0,0,.25); }
+
+  .bar { width: 400px; max-width: 80%; height: 8px; margin: 0 auto 24px; background: #888; border-radius: 4px; overflow: hidden; }
+  .bar span { display: block; height: 100%; width: 0; background: #333; border-radius: 4px; }
+
+#about-us p { 
+    max-width: 1060px;
+    margin-top: 24px;
+    margin: 0 auto;
+    font-size: 19px;
+    line-height: 1.4; 
+    font-family: "Google Sans", sans-serif;
+
+}
+
+
+
+  #about-us hr { max-width: 1140px; margin: 32px auto 0; border: 0; border-top: 1px solid #777; }
+
+  @media (max-width: 700px) {
+    nav a { padding: 8px 10px; }
+    .track { gap: 16px; }
+    .track img { flex-basis: 80%; }
+  }

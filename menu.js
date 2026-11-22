@@ -1,60 +1,52 @@
 /* =========================================================
    menu.js  -  the menu page (menu.html)
+   Needs common.js loaded first.
    ========================================================= */
 
+const dishes = document.querySelectorAll(".dish");
+const tabs = document.querySelectorAll(".menu-tab");
+const searchBox = document.querySelector("#menuSearch");
+const emptyMsg = document.querySelector("#menuEmpty");
+
+let category = "rice";                            // the tab that is open
+
 
 /* ---------------------------------------------------------
-   1. THE < AND > ARROWS
-   Every row has two arrows. Pressing one scrolls that row sideways
-   by one "page" (the width of the row). An arrow turns pale when
-   there is nothing more to scroll in that direction.
+   1. TABS + SEARCH
+   With nothing typed, show the foods of the open tab.
+   When something is typed, search ALL the foods (no tab is highlighted).
    --------------------------------------------------------- */
-document.querySelectorAll(".carousel-row").forEach(function (row) {
-  const track = row.querySelector(".track");
-  const arrows = row.querySelectorAll(".arrow");
+function showDishes() {
+  const text = searchBox.value.trim().toLowerCase();
+  let shown = 0;
 
-  // Switch an arrow off when the row is already at that end
-  function updateArrows() {
-    const atStart = track.scrollLeft <= 1;
-    const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
-    arrows[0].disabled = atStart;
-    arrows[1].disabled = atEnd;
-  }
-
-  arrows.forEach(function (arrow) {
-    arrow.addEventListener("click", function () {
-      const direction = Number(arrow.dataset.dir);      // -1 = left, 1 = right
-      track.scrollBy({ left: direction * track.clientWidth, behavior: "smooth" });
-    });
+  dishes.forEach(function (dish) {
+    const name = dish.querySelector("figcaption").textContent.toLowerCase();
+    const show = text ? name.includes(text) : dish.dataset.cat === category;
+    dish.hidden = !show;
+    if (show) shown++;
   });
 
-  track.addEventListener("scroll", updateArrows);       // runs while the row moves
-  window.addEventListener("resize", updateArrows);      // and when the window changes size
-  updateArrows();                                       // and once at the start
-});
+  tabs.forEach(function (tab) { tab.classList.toggle("active", !text && tab.dataset.cat === category); });
+  emptyMsg.hidden = shown > 0;
+}
 
-
-/* ---------------------------------------------------------
-   2. TOP LINKS  (Offers, Contact us)
-   Links that start with "#" do not go anywhere yet, so we just move the
-   highlight to the one you clicked. "Login/Sign up" is a real link.
-   --------------------------------------------------------- */
-const navLinks = document.querySelectorAll(".nav-link");
-
-navLinks.forEach(function (link) {
-  if (!link.getAttribute("href").startsWith("#")) return;     // a real page -> leave it alone
-
-  link.addEventListener("click", function (event) {
-    event.preventDefault();                                   // stops the page jumping to the top
-    navLinks.forEach(function (other) { other.classList.remove("active"); });
-    link.classList.add("active");
+tabs.forEach(function (tab) {
+  tab.addEventListener("click", function () {
+    category = tab.dataset.cat;
+    searchBox.value = "";
+    showDishes();
   });
 });
+searchBox.addEventListener("input", showDishes);
 
 
 /* ---------------------------------------------------------
-   3. LOGO + BACK BUTTON  (common.js)
-   When you come from the dashboard's "View all" (or you are logged in),
-   "Login/Sign up" becomes a Back button and the logo goes to your home page.
+   2. LOGO + BACK TO HOME  (common.js)
+   Logged in -> the logo and "Back to Home" go to YOUR home page
+   (student -> index.html, staff -> staff.html). A visitor goes to the landing page.
    --------------------------------------------------------- */
 setupPublicHeader();
+getCurrentUser().then(function (user) {
+  if (user) document.querySelector("#backHome").href = homeFor(user);
+}).catch(function () { /* server not reachable: keep the landing page link */ });

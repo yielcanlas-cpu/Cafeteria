@@ -7,70 +7,87 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Itim&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="common.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="profile.css">
 </head>
-<!-- "profile-page" lets style.css style this page differently.
-     "checking" hides the page until we know who is logged in. -->
-<body class="profile-page checking">
+<!-- "checking" hides the page until we know who is logged in. -->
+<body class="checking">
 
-  <div class="profile">
-    <div class="profile-top">
-      <!-- profile.js sets where this goes (student -> dashboard, staff -> staff page) -->
-      <a href="index.html" class="back-link" id="backLink"><img class="inline-icon" src="img/icons/arrow-left.svg" alt=""> Back to home</a>
-      <button class="logout-link" id="logoutBtn" type="button">Log out</button>
+  <!-- ============ RED TOP BAR ============ -->
+  <header class="pf-bar">
+    <!-- profile.js sets where this goes (student -> dashboard, staff -> staff page) -->
+    <a href="index.html" class="pf-back" id="backLink"><img src="img/icons/arrow-left.svg" alt=""> Back to Home</a>
+
+    <details class="pf-menu">
+      <summary aria-label="Menu"><img src="img/icons/list.svg" alt=""></summary>
+      <div class="pf-dropdown"><button type="button" id="logoutBtn">Log out</button></div>
+    </details>
+  </header>
+
+  <main class="pf">
+    <!-- ============ BANNER + AVATAR ============ -->
+    <div class="pf-banner" id="banner">
+      <button class="pf-photo-btn" type="button" data-photo="banner" aria-label="Change banner" hidden><img src="img/icons/edit.svg" alt=""></button>
     </div>
 
-    <!-- Big red banner at the top -->
-    <div class="profile-banner"></div>
-
-    <!-- Avatar (left) + name and bio (right) -->
-    <div class="profile-head">
-      <div class="avatar-wrap">
-        <!-- To use a photo: change src="img/avatar.svg" to src="img/me.jpg" -->
-        <div class="avatar-big"><img src="img/avatar.svg" alt="Profile photo"></div>
-        <!-- The green "online" dot -->
-        <span class="online-dot"></span>
+    <div class="pf-avatar-row">
+      <div class="pf-avatar">
+        <img id="avatarImg" src="img/avatar.svg" alt="Profile photo">
+        <button class="pf-photo-btn" type="button" data-photo="avatar" aria-label="Change profile photo" hidden><img src="img/icons/edit.svg" alt=""></button>
       </div>
-
-      <div class="profile-text">
-        <h1 class="profile-name" id="profileName">&nbsp;</h1>
-        <!--
-          contenteditable="true" lets you type right inside this box.
-          data-placeholder is shown (by CSS) while the box is empty.
-          profile.js saves it to the database when you click away.
-        -->
-        <div class="bio" id="bio" contenteditable="true" data-placeholder="Bio" role="textbox" aria-label="Bio"></div>
-      </div>
+      <button class="pf-edit" id="editBtn" type="button">Edit profile</button>
     </div>
 
-    <!-- Info rows -->
-    <div class="info">
-      <div class="info-row">
-        <span class="info-item"><img class="inline-icon" src="img/icons/calendar.svg" alt=""> <span id="joined">Joined</span></span>
-        <span class="info-item">
-          <img class="inline-icon" src="img/icons/pin.svg" alt="">
-          <span id="location" data-placeholder="Add your location"></span>
-          <!-- data-target tells profile.js WHICH text this button edits -->
-          <button class="edit-btn" data-target="location">Edit</button>
-        </span>
+    <!-- ============ WHO YOU ARE (always shown) ============ -->
+    <h1 class="pf-name" id="profileName">&nbsp;</h1>
+    <p class="pf-email" id="email"></p>
+    <p class="pf-bio" id="bio"></p>
+    <p class="pf-meta">
+      <span><img src="img/icons/pin.svg" alt=""> <span id="location"></span></span>
+      <span><img src="img/icons/calendar.svg" alt=""> <span id="joined"></span></span>
+    </p>
+    <hr class="pf-line">
+
+    <!-- ============ TABS (hidden while editing) ============ -->
+    <section id="viewBox">
+      <div class="pf-tabs" role="tablist">
+        <button type="button" role="tab" class="on" data-tab="favorites">Favorites</button>
+        <button type="button" role="tab" data-tab="orders">My orders</button>
+      </div>
+      <div id="tabBody"></div>
+    </section>
+
+    <!-- ============ EDIT FORM (shown after "Edit profile") ============ -->
+    <form class="pf-form" id="editForm" hidden>
+      <label>Name
+        <input id="fName" maxlength="50" required>
+        <small><span id="nameCount">0</span>/50</small>
+      </label>
+
+      <label>Bio
+        <textarea id="fBio" maxlength="100" rows="3"></textarea>
+        <small><span id="bioCount">0</span>/100</small>
+      </label>
+
+      <div class="pf-two">
+        <label>Location
+          <input id="fLocation" maxlength="80">
+        </label>
+        <label>Birthdate
+          <input id="fBirthdate" type="date">
+        </label>
       </div>
 
-      <!-- The email is your login, so it cannot be edited here.
-           (Hidden by profile.js when you signed up with a mobile number instead.) -->
-      <p class="info-item" id="emailRow">
-        <span class="info-label">Email Address:</span>
-        <span id="email"></span>
-      </p>
+      <div class="pf-actions">
+        <button class="pf-save" type="submit" id="saveBtn">Save</button>
+        <button class="pf-cancel" type="button" id="cancelBtn">Cancel</button>
+      </div>
+    </form>
 
-      <p class="info-item">
-        <span class="info-label">Number:</span>
-        <span id="number" data-placeholder="Add your phone number"></span>
-        <button class="edit-btn" data-target="number">Edit</button>
-      </p>
-    </div>
-  </div>
+    <!-- hidden file picker used by both photo buttons -->
+    <input type="file" id="photoInput" accept="image/*" hidden>
+  </main>
 
   <script src="common.js"></script>
-  <script src="profile.js"></script>
+  <script src="profile-page.js"></script>
 </body>
 </html>

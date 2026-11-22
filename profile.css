@@ -1,0 +1,126 @@
+/* =========================================================
+   profile.css  -  the profile page (profile.html)
+   Needs common.css too (toast, [hidden], .badge).
+   ========================================================= */
+
+:root {
+  --red: #bf1e2e;
+  --gray: #8c8785;
+  --font-title: "Chewy", "Comic Sans MS", cursive;
+  --font-body: "Itim", "Comic Sans MS", cursive;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: #fff; color: #000; font-family: var(--font-body); }
+h1, p { margin: 0; }
+button { font-family: inherit; cursor: pointer; }
+
+
+/* ----- Red top bar ----- */
+.pf-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 16px;
+  background: var(--red);
+}
+.pf-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+  color: #fff; font-weight: bold; text-decoration: none;
+}
+.pf-back img { width: 22px; filter: invert(1); }   /* the arrow icon is black: make it white */
+
+.pf-menu { position: relative; }
+.pf-menu summary { list-style: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; cursor: pointer; }
+.pf-menu summary::-webkit-details-marker { display: none; }
+.pf-menu summary img { width: 22px; }
+.pf-dropdown {
+  position: absolute; right: 0; top: 46px; z-index: 5;
+  padding: 6px; border-radius: 12px; background: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+.pf-dropdown button { padding: 8px 18px; border: 0; background: none; color: var(--red); font-size: 1rem; white-space: nowrap; }
+
+
+/* ----- Page column ----- */
+.pf { max-width: 720px; margin: 0 auto; padding: 6px 8px 40px; }
+
+.pf-banner {
+  position: relative;
+  height: 155px;
+  border-radius: 30px;
+  background: #857570 center / cover no-repeat;   /* replaced by the photo when one is set */
+}
+
+/* Avatar overlaps the banner; the Edit profile button sits on the right */
+.pf-avatar-row { display: flex; justify-content: space-between; margin-top: -70px; padding: 0 22px 0 16px; }
+.pf-avatar {
+  position: relative;
+  width: 170px; height: 170px;
+  border: 1px solid #222; border-radius: 50%;
+  overflow: hidden; background: #f0d9cf;
+}
+.pf-avatar > img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.pf-edit {
+  align-self: flex-start; margin-top: 88px;
+  padding: 6px 16px;
+  border: 0; border-radius: 20px;
+  background: var(--red); color: #fff; font-weight: bold;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Round "change photo" button, only shown while editing */
+.pf-photo-btn {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 34px; height: 34px; padding: 0;
+  border: 0; border-radius: 50%;
+  background: rgba(0, 0, 0, 0.35);
+  display: grid; place-items: center;
+}
+.pf-photo-btn img { width: 18px; }
+
+
+/* ----- Who you are ----- */
+.pf-name { margin: 6px 0 0 16px; font-family: var(--font-title); font-size: 2.1rem; font-weight: normal; line-height: 1.1; overflow-wrap: anywhere; }
+.pf-email { margin: 4px 0 0 16px; color: var(--gray); font-size: 0.8rem; font-weight: bold; }
+.pf-bio { margin: 8px 0 0 16px; font-size: 0.85rem; font-weight: bold; white-space: pre-line; overflow-wrap: anywhere; }
+.pf-meta { display: flex; flex-wrap: wrap; gap: 8px 36px; margin: 12px 0 0 16px; color: var(--gray); font-size: 0.8rem; font-weight: bold; }
+.pf-meta > span { display: inline-flex; align-items: center; gap: 6px; }
+.pf-meta img { width: 18px; opacity: 0.6; }
+.pf-line { margin: 12px 12px 0; border: 0; border-top: 1px solid #ddd; }
+
+
+/* ----- Tabs ----- */
+.pf-tabs { display: flex; justify-content: space-around; margin: 0 12px; border-bottom: 1px solid #ddd; }
+.pf-tabs button { padding: 10px 14px; border: 0; border-bottom: 3px solid transparent; background: none; font-size: 0.9rem; font-weight: bold; }
+.pf-tabs button.on { border-bottom-color: var(--red); color: var(--red); }
+
+#tabBody { padding: 4px 16px; }
+.pf-empty { padding: 26px 0; text-align: center; color: #999; }
+.pf-row { padding: 12px 0; border-bottom: 1px solid #eee; }
+.pf-row-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-weight: bold; }
+.pf-row small { display: block; margin-top: 2px; color: var(--gray); }
+
+
+/* ----- Edit form ----- */
+.pf-form { padding: 10px 16px 0; }
+.pf-form label { display: block; margin-top: 14px; font-size: 0.8rem; font-weight: bold; }
+.pf-form input, .pf-form textarea {
+  display: block; width: 100%; margin-top: 6px; padding: 9px 16px;
+  border: 1px solid #333; border-radius: 22px;
+  font: 0.85rem var(--font-body); font-weight: bold;
+}
+.pf-form textarea { resize: none; }
+.pf-form input:focus, .pf-form textarea:focus { outline: 2px solid var(--red); }
+.pf-form small { display: block; margin: 4px 0 0 12px; color: var(--gray); }
+.pf-two { display: flex; gap: 20px; }
+.pf-two label { flex: 1; min-width: 0; }
+
+/* sticky: Save / Cancel stay at the bottom of the screen while you scroll the form */
+.pf-actions { position: sticky; bottom: 0; display: flex; justify-content: center; gap: 12px; margin-top: 22px; padding: 12px 0; background: #fff; }
+.pf-save, .pf-cancel { padding: 8px 26px; border-radius: 20px; font-weight: bold; }
+.pf-save { border: 0; background: var(--red); color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); }
+.pf-save:disabled { opacity: 0.6; cursor: wait; }
+.pf-cancel { border: 1px solid #333; background: #fff; }

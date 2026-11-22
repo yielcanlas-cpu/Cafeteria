@@ -14,11 +14,11 @@ and a staff page that holds and manages ALL orders. PHP + MySQL (runs on Laragon
 | `offers.html` | everyone | Offers. **10% off for new customers** has a first-time-customer check (log in, answer Yes, Submit) |
 | `contact.html` | everyone | "Stay Connected" form; staff read and reply on the staff page |
 | `profile.html` | logged-in | Name, email, join date; location, phone and bio are saved |
-| `admin.html` | staff only | Every student's orders; move them Preparing -> Ready -> Delivered, or cancel |
+| `staff.html` | canteen staff only | Every student's orders; move them Preparing -> Ready -> Delivered, or cancel |
 
 After logging in:
 - a **student** goes to `index.html` (the main menu),
-- the **staff account** goes to `admin.html`.
+- the **staff account** goes to `staff.html`.
 
 Opening `index.html` or `profile.html` while logged out sends you to the login page first.
 
@@ -27,7 +27,7 @@ Opening `index.html` or `profile.html` while logged out sends you to the login p
   (no order yet, cancelled ones don't count) and only then switches on 10% off the next order. It works once.
   The percent is `FIRST_ORDER_DISCOUNT_PERCENT` in `config.php`. Orders now store `discount`.
 - **View all** opens `menu.html?from=app`: no Login/Sign up, a **Back** button instead. The logo goes to the
-  logged-in person's home (student `index.html`, staff `admin.html`); guests still go to the landing page.
+  logged-in person's home (student `index.html`, staff `staff.html`); guests still go to the landing page.
 - Dashboard sidebar now works: Delivery, Offers, Favorites (heart on each food), Messages, Notification, Help Center (`panels.js`).
 - Landing: Offers, Updates, Contact us and Get app (install instructions) all have content.
 - Staff page: **Messages** tab to reply to students; orders show the discount.
@@ -57,7 +57,7 @@ the orders and accounts already stored in them).
 It is created automatically the first time the site is used. Settings are in `config.php`:
 
     ADMIN_EMAIL    = admin@mcc.local
-    ADMIN_PASSWORD = canteen123
+    ADMIN_PASSWORD = 123456
 
 Log in with these on `login.html` and you land on the staff page.
 **Change `ADMIN_PASSWORD` in `config.php` BEFORE the first run** (it is only used when the
@@ -82,8 +82,8 @@ A food button whose `data-id` is not in `$MENU` is greyed out and cannot be orde
 - **Tables have the wrong columns**: import `canteen.sql` (rebuilds the tables).
 
 ## Files
-- Pages: `landing.html`, `menu.html`, `login.html`, `index.html`, `profile.html`, `admin.html`
-- Scripts: `common.js` (shared helpers), `script.js` (dashboard), `login.js`, `profile.js`, `admin.js`, `landing.js`, `menu.js`
-- Styles: `common.css`, `style.css` (dashboard + profile), `landing.css`, `menu.css`, `auth.css`, `admin.css`
+- Pages: `landing.html`, `menu.html`, `login.html`, `index.html`, `profile.html`, `staff.html`
+- Scripts: `common.js` (shared helpers), `script.js` (dashboard), `login.js`, `profile-page.js`, `staff.js`, `landing.js`, `menu.js`
+- Styles: `common.css`, `style.css` (dashboard + profile), `landing.css`, `menu.css`, `auth.css`, `staff.css`
 - Backend: `api.php`, `db.php`, `config.php`, `canteen.sql`
 - Pictures: `logo.png`, `img/` (food photos), `img/icons/` (icons)

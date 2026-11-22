@@ -5,6 +5,8 @@
   <!-- Makes the page scale properly on phones -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Menu · MCC Canteen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Itim&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="common.css">
   <!-- landing.css has the header (the red bar) that this page shares with landing.html -->
   <link rel="stylesheet" href="landing.css">
@@ -16,124 +18,167 @@
   <!-- ===================================================================
        HOW TO CHANGE A FOOD PHOTO: edit only the link inside src="..."
          <img src="img/YOUR-PHOTO.jpg" alt="Name of the food">
-       Photos that still say img/placeholder.svg are waiting for your picture.
 
-       HOW TO ADD A FOOD: copy one <figure class="dish"> ... </figure> block
-       and paste it inside the same row (inside <div class="track">).
+       HOW TO ADD A FOOD: copy one <figure class="dish" data-cat="..."> ... </figure>
+       block and paste it next to the others inside <div class="dish-grid">.
+       data-cat must be one of: rice, meryenda, tusok, drinks
+       (it decides which tab the food shows under).
        =================================================================== -->
 
   <div class="page">
 
-    <!-- ============ HEADER ============ -->
+    <!-- ============ HEADER: logo, search box, Back to Home ============ -->
     <header class="header">
       <a href="landing.html" class="brand">
-        <img class="brand-logo" src="logo.png" alt="Mabalacat City College logo">
+        <img class="brand-logo" src="img/logo.png" alt="Mabalacat City College logo">
         <span class="brand-name">MCC CANTEEN</span>
       </a>
-      <nav class="nav">
-        <a href="offers.html" class="nav-link">Offers</a>
-        <a href="contact.html" class="nav-link">Contact us</a>
-        <!-- common.js turns this into a Back button when you are logged in or came from "View all" -->
-        <a href="login.html" class="nav-link" data-auth-link="back">Login/Sign up</a>
-      </nav>
+      <div class="menu-tools">
+        <input type="search" id="menuSearch" class="menu-search" placeholder="Search food" aria-label="Search the menu">
+        <!-- menu.js sends a logged-in person to their own home page instead -->
+        <a href="landing.html" class="back-pill" id="backHome">Back to Home <img src="img/icons/arrow-right.svg" alt=""></a>
+      </div>
     </header>
 
     <main class="menu-page">
-      <h1 class="menu-title">Menu</h1>
+      <p class="menu-eyebrow">Menu</p>
+      <h1 class="menu-heading">Browse our Menu</h1>
 
-      <!-- ---------- Rice Meal ---------- -->
-      <section class="category">
-        <h2 class="category-title">Rice Meal</h2>
-        <div class="carousel-row">
-          <button class="arrow" data-dir="-1" aria-label="Scroll Rice Meal left"><img src="img/icons/menu-prev.svg" alt=""></button>
-          <div class="track">
-          <figure class="dish">
-            <img src="img/Crispy Pork Kare- Kare.jpg" alt="Kare-kare">
-            <figcaption>Kare-kare</figcaption>
-          </figure>
-          <figure class="dish">
-            <img src="img/sisig.jpg" alt="Sisig">
-            <figcaption>Sisig</figcaption>
-          </figure>
-          <figure class="dish">
-            <img src="img/bicol-express.jpg" alt="Bicol Express">
-            <figcaption>Bicol Express</figcaption>
-          </figure>
-          <figure class="dish">
-            <img src="img/sinigang.jpg" alt="Sinigang">
-            <figcaption>Sinigang</figcaption>
-          </figure>
-          <figure class="dish">
-            <img src="img/tinola.jpg" alt="Tinola">
-            <figcaption>Tinola</figcaption>
-          </figure>
-          </div>
-          <button class="arrow" data-dir="1" aria-label="Scroll Rice Meal right"><img src="img/icons/menu-next.svg" alt=""></button>
-        </div>
-      </section>
+      <!-- ============ CATEGORY TABS ============ -->
+      <nav class="menu-tabs" id="menuTabs">
+        <button class="menu-tab active" data-cat="rice" type="button">Rice Meal</button>
+        <button class="menu-tab" data-cat="meryenda" type="button">Meryenda</button>
+        <button class="menu-tab" data-cat="tusok" type="button">Tusok-tusok</button>
+        <button class="menu-tab" data-cat="drinks" type="button">Drinks</button>
+      </nav>
 
-      <!-- ---------- Meryenda ---------- -->
-      <section class="category">
-        <h2 class="category-title">Meryenda</h2>
-        <div class="carousel-row">
-          <button class="arrow" data-dir="-1" aria-label="Scroll Meryenda left"><img src="img/icons/menu-prev.svg" alt=""></button>
-          <div class="track">
-          <figure class="dish">
-            <img src="img/Kwek-kwek.jpg" alt="Kwek-kwek">
-            <figcaption>Kwek-kwek</figcaption>
-          </figure>
-          <figure class="dish">
-            <img src="img/fried-isaw.jpg" alt="Fried isaw">
-            <figcaption>Fried isaw</figcaption>
-          </figure>
-          <figure class="dish">
-            <img src="img/lumpiang-gulay.jpg" alt="Lumpiang Gulay">
-            <figcaption>Lumpiang Gulay</figcaption>
-          </figure>
-          <figure class="dish">
-            <img src="img/Turon(Banana Wrapped in Lumpia Wrapper).jpg" alt="Turon">
-            <figcaption>Turon</figcaption>
-          </figure>
-          <figure class="dish">
-            <img src="img/maruya.jpg" alt="Maruya">
-            <figcaption>Maruya</figcaption>
-          </figure>
-          </div>
-          <button class="arrow" data-dir="1" aria-label="Scroll Meryenda right"><img src="img/icons/menu-next.svg" alt=""></button>
-        </div>
-      </section>
+      <!-- ============ THE FOODS (menu.js shows the ones for the chosen tab) ============ -->
+      <div class="dish-grid" id="dishGrid">
 
-      <!-- ---------- Drinks ---------- -->
-      <section class="category">
-        <h2 class="category-title">Drinks</h2>
-        <div class="carousel-row">
-          <button class="arrow" data-dir="-1" aria-label="Scroll Drinks left"><img src="img/icons/menu-prev.svg" alt=""></button>
-          <div class="track cols-4">
-          <figure class="dish">
-            <img src="img/download (1).jpg" alt="Iced Tea">
-            <figcaption>Iced Tea</figcaption>
-          </figure>
-          <figure class="dish">
-            <img src="img/redtea.jpg" alt="Red Tea">
-            <figcaption>Red Tea</figcaption>
-          </figure>
-          <figure class="dish">
-            <img src="img/sago at gulaman.jpg" alt="Gulaman">
-            <figcaption>Gulaman</figcaption>
-          </figure>
-          <figure class="dish">
-            <img src="img/melon.jpg" alt="Melon">
-            <figcaption>Melon</figcaption>
-          </figure>
-          </div>
-          <button class="arrow" data-dir="1" aria-label="Scroll Drinks right"><img src="img/icons/menu-next.svg" alt=""></button>
-        </div>
-      </section>
+        <!-- ---------- Rice Meal ---------- -->
+        <figure class="dish" data-cat="rice">
+          <img src="img/Crispy Pork Kare- Kare.jpg" alt="Kare-kare">
+          <figcaption>Kare-kare</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="rice">
+          <img src="img/sisig.jpg" alt="Sisig">
+          <figcaption>Sisig</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="rice">
+          <img src="img/bicol-express.jpg" alt="Bicol Express">
+          <figcaption>Bicol Express</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="rice">
+          <img src="img/sinigang.jpg" alt="Sinigang">
+          <figcaption>Sinigang</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="rice">
+          <img src="img/tinola.jpg" alt="Tinola">
+          <figcaption>Tinola</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="rice">
+          <img src="img/cheesy-chicken-katsu.jpg" alt="Cheesy Chicken Katsu">
+          <figcaption>Cheesy Chicken Katsu</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="rice">
+          <img src="img/pork-adobo.jpg" alt="Pork Adobo">
+          <figcaption>Pork Adobo</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="rice">
+          <img src="img/menudo.jpg" alt="Menudo">
+          <figcaption>Menudo</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
 
+        <!-- ---------- Meryenda ---------- -->
+        <figure class="dish" data-cat="meryenda" hidden>
+          <img src="img/lumpiang-gulay.jpg" alt="Lumpiang Gulay">
+          <figcaption>Lumpiang Gulay</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="meryenda" hidden>
+          <img src="img/Turon(Banana Wrapped in Lumpia Wrapper).jpg" alt="Turon">
+          <figcaption>Turon</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="meryenda" hidden>
+          <img src="img/maruya.jpg" alt="Maruya">
+          <figcaption>Maruya</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="meryenda" hidden>
+          <img src="img/muffin.jpg" alt="Muffin">
+          <figcaption>Muffin</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="meryenda" hidden>
+          <img src="img/ham-and-cheese.jpg" alt="Ham &amp; Cheese">
+          <figcaption>Ham &amp; Cheese</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="meryenda" hidden>
+          <img src="img/cheese-stick.jpg" alt="Cheese Stick">
+          <figcaption>Cheese Stick</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+
+        <!-- ---------- Tusok-tusok ---------- -->
+        <figure class="dish" data-cat="tusok" hidden>
+          <img src="img/Kwek-kwek.jpg" alt="Kwek-kwek">
+          <figcaption>Kwek-kwek</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="tusok" hidden>
+          <img src="img/fried-isaw.jpg" alt="Fried isaw">
+          <figcaption>Fried isaw</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="tusok" hidden>
+          <img src="img/fried-tokwa.jpg" alt="Fried Tokwa">
+          <figcaption>Fried Tokwa</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="tusok" hidden>
+          <img src="img/fried-siomai.jpg" alt="Fried Siomai">
+          <figcaption>Fried Siomai</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+
+        <!-- ---------- Drinks ---------- -->
+        <figure class="dish" data-cat="drinks" hidden>
+          <img src="img/iced tea.jpg" alt="Iced Tea">
+          <figcaption>Iced Tea</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="drinks" hidden>
+          <img src="img/redtea.jpg" alt="Red Tea">
+          <figcaption>Red Tea</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="drinks" hidden>
+          <img src="img/sago at gulaman.jpg" alt="Gulaman">
+          <figcaption>Gulaman</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+        <figure class="dish" data-cat="drinks" hidden>
+          <img src="img/melon.jpg" alt="Melon">
+          <figcaption>Melon</figcaption>
+          <a class="order-btn" href="index.html">Order Now</a>
+        </figure>
+
+      </div>
+      <p class="menu-empty" id="menuEmpty" hidden>No food found.</p>
     </main>
   </div>
 
   <script src="common.js"></script>
-  <script src="menu.js"></script>
+  <script src="menu.js?v=2"></script>
 </body>
 </html>

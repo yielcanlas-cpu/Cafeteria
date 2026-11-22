@@ -26,14 +26,15 @@ const OFFERS = {
   "pasko": {
     title: "Pasko Deals",
     image: "img/offer-pasko.jpg",
-    text: "Warm up the holidays with our Milk Tea Duo: two milk teas for only Php90!",
+    text: "Celebrate the holiday season with our special Pasko Promo! From December 1–4, students can enjoy exclusive discounts on delivery services whenever they place an order. Make your favorite cafeteria meals more affordable and convenient this Christmas season. Don't miss out on this limited-time holiday offer!",
     extra: "Find it under Bundle on the main menu. Perfect for sharing with a classmate between lectures."
   },
   "people-power": {
     title: "People power promo",
     image: "img/offer-people-power.jpg",
-    text: "Rice meal + Coke for only Php85. A full meal and a cold drink for every hungry MCCian.",
-    extra: "Find it under Bundle on the main menu."
+    text: "Join the movement by raising awareness about current political issues in the Philippines. Share an informative post on your social media, send us proof of your participation, and receive 20% OFF your purchase!",
+    extra: "Find it under Bundle on the main menu.",
+    note: "Note: Promo is valid for new customers only and can be redeemed once."
   }
 };
 
@@ -83,7 +84,15 @@ function showPage() {
   const action = document.querySelector("#offerAction");
   action.innerHTML = "";
   if (offer.firstTime) buildFirstTimeCheck(action, offer);
-  else action.append(orderButton());
+  else {
+    action.append(orderButton());
+    if (offer.note) {
+      const note = document.createElement("p");
+      note.className = "offer-note";
+      note.textContent = offer.note;
+      action.append(note);
+    }
+  }
 }
 
 window.addEventListener("hashchange", showPage);
@@ -102,7 +111,8 @@ function orderButton() {
   const link = document.createElement("a");
   link.className = "red-btn";
   link.href = "index.html";
-  link.textContent = "Order now";
+  link.textContent = "Send us the proof";
+  
   return link;
 }
 

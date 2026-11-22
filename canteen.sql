@@ -49,6 +49,7 @@ CREATE TABLE `users` (
   `phone`         VARCHAR(20)  NOT NULL DEFAULT '',
   `location`      VARCHAR(80)  NOT NULL DEFAULT '',
   `bio`           VARCHAR(200) NOT NULL DEFAULT '',
+  `birthdate`     DATE         NULL DEFAULT NULL,
   `promo_claimed_at` TIMESTAMP NULL DEFAULT NULL,   -- when the student passed the first-time-customer check
   `created_at`    TIMESTAMP    NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

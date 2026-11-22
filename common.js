@@ -66,7 +66,7 @@ async function getCurrentUser() {
 
 // Each kind of account has its own "home" page
 function homeFor(user) {
-  return user.role === "admin" ? "admin.html" : "index.html";
+  return user.role === "admin" ? "staff.html" : "index.html";
 }
 
 // Log out, then go to the login page
@@ -122,7 +122,7 @@ function showToast(message) {
    setupPublicHeader()  -  the red bar of landing / menu / offers / contact
 
    1. THE LOGO: for someone who is logged in it goes to THEIR home
-      (student -> index.html, staff -> admin.html), not to the landing page.
+      (student -> index.html, staff -> staff.html), not to the landing page.
       A visitor who is not logged in still goes to the landing page.
    2. THE "Login/Sign up" LINK: pages mark it with data-auth-link="back" or "home".
         back -> a BACK button once you are logged in (or came from the dashboard)

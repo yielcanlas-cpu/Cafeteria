@@ -33,8 +33,7 @@
 
     <!-- Search box: script.js filters the food items while you type -->
     <div class="search">
-      <input type="text" id="searchInput" placeholder="Search">
-      <img class="search-icon" src="img/icons/search.svg" alt="Search">
+      <input type="search" id="searchInput" class="menu-search" placeholder="Search food" aria-label="Search food">
     </div>
 
     <!-- The user chip opens a small menu: profile, my orders, log out -->
@@ -141,17 +140,17 @@
 
       <!-- "big" makes these cards larger than the ones above -->
       <div class="row">
-        <button class="food big" data-id="8" data-name="Milk Tea Duo" data-price="90">
-          <span class="thumb"><img src="img/milk-tea-duo.jpg" alt="Milk Tea Duo"></span>
-          <span class="caption">Milk Tea Duo</span>
+        <button class="food big" data-id="8" data-name="Coffee & Cookies" data-price="90">
+          <span class="thumb"><img src="img/Coffee & Cookies.jpg" alt="Coffee & Cookies"></span>
+          <span class="caption">Coffee & Cookies</span>
         </button>
-        <button class="food big" data-id="9" data-name="Rice meal + Coke" data-price="85">
-          <span class="thumb"><img src="img/download (4).jpg" alt="Rice meal + Coke"></span>
-          <span class="caption">Rice meal + Coke</span>
+        <button class="food big" data-id="9" data-name="Siomai & drink" data-price="85">
+          <span class="thumb"><img src="img/siomai with drink.jpg" alt="Siomai & drink"></span>
+          <span class="caption">Siomai & drink</span>
         </button>
-        <button class="food big" data-id="10" data-name="Coffee + Fries" data-price="200">
-          <span class="thumb"><img src="img/download (5).jpg" alt="Coffee + Fries"></span>
-          <span class="caption">Coffee + Fries</span>
+        <button class="food big" data-id="10" data-name="Coffee & Fries" data-price="200">
+          <span class="thumb"><img src="img/download (5).jpg" alt="Coffee & Fries"></span>
+          <span class="caption">Coffee & Fries</span>
         </button>
         <button class="food big" data-id="9" data-name="Rice meal + Coke" data-price="85">
           <span class="thumb"><img src="img/download (4).jpg" alt="Rice meal + Coke"></span>
@@ -172,7 +171,7 @@
       </div>
       <div class="deal">
         <span class="deal-off">20% OFF</span>
-        <span class="deal-text"><img src="img/buffet.jpg" alt="Buffet"></span>
+        <span class="deal-text"><img src="img/Kamayan_ The Ultimate Filipino Finger Food Feast - Chatelaine.jpg" alt="Buffet"></span>
       </div>
     </section>
   </main>
@@ -249,7 +248,7 @@
   <!-- Load our JavaScript LAST so the page elements already exist.
        common.js first: it has the helpers (api, showToast...) that script.js uses. -->
   <script src="common.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=2"></script>
   <script src="panels.js"></script>
 </body>
 </html>

@@ -28,13 +28,15 @@ let currentUser = null;        // the logged-in student (filled in by start() be
     return;
   }
   if (currentUser.role === "admin") {
-    location.replace("admin.html");
+    location.replace("staff.html");
     return;
   }
 
   // Show the person's name in the header and the welcome line
   document.querySelector("#userName").textContent = currentUser.name;
   document.querySelector("#welcomeName").textContent = currentUser.name;
+  // the profile photo picked on the profile page (kept in this browser, see profile-page.js)
+  document.querySelector(".avatar-small img").src = loadFromBrowser("mcc_avatar_" + currentUser.id, "") || "img/avatar.svg";
   document.body.classList.remove("checking");  // reveal the page
 
   roomInput.value = loadFromBrowser("mcc_room_" + currentUser.id, "");   // remember the last room
