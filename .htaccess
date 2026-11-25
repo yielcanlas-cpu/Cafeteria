@@ -1,0 +1,14 @@
+# Laragon / Apache: make the browser re-check pages, styles and scripts every time,
+# so an old cached copy of a file can never mix with the new ones.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|css|js|php)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Never let anyone download the local mail log (it holds verification codes while email is not set up)
+<FilesMatch "\.log$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>

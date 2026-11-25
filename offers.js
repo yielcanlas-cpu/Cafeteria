@@ -27,14 +27,16 @@ const OFFERS = {
     title: "Pasko Deals",
     image: "img/offer-pasko.jpg",
     text: "Celebrate the holiday season with our special Pasko Promo! From December 1–4, students can enjoy exclusive discounts on delivery services whenever they place an order. Make your favorite cafeteria meals more affordable and convenient this Christmas season. Don't miss out on this limited-time holiday offer!",
-    extra: "Find it under Bundle on the main menu. Perfect for sharing with a classmate between lectures."
+    extra: "Find it under Bundle on the main menu. Perfect for sharing with a classmate between lectures.",
+    button: { text: "Order now", href: "index.html" }
   },
   "people-power": {
     title: "People power promo",
     image: "img/offer-people-power.jpg",
     text: "Join the movement by raising awareness about current political issues in the Philippines. Share an informative post on your social media, send us proof of your participation, and receive 20% OFF your purchase!",
     extra: "Find it under Bundle on the main menu.",
-    note: "Note: Promo is valid for new customers only and can be redeemed once."
+    note: "Note: Promo is valid for new customers only and can be redeemed once.",
+    button: { text: "Send us the proof", href: "contact.html" }
   }
 };
 
@@ -85,7 +87,7 @@ function showPage() {
   action.innerHTML = "";
   if (offer.firstTime) buildFirstTimeCheck(action, offer);
   else {
-    action.append(orderButton());
+    action.append(orderButton(offer.button));
     if (offer.note) {
       const note = document.createElement("p");
       note.className = "offer-note";
@@ -94,6 +96,16 @@ function showPage() {
     }
   }
 }
+
+// The main admin can change the percent (owner.html): show the real number on the first-time offer
+api("promo_info").then(function (info) {
+  const first = OFFERS["first-time"];
+  first.title = info.percent + "% off for new customers";
+  first.text = "New to MCC Canteen? Enjoy " + info.percent + "% OFF on your first purchase!";
+  const label = grid.firstElementChild && grid.firstElementChild.querySelector("span");
+  if (label) label.textContent = first.title;
+  showPage();
+}).catch(function () { /* server not reachable: keep the default text */ });
 
 window.addEventListener("hashchange", showPage);
 document.querySelector("#offerBack").addEventListener("click", function (event) {
@@ -107,12 +119,12 @@ showPage();
 /* ---------------------------------------------------------
    4. "Order now" button (for offers that are just bundles)
    --------------------------------------------------------- */
-function orderButton() {
+function orderButton(button) {
+  const info = button || { text: "Order now", href: "index.html" };
   const link = document.createElement("a");
   link.className = "red-btn";
-  link.href = "index.html";
-  link.textContent = "Send us the proof";
-  
+  link.href = info.href;
+  link.textContent = info.text;
   return link;
 }
 
@@ -153,6 +165,10 @@ async function buildFirstTimeCheck(box, offer) {
   let promo;
   try { promo = await api("promo_status"); } catch (err) { showMessage("bad", "Could not check your account. Please try again."); return; }
 
+  if (promo.enabled === false) {
+    showMessage("bad", "This promo is not running right now. Check back soon, or see our other offers!");
+    return;
+  }
   if (promo.claimed) {
     showMessage("good", "&#10003; You are verified as a first-time customer! " + promo.percent + "% off will be taken off your first order.<br><a href=\"index.html\">Order now &rarr;</a>");
     return;

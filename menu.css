@@ -1,7 +1,7 @@
 /* =========================================================
    menu.css  -  the menu page (menu.html)
-   The red header bar comes from landing.css. This file styles the
-   search box + Back to Home in it, and the tabs and food cards below.
+   The red header bar and its links come from landing.css. This file styles
+   the title, the tabs and the food cards below it.
    ========================================================= */
 
 :root {
@@ -10,32 +10,12 @@
 }
 
 
-/* ----- header: search box + Back to Home ----- */
-.menu-tools { display: flex; align-items: center; gap: 28px; }
-
-.menu-search {
-  width: 260px; max-width: 100%;
-  padding: 5px 10px 5px 32px;
-  border: 1px solid #ccc; border-radius: 4px;
-  background: #fff url("img/icons/search.svg") no-repeat 9px center / 14px;
-  font-size: 0.9rem;
-}
-.menu-search:focus { outline: 2px solid #fff; }
-
-.back-pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 16px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.45);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
-  color: #fff; font: bold 0.95rem var(--font-body); white-space: nowrap;
-}
-.back-pill img { width: 22px; filter: brightness(0) invert(1); }      /* white arrow */
-.back-pill:hover { background: rgba(255, 255, 255, 0.6); }
-
-
 /* ----- title ----- */
-.menu-page { padding: 44px 40px 70px; text-align: center; font-family: var(--font-body); }
+.menu-page {
+  display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 30px; align-items: start;   /* foods left, Order Summary right */
+  padding: 44px 40px 70px; font-family: var(--font-body);
+}
+.menu-main { text-align: center; }
 .menu-eyebrow { color: var(--red); font: 1.25rem var(--font-title); }
 .menu-heading { margin: 4px 0 26px; font: normal 2rem var(--font-title); }
 
@@ -74,16 +54,61 @@
 }
 .order-btn:hover { background: #8e0000; }
 
-.menu-empty { margin-top: 40px; color: #777; font-size: 1.2rem; }
+
+/* ----- Order Summary (right side, same look as the cart on the front page) ----- */
+.order-summary {
+  position: sticky; top: 16px;
+  display: flex; flex-direction: column;
+  max-height: calc(100vh - 32px);
+  padding: 20px 18px;
+  border: 2px solid #000; border-radius: 14px; background: #fff;
+}
+.os-title { margin: 0 0 8px; font: normal 1.6rem var(--font-title); }
+.os-title span { color: #6b6b6b; font-size: 1.1rem; }
+.os-items { flex: 1; min-height: 60px; margin: 0; padding: 0; list-style: none; overflow-y: auto; }
+.os-items li {
+  display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid #eee;
+}
+.os-name { display: block; font-size: 1.05rem; }
+.os-qty { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: #6b6b6b; }
+.os-qty b { min-width: 1.2em; text-align: center; color: #000; font-weight: normal; }
+.os-qty-btn {
+  width: 22px; height: 22px; padding: 0;
+  border: 1.5px solid var(--red); border-radius: 50%;
+  background: #fff; color: var(--red); font-size: 1rem; line-height: 1;
+}
+.os-qty-btn:hover { background: var(--red); color: #fff; }
+.os-remove { width: 26px; height: 26px; padding: 0; border: 0; border-radius: 50%; background: #f1f1f1; color: #333; line-height: 1; }
+.os-remove:hover { background: #e3e3e3; }
+.os-empty { flex: 1; display: grid; place-items: center; padding: 26px 0; margin: 0; text-align: center; color: #999; }
+
+.os-bottom { display: flex; flex-direction: column; gap: 10px; padding-top: 14px; border-top: 2px solid #000; }
+.os-fields { display: flex; flex-direction: column; gap: 8px; }
+.os-fields input, .os-fields select {
+  width: 100%; padding: 8px 14px;
+  border: 1.5px solid #ddd; border-radius: 20px; font: inherit; font-size: 1rem;
+}
+.os-fields input:focus, .os-fields select:focus { outline: none; border-color: var(--red); }
+.os-row { display: flex; justify-content: space-between; font-size: 1.05rem; color: #6b6b6b; }
+.os-discount { color: #11672b; }
+.os-total { margin-bottom: 4px; font: normal 1.6rem var(--font-title); color: #000; }
+.os-confirm { width: 100%; padding: 10px; border: 0; border-radius: 30px; background: var(--red); color: #fff; font: 1.15rem var(--font-title); }
+.os-confirm:hover:not(:disabled) { background: #8e0000; }
+.os-confirm:disabled { background: #b5b5b5; cursor: not-allowed; }
+
+.order-btn { border: 0; cursor: pointer; }
+.order-btn:disabled { background: #b5b5b5; box-shadow: none; cursor: not-allowed; }
 
 
 /* ----- phones ----- */
-@media (max-width: 700px) {
-  .header { flex-wrap: wrap; height: auto; gap: 8px; padding: 4px 14px 10px 4px; }   /* landing.css fixes the height at 60px */
-  .menu-tools { flex: 1 1 100%; gap: 10px; }
-  .back-pill { padding: 6px 12px; font-size: 0.85rem; }
-  .menu-search { flex: 1; width: auto; min-width: 0; }
-  .menu-page { padding: 30px 16px 60px; }
+@media (max-width: 800px) {
+  /* landing.css hides the top links on phones; this page keeps them, as a row under the logo */
+  .header { flex-wrap: wrap; height: auto; gap: 6px; padding: 4px 14px 10px 4px; }   /* landing.css fixes the height at 60px */
+  .nav { flex: 1 1 100%; justify-content: space-between; gap: 2px; }
+  .nav-link { padding: 6px 10px; font-size: 0.85rem; }
+  .menu-page { grid-template-columns: 1fr; padding: 30px 16px 60px; }   /* Order Summary goes under the foods */
+  .order-summary { position: static; max-height: none; }
   .menu-heading { font-size: 1.6rem; }
   .menu-tabs { gap: 6px; }
   .dish-grid { grid-template-columns: repeat(2, 1fr); gap: 26px 14px; }

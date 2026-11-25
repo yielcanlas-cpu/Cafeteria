@@ -14,8 +14,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
 
   <!-- Link our stylesheet -->
-  <link rel="stylesheet" href="common.css">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="common.css?v=3">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body class="checking">
   <!-- ===================================================================
@@ -33,7 +33,8 @@
 
     <!-- Search box: script.js filters the food items while you type -->
     <div class="search">
-      <input type="search" id="searchInput" class="menu-search" placeholder="Search food" aria-label="Search food">
+      <input type="text" id="searchInput" placeholder="Search">
+      <img class="search-icon" src="img/icons/search.svg" alt="Search" width="26" height="26">
     </div>
 
     <!-- The user chip opens a small menu: profile, my orders, log out -->
@@ -75,8 +76,8 @@
 
     <!-- Banner carousel: 3 slides, only the one with class "active" shows -->
     <section class="carousel" id="carousel">
-      <div class="slide slide-1 active"><img src="img/download (2).jpg" alt="Canteen"></div>
-      <div class="slide slide-2"><img src="img/download (3).jpg" alt="Canteen"></div>
+      <div class="slide slide-1 active"><img src="img/hero.jpg" alt="Canteen"></div>
+      <div class="slide slide-2"><img src="img/foods.jpg" alt="Canteen"></div>
       <div class="slide slide-3"><img src="img/banner3.jpg" alt="Canteen"></div>
 
       <button class="order-now" id="orderNowBtn">Order Now <img class="inline-icon" src="img/icons/arrow-right.svg" alt=""></button>
@@ -120,9 +121,9 @@
           <span class="thumb"><img src="img/Crispy Pork Kare- Kare.jpg" alt="Kare-kare"></span>
           <span class="caption">Kare-kare</span>
         </button>
-        <button class="food" data-id="6" data-name="Ham & Cheese" data-price="60">
-          <span class="thumb"><img src="img/ham&cheese.jpg" alt="Ham & Cheese"></span>
-          <span class="caption">Ham & Cheese</span>
+        <button class="food" data-id="6" data-name="Ham &amp; Cheese" data-price="60">
+          <span class="thumb"><img src="img/ham&amp;cheese.jpg" alt="Ham &amp; Cheese"></span>
+          <span class="caption">Ham &amp; Cheese</span>
         </button>
         <button class="food" data-id="7" data-name="Red Tea" data-price="60">
           <span class="thumb"><img src="img/redtea.jpg" alt="Red Tea"></span>
@@ -140,28 +141,29 @@
 
       <!-- "big" makes these cards larger than the ones above -->
       <div class="row">
-        <button class="food big" data-id="8" data-name="Coffee & Cookies" data-price="90">
-          <span class="thumb"><img src="img/Coffee & Cookies.jpg" alt="Coffee & Cookies"></span>
-          <span class="caption">Coffee & Cookies</span>
+        <button class="food big" data-id="8" data-name="Coffee &amp; Cookies" data-price="90">
+          <span class="thumb"><img src="img/Coffee &amp; Cookies.jpg" alt="Coffee &amp; Cookies"></span>
+          <span class="caption">Coffee &amp; Cookies</span>
         </button>
-        <button class="food big" data-id="9" data-name="Siomai & drink" data-price="85">
-          <span class="thumb"><img src="img/siomai with drink.jpg" alt="Siomai & drink"></span>
-          <span class="caption">Siomai & drink</span>
+        <button class="food big" data-id="9" data-name="Siomai &amp; drink" data-price="85">
+          <span class="thumb"><img src="img/siomai with drink.jpg" alt="Siomai &amp; drink"></span>
+          <span class="caption">Siomai &amp; drink</span>
         </button>
-        <button class="food big" data-id="10" data-name="Coffee & Fries" data-price="200">
-          <span class="thumb"><img src="img/download (5).jpg" alt="Coffee & Fries"></span>
-          <span class="caption">Coffee & Fries</span>
+        <button class="food big" data-id="10" data-name="Coffee &amp; Fries" data-price="200">
+          <span class="thumb"><img src="img/coffee and fries.jpg" alt="Coffee &amp; Fries"></span>
+          <span class="caption">Coffee &amp; Fries</span>
         </button>
-        <button class="food big" data-id="9" data-name="Rice meal + Coke" data-price="85">
+        <button class="food big" data-id="11" data-name="Rice meal + Coke" data-price="85">
           <span class="thumb"><img src="img/download (4).jpg" alt="Rice meal + Coke"></span>
           <span class="caption">Rice meal + Coke</span>
-        </button>
-        <button class="food big" data-id="9" data-name="Rice meal + Coke" data-price="85">
-          <span class="thumb"><img src="img/download (4).jpg" alt="Rice meal + Coke"></span>
-          <span class="caption">Rice meal + Coke</span>
-          
         </button>
       </div>
+    </section>
+
+    <!-- ---------- New foods added by the main admin (script.js fills it) ---------- -->
+    <section id="newFoods" hidden>
+      <div class="section-head"><h2>New on the menu</h2></div>
+      <div class="row" id="newFoodsRow"></div>
     </section>
 
     <!-- ---------- Sulit Deals ---------- -->
@@ -195,12 +197,14 @@
       <!-- Where should the order be brought? -->
       <div class="cart-fields">
         <input id="roomInput" type="text" placeholder="Deliver to room (e.g. MB 101)" maxlength="9" autocomplete="off" aria-label="Room">
+        <select id="floorSelect" aria-label="Floor"><option value="">Select floor</option></select>   <!-- script.js fills it from api.php -->
         <input id="noteInput" type="text" placeholder="Note (optional)" maxlength="120" autocomplete="off" aria-label="Note">
       </div>
       <!-- First-time customers who passed the check on the Offers page see this line (script.js) -->
-      <p class="promo-hint" id="promoHint" hidden>First order? <a href="offers.html?from=app#first-time">Verify and get 10% off</a></p>
+      <p class="promo-hint" id="promoHint" hidden>First order? <a href="offers.html?from=app#first-time">Verify and get <span id="promoPct">10</span>% off</a></p>
       <div class="cart-row"><span>Sub total</span><span id="subtotal">Php0.00</span></div>
       <div class="cart-row cart-discount" id="discountRow" hidden><span id="discountLabel">First-order discount</span><span id="discountAmt">-Php0.00</span></div>
+      <div class="cart-row"><span>Delivery fee</span><span id="deliveryFee">Php0.00</span></div>
       <div class="cart-row cart-total"><span>Total</span><span id="total">Php0.00</span></div>
 
       <!-- "disabled" = gray and unclickable until something is in the cart -->
@@ -247,8 +251,8 @@
 
   <!-- Load our JavaScript LAST so the page elements already exist.
        common.js first: it has the helpers (api, showToast...) that script.js uses. -->
-  <script src="common.js"></script>
-  <script src="script.js?v=2"></script>
-  <script src="panels.js"></script>
+  <script src="common.js?v=3"></script>
+  <script src="script.js?v=3"></script>
+  <script src="panels.js?v=3"></script>
 </body>
 </html>

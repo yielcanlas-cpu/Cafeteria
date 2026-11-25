@@ -1,0 +1,20 @@
+# Everything in this folder (installer, password tool, notes) is for the owner's own computer only.
+<IfModule mod_authz_core.c>
+  Require local
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order deny,allow
+  Deny from all
+  Allow from 127.0.0.1 ::1
+</IfModule>
+<FilesMatch "\.(md|txt)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>
+# The security layer itself is loaded by PHP from disk; it must never be opened as a web page.
+<FilesMatch "^security\.php$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>

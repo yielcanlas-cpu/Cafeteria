@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MCC Canteen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Schibsted+Grotesk:wght@400;500;600&display=swap">
+<style>
+:root{--red:#c01f2f;--card:#4a4643;--ink:#fff;--muted:#7a7a7a;--serif:"Playfair Display",Georgia,serif;--sans:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;box-sizing:border-box}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{font-family:var(--sans);color:var(--ink);background:#3a0d14;display:flex;flex-direction:column;min-height:100%}
+header{background:var(--red);display:flex;align-items:center;gap:12px;padding:10px 20px;padding-top:calc(10px + env(safe-area-inset-top,0px));position:relative;z-index:2}
+header span{font-family:var(--serif);font-size:24px}
+.logo{width:42px;height:42px;border-radius:50%;background:var(--red);border:2px solid #f3c9cd;display:grid;place-items:center;flex:none}
+.logo svg{width:22px;height:22px;fill:#fff}
+.logo{cursor:pointer;overflow:hidden;outline:2px dashed rgba(255,255,255,.55);outline-offset:3px;position:relative}
+.logo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.logo:focus-visible{outline:3px solid #ffd2d6}
+.scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.scene.has-img{background:none}
+.scene.has-img::before{display:none}
+.scene.has-img::after{top:0;height:auto;background:linear-gradient(rgba(120,20,40,.55),rgba(60,5,20,.7))}
+.bg-btn{position:absolute;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:3;border:2px dashed rgba(255,255,255,.7);background:rgba(0,0,0,.35);color:#fff;border-radius:999px;padding:8px 14px;font:500 14px var(--sans);cursor:pointer}
+.bg-btn:hover{background:rgba(0,0,0,.55)}
+.bg-btn:focus-visible{outline:3px solid #ffd2d6;outline-offset:2px}
+main{flex:1;position:relative;display:grid;place-items:center;padding:24px 16px calc(24px + env(safe-area-inset-bottom,0px));overflow:hidden}
+.scene{position:absolute;inset:0;background:
+ linear-gradient(rgba(120,20,40,.55),rgba(60,5,20,.7)),
+ linear-gradient(180deg,#6f7fb0 0%,#c9a0b0 38%,#d9d2d0 42%,#e7e2e0 52%,#a86a5c 53%,#7a3a34 100%)}
+.scene::before{content:"";position:absolute;left:0;right:0;top:36%;height:20%;background:linear-gradient(#f2eeee,#cfc8c8);opacity:.75;clip-path:polygon(0 30%,36% 30%,36% 10%,64% 10%,64% 30%,100% 30%,100% 100%,0 100%)}
+.scene::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;background:repeating-linear-gradient(90deg,rgba(0,0,0,.18) 0 2px,transparent 2px 46px),repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 18px)}
+.card{position:relative;width:min(360px,100%);background:var(--card);border:2px solid #5a5552;border-radius:36px;padding:18px 16px 22px;box-shadow:0 20px 50px rgba(0,0,0,.4);text-align:center}
+.card .logo{margin:0 auto 4px}
+.card h1{font-family:var(--serif);font-size:24px;margin:0 0 14px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.tab{border:0;border-radius:999px;padding:13px 0;font:500 17px var(--sans);background:#fff;color:#666;cursor:pointer;box-shadow:0 6px 12px rgba(0,0,0,.3)}
+.tab[aria-selected="true"]{background:var(--red);color:#fff}
+form{text-align:left;display:none}
+form.active{display:block}
+label{display:block;font-weight:600;font-size:15px;margin:10px 0 3px 10px}
+.field{position:relative}
+input{width:100%;border:0;border-radius:999px;padding:10px 16px;font:500 16px var(--sans);color:#222;background:#fff;box-shadow:0 5px 10px rgba(0,0,0,.25)}
+input::placeholder{color:var(--muted)}
+input:focus-visible,.tab:focus-visible,.go:focus-visible,.eye:focus-visible,.link:focus-visible{outline:3px solid #ffd2d6;outline-offset:2px}
+.eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);border:0;background:none;color:#777;cursor:pointer;padding:4px;display:grid}
+.eye svg{width:20px;height:20px;fill:currentColor}
+.link{display:inline-block;margin:8px 0 0 8px;font-size:14px;color:#f1eeee;background:none;border:0;padding:0;font-family:var(--sans);cursor:pointer;text-decoration:none}
+.link:hover{text-decoration:underline}
+hr{border:0;border-top:1px solid rgba(255,255,255,.12);margin:16px 12px 14px}
+.go{display:block;margin:0 auto;border:0;border-radius:999px;background:var(--red);color:#fff;font:500 17px var(--sans);padding:11px 30px;cursor:pointer;box-shadow:0 6px 12px rgba(0,0,0,.35)}
+.go:hover{filter:brightness(1.08)}
+.msg{min-height:20px;margin:10px 8px 0;font-size:14px;text-align:center;color:#ffd2d6}
+.msg.ok{color:#cdeccf}
+@media (prefers-reduced-motion:no-preference){.go,.tab{transition:filter .15s,background .15s,color .15s}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" role="button" tabindex="0" title="Click to replace logo" aria-label="Replace logo"><svg viewBox="0 0 24 24"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg></div>
+  <span>MCC Canteen</span>
+</header>
+<main>
+  <div class="scene" aria-hidden="true"><img id="bgImg" alt="" hidden></div>
+  <button type="button" class="bg-btn" id="bgBtn">Replace background photo</button>
+  <input type="file" id="picker" accept="image/*" hidden>
+  <section class="card" aria-labelledby="t">
+    <div class="logo" role="button" tabindex="0" title="Click to replace logo" aria-label="Replace logo"><svg viewBox="0 0 24 24"><path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z"/></svg></div>
+    <h1 id="t">MCC Canteen</h1>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-login" aria-selected="true" aria-controls="login">Log in</button>
+      <button class="tab" role="tab" id="tab-signup" aria-selected="false" aria-controls="signup">Sign up</button>
+    </div>
+
+    <form id="login" class="active" novalidate aria-labelledby="tab-login">
+      <label for="l-email">Email</label>
+      <input id="l-email" type="email" autocomplete="email" placeholder="@gmail.com">
+      <label for="l-pass">Password</label>
+      <div class="field">
+        <input id="l-pass" type="password" autocomplete="current-password" placeholder="password">
+        <button type="button" class="eye" aria-label="Show password"><svg viewBox="0 0 24 24"><path d="M12 5c-5 0-9 4.5-10 7 1 2.5 5 7 10 7s9-4.500 10-7c-1-2.500-5-7-10-7zm0 11.500A4.500 4.500 0 1 1 12 7.500a4.500 4.500 0 0 1 0 9zm0-7a2.500 2.500 0 1 0 0 5 2.500 2.500 0 0 0 0-5z"/></svg></button>
+      </div>
+      <button type="button" class="link" id="forgot">Forgot password?</button>
+      <hr>
+      <button class="go" type="submit">Log in</button>
+      <div class="msg" role="status" aria-live="polite"></div>
+    </form>
+
+    <form id="signup" novalidate aria-labelledby="tab-signup">
+      <label for="s-name">Full name</label>
+      <input id="s-name" type="text" autocomplete="name" placeholder="name">
+      <label for="s-id">Email or Number</label>
+      <input id="s-id" type="text" autocomplete="username" placeholder="email or number">
+      <label for="s-pass">Password</label>
+      <div class="field">
+        <input id="s-pass" type="password" autocomplete="new-password" placeholder="min 8 characters">
+        <button type="button" class="eye" aria-label="Show password"><svg viewBox="0 0 24 24"><path d="M12 5c-5 0-9 4.5-10 7 1 2.5 5 7 10 7s9-4.500 10-7c-1-2.500-5-7-10-7zm0 11.500A4.500 4.500 0 1 1 12 7.500a4.500 4.500 0 0 1 0 9zm0-7a2.500 2.500 0 1 0 0 5 2.500 2.500 0 0 0 0-5z"/></svg></button>
+      </div>
+      <hr>
+      <button class="go" type="submit">Create now</button>
+      <div class="msg" role="status" aria-live="polite"></div>
+    </form>
+  </section>
+</main>
+<script>
+const tabs=document.querySelectorAll('.tab'),forms=document.querySelectorAll('form');
+function show(id){
+  tabs.forEach(t=>t.setAttribute('aria-selected',t.getAttribute('aria-controls')===id));
+  forms.forEach(f=>{f.classList.toggle('active',f.id===id);f.querySelector('.msg').textContent='';});
+}
+tabs.forEach(t=>t.addEventListener('click',()=>show(t.getAttribute('aria-controls'))));
+document.querySelectorAll('.eye').forEach(b=>b.addEventListener('click',()=>{
+  const i=b.parentElement.querySelector('input'),s=i.type==='password';
+  i.type=s?'text':'password';b.setAttribute('aria-label',s?'Hide password':'Show password');
+}));
+const emailRe=/^[^\s@]+@[^\s@]+\.[^\s@]+$/,phoneRe=/^(\+?63|0)?9\d{9}$/;
+function say(f,t,ok){const m=f.querySelector('.msg');m.textContent=t;m.classList.toggle('ok',!!ok);}
+document.getElementById('login').addEventListener('submit',e=>{
+  e.preventDefault();const f=e.target;
+  if(!emailRe.test(f['l-email'].value.trim()))return say(f,'Enter a valid email address.');
+  if(!f['l-pass'].value)return say(f,'Enter your password.');
+  say(f,'Logged in. Welcome back!',true);
+});
+document.getElementById('signup').addEventListener('submit',e=>{
+  e.preventDefault();const f=e.target,id=f['s-id'].value.trim().replace(/[\s-]/g,'');
+  if(!f['s-name'].value.trim())return say(f,'Enter your full name.');
+  if(!emailRe.test(id)&&!phoneRe.test(id))return say(f,'Enter a valid email or mobile number.');
+  if(f['s-pass'].value.length<8)return say(f,'Password must be at least 8 characters.');
+  say(f,'Account created. You can log in now.',true);setTimeout(()=>show('login'),1200);
+});
+document.getElementById('forgot').addEventListener('click',()=>{
+  const f=document.getElementById('login');
+  say(f,emailRe.test(f['l-email'].value.trim())?'Reset link sent. Check your email.':'Enter your email first, then tap Forgot password.',emailRe.test(f['l-email'].value.trim()));
+});
+
+/* ---- Image slots ----
+   To make your pictures permanent, put their file names or URLs here,
+   e.g. const LOGO_SRC = "logo.png"; const BG_SRC = "campus.jpg";
+   Or click the logo / "Replace background photo" button to preview one now. */
+const LOGO_SRC = "";
+const BG_SRC = "";
+
+const scene=document.querySelector('.scene'),bgImg=document.getElementById('bgImg'),picker=document.getElementById('picker');
+function setLogo(src){
+  document.querySelectorAll('.logo').forEach(l=>{
+    let img=l.querySelector('img');
+    if(!img){img=document.createElement('img');img.alt='';l.appendChild(img);}
+    img.src=src;l.querySelector('svg').style.display='none';
+  });
+}
+function setBg(src){bgImg.src=src;bgImg.hidden=false;scene.classList.add('has-img');}
+if(LOGO_SRC)setLogo(LOGO_SRC);
+if(BG_SRC)setBg(BG_SRC);
+try{
+  const l=localStorage.getItem('mcc-logo'),b=localStorage.getItem('mcc-bg');
+  if(l&&!LOGO_SRC)setLogo(l);
+  if(b&&!BG_SRC)setBg(b);
+}catch(e){}
+let target=null;
+function pick(t){target=t;picker.value='';picker.click();}
+document.querySelectorAll('.logo').forEach(l=>{
+  l.addEventListener('click',()=>pick('logo'));
+  l.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick('logo');}});
+});
+document.getElementById('bgBtn').addEventListener('click',()=>pick('bg'));
+picker.addEventListener('change',()=>{
+  const f=picker.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    const data=r.result;
+    if(target==='logo')setLogo(data);else setBg(data);
+    try{localStorage.setItem(target==='logo'?'mcc-logo':'mcc-bg',data);}catch(e){}
+  };
+  r.readAsDataURL(f);
+});
+</script>
+</body>
+</html>

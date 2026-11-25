@@ -25,7 +25,7 @@ let knownIds = null;           // ids we have already seen (to spot NEW orders)
   try { user = await getCurrentUser(); } catch (err) { user = null; }
 
   if (!user) { location.replace("login.html"); return; }
-  if (user.role !== "admin") { location.replace("index.html"); return; }
+  if (user.role !== "admin") { location.replace(homeFor(user)); return; }
 
   document.querySelector("#adminName").textContent = user.name;
   document.querySelector("#adminInitial").textContent = initials(user.name);

@@ -66,7 +66,8 @@ async function getCurrentUser() {
 
 // Each kind of account has its own "home" page
 function homeFor(user) {
-  return user.role === "admin" ? "staff.html" : "index.html";
+  if (user.role === "owner") return "owner.html";
+  return user.role === "admin" ? "admin.html" : "index.html";
 }
 
 // Log out, then go to the login page
@@ -122,7 +123,7 @@ function showToast(message) {
    setupPublicHeader()  -  the red bar of landing / menu / offers / contact
 
    1. THE LOGO: for someone who is logged in it goes to THEIR home
-      (student -> index.html, staff -> staff.html), not to the landing page.
+      (student -> index.html, staff -> admin.html), not to the landing page.
       A visitor who is not logged in still goes to the landing page.
    2. THE "Login/Sign up" LINK: pages mark it with data-auth-link="back" or "home".
         back -> a BACK button once you are logged in (or came from the dashboard)
@@ -140,6 +141,8 @@ function setupPublicHeader() {
     if (brand) brand.setAttribute("href", home);
 
     authLinks.forEach(function (authLink) {
+      // data-auth-link="hide": a link only guests need (like Sign up)
+      if (authLink.dataset.authLink === "hide") { authLink.hidden = true; return; }
       authLink.setAttribute("href", home);
       if (authLink.dataset.authLink === "back") {
         authLink.classList.add("back-btn");
@@ -163,4 +166,42 @@ function setupPublicHeader() {
   getCurrentUser().then(function (user) {
     if (user) apply(user);
   }).catch(function () { /* server not reachable: leave the header as it is */ });
+}
+
+
+/* ---------------------------------------------------------
+   Browser storage + delivery floors
+   Used by the dashboard (script.js) and the menu page (menu.js),
+   which share the same cart.
+   --------------------------------------------------------- */
+// Tiny helpers: browser storage can be blocked, so every use is wrapped in try/catch
+function loadFromBrowser(key, fallback) {
+  try { return localStorage.getItem(key) ?? fallback; } catch (err) { return fallback; }
+}
+// Reads a saved list/object (cart, favorites) and never throws if the saved text is damaged
+function loadJsonFromBrowser(key, fallback) {
+  try {
+    const value = JSON.parse(loadFromBrowser(key, "") || "null");
+    return value === null || value === undefined ? fallback : value;
+  } catch (err) { return fallback; }
+}
+function saveToBrowser(key, value) {
+  try { localStorage.setItem(key, value); } catch (err) { /* ignore */ }
+}
+
+// Where the order goes. The fee for each floor comes from api.php ("menu" action),
+// because the server is the one that charges it.
+const FLOOR_NAMES = { 1: "First Floor", 2: "Second Floor" };
+
+// Fills a floor <select> with "First Floor (Php5.00)", "Second Floor (Php10.00)" and keeps the choice
+function fillFloorSelect(select, fees) {
+  const chosen = select.value;
+  select.innerHTML = '<option value="">Select floor</option>';
+  Object.keys(fees || {}).forEach(function (floor) {
+    const option = document.createElement("option");
+    option.value = floor;
+    option.textContent = (FLOOR_NAMES[floor] || "Floor " + floor) + " (" + formatPrice(fees[floor]) + ")";
+    select.append(option);
+  });
+  select.value = chosen;
 }

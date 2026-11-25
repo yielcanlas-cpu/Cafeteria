@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Owner · MCC Canteen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Itim&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="owner.css">
+</head>
+<!-- "checking" hides the page until we know the owner account is logged in -->
+<body class="checking">
+
+<!-- ============ TOP BAR (dark) ============ -->
+<header class="header">
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Toggle menu"><img class="icon" src="img/icons/menu.svg" alt="Menu"></button>
+  <h1 class="logo"><a href="owner.html">MCC CANTEEN</a><small>Owner</small></h1>
+  <div class="search">
+    <input type="search" id="search" class="menu-search" placeholder="Search this page" aria-label="Search this page">
+  </div>
+  <div class="user-menu">
+    <button class="user-chip" id="userChip" type="button" aria-haspopup="true" aria-expanded="false">
+      <span class="who-av" id="ownerInitial"></span>
+      <span class="user-name"><span id="ownerName">&nbsp;</span> <img class="inline-icon" src="img/icons/chevron.svg" alt=""></span>
+    </button>
+    <div class="user-dropdown" id="userDropdown" hidden>
+      <span class="dd-label">Canteen Owner</span>
+      <button type="button" id="logoutBtn">Log out</button>
+    </div>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- ============ SIDE MENU: the five things the owner manages ============ -->
+  <aside class="side">
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-tab="dashboard" type="button"><img src="img/icons/home.svg" alt=""> Dashboard</button>
+      <button class="tab" data-tab="menu" type="button"><img src="img/icons/list.svg" alt=""> Menu &amp; prices</button>
+      <button class="tab" data-tab="offers" type="button"><img src="img/icons/offers.svg" alt=""> Offers &amp; promo</button>
+      <button class="tab" data-tab="staff" type="button"><img src="img/icons/settings.svg" alt=""> Staff accounts</button>
+      <button class="tab" data-tab="students" type="button"><img src="img/icons/categories.svg" alt=""> Student accounts</button>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <header class="main-head">
+      <div>
+        <h1 id="pageTitle">Dashboard</h1>
+        <span class="today" id="today"></span>
+      </div>
+      <!-- the numbers at the top right (owner.js fills them for each page) -->
+      <div class="head-stats" id="headStats"></div>
+    </header>
+
+    <p class="updated" id="notice" hidden></p>
+    <section id="view"></section>
+  </main>
+</div>
+
+<!-- ============ ONE POP-UP FORM, reused for every add / edit / reset ============ -->
+<div class="modal" id="modal" hidden>
+  <form class="modal-card" id="modalForm" autocomplete="off">
+    <h2 id="modalTitle"></h2>
+    <div id="modalFields"></div>
+    <p class="form-error" id="modalError" role="alert"></p>
+    <div class="modal-actions">
+      <button type="button" class="btn ghost" id="modalCancel">Cancel</button>
+      <button type="submit" class="btn solid" id="modalOk">Save</button>
+    </div>
+  </form>
+</div>
+
+<script src="common.js"></script>
+<script src="owner.js"></script>
+</body>
+</html>

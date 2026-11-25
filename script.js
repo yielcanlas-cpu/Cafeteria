@@ -27,8 +27,8 @@ let currentUser = null;        // the logged-in student (filled in by start() be
     location.replace("login.html?next=index.html");
     return;
   }
-  if (currentUser.role === "admin") {
-    location.replace("staff.html");
+  if (currentUser.role === "admin" || currentUser.role === "owner") {
+    location.replace(homeFor(currentUser));      // staff -> admin.html, main admin -> owner.html
     return;
   }
 
@@ -40,21 +40,13 @@ let currentUser = null;        // the logged-in student (filled in by start() be
   document.body.classList.remove("checking");  // reveal the page
 
   roomInput.value = loadFromBrowser("mcc_room_" + currentUser.id, "");   // remember the last room
-  cart = JSON.parse(loadFromBrowser("mcc_cart_" + currentUser.id, "[]")) || [];
+  cart = loadJsonFromBrowser("mcc_cart_" + currentUser.id, []);
+  if (!Array.isArray(cart)) cart = [];
   updateCart();
   syncMenuWithServer();
   loadPromo();                                  // does this student get 10% off? (section 7)
   if (typeof initPanels === "function") initPanels();   // favorites hearts, notification dot (panels.js)
 })();
-
-// Tiny helpers: browser storage can be blocked, so every use is wrapped in try/catch
-function loadFromBrowser(key, fallback) {
-  try { return localStorage.getItem(key) ?? fallback; } catch (err) { return fallback; }
-}
-function saveToBrowser(key, value) {
-  try { localStorage.setItem(key, value); } catch (err) { /* ignore */ }
-}
-
 
 /* ---------------------------------------------------------
    1. SIDEBAR TOGGLE  (hamburger button)
@@ -183,7 +175,7 @@ document.querySelector("#orderNowBtn").addEventListener("click", function () {
    5. SEARCH  (filters the food as you type)
    --------------------------------------------------------- */
 const searchInput = document.querySelector("#searchInput");
-const foodItems = document.querySelectorAll(".food");
+const foodItems = Array.from(document.querySelectorAll(".food"));   // an array, so foods added by the main admin can be pushed in
 
 searchInput.addEventListener("input", function () {
   const text = searchInput.value.trim().toLowerCase();   // lowercase so "Coke" = "coke"
@@ -203,10 +195,15 @@ searchInput.addEventListener("input", function () {
    --------------------------------------------------------- */
 async function syncMenuWithServer() {
   try {
-    const { menu } = await api("menu");
+    const { menu, delivery_fees } = await api("menu");
 
     const byId = {};
     menu.forEach(function (item) { byId[item.id] = item; });
+
+    // Delivery fee per floor (one fee per order). Show it in the floor box and restore the last floor.
+    deliveryFees = delivery_fees;
+    fillFloorSelect(floorSelect, deliveryFees);
+    floorSelect.value = loadFromBrowser("mcc_floor_" + currentUser.id, "");
 
     foodItems.forEach(function (food) {
       const item = byId[Number(food.dataset.id)];
@@ -217,9 +214,30 @@ async function syncMenuWithServer() {
       } else {
         food.disabled = true;                                        // not in api.php: cannot be ordered
         food.classList.add("unavailable");
-        food.title = "Not available for ordering yet";
+        food.title = "Sold out or not available right now";
       }
     });
+
+    // Foods the main admin added on owner.html have no button in index.html yet: make one for each
+    const known = new Set(foodItems.map(function (food) { return Number(food.dataset.id); }));
+    const newRow = document.querySelector("#newFoodsRow");
+    menu.forEach(function (item) {
+      if (known.has(item.id)) return;
+      known.add(item.id);
+      const food = document.createElement("button");
+      food.className = "food";
+      food.dataset.id = item.id;
+      food.dataset.name = item.name;
+      food.dataset.price = item.price;
+      food.title = item.name + " · " + formatPrice(item.price);
+      food.innerHTML = '<span class="thumb"><img alt=""></span><span class="caption"></span>';
+      food.querySelector("img").src = item.image || "img/canteen.jpg";      // the dish's photo from menu.html, or a plain canteen photo
+      food.querySelector(".caption").textContent = item.name;
+      newRow.appendChild(food);
+      foodItems.push(food);
+      bindFood(food);
+    });
+    document.querySelector("#newFoods").hidden = newRow.children.length === 0;
 
     // Refresh the cart with the server's prices and drop anything that is gone
     cart = cart.filter(function (line) { return byId[line.id]; });
@@ -249,6 +267,8 @@ const fabCountEl = document.querySelector("#fabCount");
 const cartFab = document.querySelector("#cartFab");
 const cartClose = document.querySelector("#cartClose");
 const roomInput = document.querySelector("#roomInput");
+const floorSelect = document.querySelector("#floorSelect");
+const deliveryFeeEl = document.querySelector("#deliveryFee");
 const noteInput = document.querySelector("#noteInput");
 const discountRow = document.querySelector("#discountRow");
 const discountAmt = document.querySelector("#discountAmt");
@@ -256,6 +276,8 @@ const discountLabel = document.querySelector("#discountLabel");
 const promoHint = document.querySelector("#promoHint");
 
 const MAX_QTY = 20;            // the same limit as api.php
+
+let deliveryFees = {};         // { 1: 5, 2: 10 } from api.php. The fee is charged ONCE per order.
 
 // The 10% first-order promo. api.php decides (promo_status):
 //   eligible = still a first-time customer       claimed = passed the check on offers.html
@@ -324,8 +346,11 @@ function updateCart() {
   discountRow.hidden = discount === 0;
   discountLabel.textContent = "First-order discount (" + promo.percent + "%)";
   discountAmt.textContent = "-" + formatPrice(discount);
+  document.querySelector("#promoPct").textContent = promo.percent;
   promoHint.hidden = !(promo.eligible && !promo.claimed);   // first-timer who has not verified yet
-  totalEl.textContent = formatPrice(sum - discount);
+  const deliveryFee = sum > 0 ? (deliveryFees[floorSelect.value] || 0) : 0;   // once per order, never per food
+  deliveryFeeEl.textContent = formatPrice(deliveryFee);
+  totalEl.textContent = formatPrice(sum - discount + deliveryFee);
 
   itemCountEl.textContent = "(" + count + ")";
   fabCountEl.textContent = count;
@@ -342,7 +367,7 @@ function updateCart() {
 }
 
 // Click a food -> add it (or add +1 if it is already in the cart)
-foodItems.forEach(function (food) {
+function bindFood(food) {
   food.addEventListener("click", function () {
     const id = Number(food.dataset.id);
 
@@ -362,6 +387,13 @@ foodItems.forEach(function (food) {
     }
     updateCart();
   });
+}
+foodItems.forEach(bindFood);
+
+// Another floor = another delivery fee: remember it and re-add the total
+floorSelect.addEventListener("change", function () {
+  saveToBrowser("mcc_floor_" + currentUser.id, floorSelect.value);
+  updateCart();
 });
 
 // "Order More" goes back to the top to keep browsing (and closes the panel on phones)
@@ -395,6 +427,12 @@ confirmBtn.addEventListener("click", async function () {
     return;
   }
 
+  if (floorSelect.value === "") {
+    showToast("Choose the floor to deliver to.");
+    floorSelect.focus();
+    return;
+  }
+
   placingOrder = true;
   confirmBtn.textContent = "Placing order...";
   updateCart();                                          // disables the buttons while we wait
@@ -404,6 +442,7 @@ confirmBtn.addEventListener("click", async function () {
       // the server only needs the id and how many of each
       items: cart.map(function (line) { return { id: line.id, qty: line.qty }; }),
       room: room,
+      floor: Number(floorSelect.value),
       note: noteInput.value.trim()
     });
 

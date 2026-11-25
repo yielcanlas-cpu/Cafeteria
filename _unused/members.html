@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Members · MCC Canteen</title>
+  <link rel="stylesheet" href="members.css">
+</head>
+<!-- "checking" hides the page until we know the manager account is logged in -->
+<body class="checking">
+<header class="top">
+  <a class="brand" href="members.html"><img src="img/logo.png" alt="">MCC Canteen</a>
+  <input type="search" id="search" placeholder="Search..." aria-label="Search name, email or mobile">
+  <div class="who"><span class="av" id="avatar"></span><span><b id="adminName"></b><small>Admin for Canteen</small></span></div>
+</header>
+
+<div class="app">
+  <aside class="side">
+    <a class="active" href="members.html"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14.5c2.5.6 4 2.4 4 5.5"/></svg>Users</a>
+    <button type="button" id="logoutBtn">Log out</button>
+  </aside>
+
+  <main class="main">
+    <div class="tabs">
+      <button class="tab active" data-tab="members" type="button">Members</button>
+      <button class="tab" data-tab="admins" type="button">Admins</button>
+    </div>
+    <div class="totals">Total members: <b id="total">0</b><br>Current active: <b id="activeCount">0</b></div>
+
+    <div class="bar">
+      <h1>Members</h1>
+      <button class="btn primary" id="addBtn" type="button">Add new</button>
+      <button class="btn" id="exportBtn" type="button">Export members (Excel)</button>
+      <select id="statusFilter" class="btn right" aria-label="Filter by status">
+        <option value="">All statuses</option><option value="active">Active</option><option value="inactive">Inactive</option>
+      </select>
+    </div>
+    <p class="error" id="error" role="alert"></p>
+
+    <div class="card">
+      <table>
+        <thead><tr><th>Photo</th><th>Member name</th><th>Mobile</th><th>Email</th><th>Status</th><th>Last login</th><th>Operation</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p class="empty" id="empty" hidden>No members found.</p>
+    </div>
+  </main>
+</div>
+
+<dialog id="viewDlg" class="wide">
+  <h2 id="vName"></h2>
+  <p class="muted" id="vInfo"></p>
+  <div class="stats"><div><b id="vOrders">0</b>Orders</div><div><b id="vSpent">0</b>Spent</div><div><b id="vJoined"></b>Joined</div><div><b id="vLast"></b>Last login</div></div>
+  <h3>Orders</h3><div id="vOrderList"></div>
+  <h3>Messages</h3><div id="vMsgList"></div>
+  <div class="actions"><button class="btn" type="button" id="vClose">Close</button></div>
+</dialog>
+
+<dialog id="dlg">
+  <form id="form" method="dialog">
+    <h2 id="dlgTitle">Add member</h2>
+    <label>Name<input name="name" maxlength="60" required></label>
+    <label>Email or mobile number (this is the login)<input name="email" required></label>
+    <label>Mobile<input name="phone" maxlength="20"></label>
+    <label>Password <small id="passHint"></small><input name="password" type="password" autocomplete="new-password"></label>
+    <label class="check"><input name="active" type="checkbox" checked> Active</label>
+    <p class="error" id="formError" role="alert"></p>
+    <div class="actions"><button class="btn" type="button" id="cancelBtn">Cancel</button><button class="btn primary" type="submit">Save</button></div>
+  </form>
+</dialog>
+
+<script src="common.js"></script>
+<script src="members.js"></script>
+</body>
+</html>

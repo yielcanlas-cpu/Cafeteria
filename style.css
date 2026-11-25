@@ -4,8 +4,8 @@
 
 /* Variables: change a color here and it updates everywhere */
 :root {
-  --red: #bf1e2e;    /* header, buttons */
-  --red: #bf1e2e;   /* profile banner, edit buttons */
+  --red: #e02d2f;        /* header, buttons */
+  --red-soft: #e44d4d;   /* profile banner, edit buttons */
   --gray: #6b6b6b;       /* sidebar text */
   --header-h: 80px;      /* height of the red header */
   --sidebar-w: 240px;    /* width of the sidebar */
@@ -64,28 +64,27 @@ button { font-family: inherit; cursor: pointer; }
   color: #fff;
 }
 
-/* Search bar matches the design used on menu.html */
 .search {
+  flex: 1;                  /* takes up the leftover space */
+  min-width: 0;             /* lets it shrink on small screens */
+  max-width: 420px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
-
-  margin-left: 1000px;
-  margin-top: 0;
+  background: #fff;
+  border: 3px solid #000;
+  border-radius: 30px;
+  padding: 4px 16px;
 }
-
-.search .menu-search {
-  width: 260px;
-  max-width: 100%;
-  padding: 5px 10px 5px 32px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: #fff url("img/icons/search.svg") no-repeat 9px center / 14px;
-  font-size: 0.9rem;
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;            /* removes the default blue outline */
+  font-family: inherit;
+  font-size: 1.3rem;
 }
-
-.search .menu-search:focus {
-  outline: 2px solid #fff;
-}
+.search-icon { width: 26px; height: 26px; }
 
 .user-menu { position: relative; }
 .user-chip {
@@ -440,12 +439,6 @@ button { font-family: inherit; cursor: pointer; }
   color: #999;
   font-size: 1.1rem;
 }
- .about-text {
-  padding: 0 24px 0 4px;
-  background: var(--red);
-  color: #fff;
-  font-family: "Google Sans", sans-serif;;
- }
 /* Totals and buttons */
 .cart-summary {
   display: flex;
@@ -553,7 +546,8 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ----- Room + note fields in the cart ----- */
 .cart-fields { display: flex; flex-direction: column; gap: 8px; }
-.cart-fields input {
+.cart-fields input,
+.cart-fields select {
   width: 100%;
   padding: 8px 14px;
   border: 1.5px solid #ddd;
@@ -561,7 +555,8 @@ button { font-family: inherit; cursor: pointer; }
   font: inherit;
   font-size: 1rem;
 }
-.cart-fields input:focus { outline: none; border-color: var(--red); }
+.cart-fields input:focus,
+.cart-fields select:focus { outline: none; border-color: var(--red); }
 
 /* ----- My Orders window ----- */
 .modal {

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Main Admin · MCC Canteen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Itim&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="owner.css">
+</head>
+<!-- "checking" hides the page until we know the main admin is logged in -->
+<body class="checking">
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <button class="burger" id="burger" type="button" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  <a class="brand" href="owner.html">MCC CANTEEN <small>Main Admin</small></a>
+  <input type="search" id="search" class="search" placeholder="Search this page" aria-label="Search this page">
+  <div class="user-menu">
+    <button class="chip" id="chip" type="button" aria-haspopup="true" aria-expanded="false">
+      <span class="av" id="av"></span><span class="chip-name" id="chipName">&nbsp;</span><span class="caret">▾</span>
+    </button>
+    <div class="dropdown" id="dropdown" hidden>
+      <span class="dd-label">Main Admin</span>
+      <button type="button" id="logoutBtn">Log out</button>
+    </div>
+  </div>
+</header>
+
+<div class="app">
+  <!-- ============ SIDE MENU ============ -->
+  <aside class="side">
+    <nav id="nav">
+      <button class="nav active" data-page="dashboard" type="button"><i>▦</i> Dashboard</button>
+      <button class="nav" data-page="menu" type="button"><i>☰</i> Menu &amp; prices</button>
+      <button class="nav" data-page="offers" type="button"><i>%</i> Offers &amp; promo</button>
+      <button class="nav" data-page="staff" type="button"><i>★</i> Staff accounts</button>
+      <button class="nav" data-page="students" type="button"><i>☺</i> Student accounts</button>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <!-- title on the left, the numbers for this page on the right -->
+    <div class="head">
+      <div>
+        <h1 id="title">Dashboard</h1>
+        <p class="sub" id="subtitle"></p>
+      </div>
+      <div class="head-stats" id="headStats"></div>
+    </div>
+
+    <div id="page"></div>
+  </main>
+</div>
+
+<!-- ============ DIALOG (one for all the forms) ============ -->
+<div class="overlay" id="overlay" hidden>
+  <form class="dialog" id="dialog" novalidate>
+    <h2 id="dlgTitle"></h2>
+    <div id="dlgBody"></div>
+    <p class="dlg-error" id="dlgError"></p>
+    <div class="dlg-actions">
+      <button type="button" class="btn ghost" id="dlgCancel">Cancel</button>
+      <button type="submit" class="btn" id="dlgOk">Save</button>
+    </div>
+  </form>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="common.js"></script>
+<script src="owner.js"></script>
+</body>
+</html>

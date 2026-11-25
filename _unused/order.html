@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#c62828">
+  <title>Campus Cafeteria</title>
+  <link rel="stylesheet" href="canteen.css">
+</head>
+<body>
+
+  <!-- AUTH -->
+  <section id="view-auth" class="view">
+    <div class="card auth-card">
+      <div class="logo">🍽️</div>
+      <h1>MCC Canteen</h1>
+      <p class="muted">Sulit sa order.</p>
+
+      <div class="tabs">
+        <button id="tab-login" class="tab active" type="button">Log in</button>
+        <button id="tab-signup" class="tab" type="button">Create account</button>
+      </div>
+
+      <form id="form-login" autocomplete="on">
+        <label>Email<input type="email" name="email" placeholder="@gmail.com" required></label>
+        <label>Password<input type="password" name="password" placeholder="Your password" required></label>
+        <button class="btn primary" type="submit">Log in</button>
+      </form>
+
+      <form id="form-signup" class="hidden" autocomplete="on">
+        <label>Full name<input type="text" name="name" placeholder="Name" required></label>
+        <label>Email<input type="email" name="email" placeholder="@gmail.com" required></label>
+        <label>Password<input type="password" name="password" placeholder="At least 6 characters" minlength="6" required></label>
+        <button class="btn primary" type="submit">Create account</button>
+      </form>
+
+      <p id="auth-error" class="error" role="alert"></p>
+    </div>
+  </section>
+
+  <!-- ORDERING -->
+  <section id="view-app" class="view hidden">
+    <header class="topbar">
+      <div><strong>🍽️ Campus Cafeteria</strong><span id="hello" class="muted"></span></div>
+      <button id="btn-logout" class="btn small ghost" type="button">Log out</button>
+    </header>
+
+    <main class="layout">
+      <div class="menu-col">
+        <h2>Menu</h2>
+        <div id="menu" class="menu-grid"></div>
+      </div>
+
+      <aside class="order-col">
+        <div id="order-card" class="card sticky">
+          <h2>Your order</h2>
+          <ul id="cart" class="cart"></ul>
+          <p id="cart-empty" class="muted">Nothing yet — pick something from the menu.</p>
+
+          <div class="subtotal"><span>Subtotal</span><strong id="subtotal">₱0.00</strong></div>
+
+          <label>Deliver to room
+            <input id="room" type="text" placeholder="e.g. MB 101" maxlength="8" autocapitalize="characters">
+          </label>
+          <label>Note (optional)
+            <input id="note" type="text" placeholder="e.g. no onions" maxlength="120">
+          </label>
+
+          <button id="btn-order" class="btn primary block" type="button" disabled>Place order</button>
+          <p id="order-error" class="error" role="alert"></p>
+        </div>
+
+        <div class="card">
+          <h2>My orders</h2>
+          <ul id="history" class="history"></ul>
+          <p id="history-empty" class="muted">No orders yet.</p>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Bottom bar for phones & tablets: shows total, jumps to the order panel -->
+    <div id="cartbar" class="cartbar hidden">
+      <div class="cartbar-info"><strong id="cartbar-count">0 items</strong><span id="cartbar-total">₱0.00</span></div>
+      <button id="cartbar-btn" class="btn primary" type="button">View order</button>
+    </div>
+  </section>
+
+  <!-- CONFIRMATION -->
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="card modal-card">
+      <div class="logo">✅</div>
+      <h2>Order placed!</h2>
+      <p id="modal-text"></p>
+      <button id="modal-close" class="btn primary" type="button">Done</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

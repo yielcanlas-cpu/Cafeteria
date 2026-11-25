@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="common.css">
-  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="auth.css?v=verify1">
 </head>
 <body>
 
@@ -78,9 +78,9 @@
         </div>
 
         <div class="field">
-          <label for="signupEmail">Email or Number</label>
+          <label for="signupEmail">Email</label>
           <div class="input-wrap">
-            <input id="signupEmail" type="text" name="email" placeholder="email or number" autocomplete="username" required>
+            <input id="signupEmail" type="email" name="email" placeholder="you@gmail.com" maxlength="120" autocomplete="email" required>
           </div>
         </div>
 
@@ -98,12 +98,35 @@
         </div>
       </form>
 
+      <!-- ---------- VERIFY EMAIL (shown after Sign up, or when a student logs in before verifying) ---------- -->
+      <form id="verifyForm" autocomplete="off" hidden>
+        <p class="verify-text">We sent a 6-digit code to<br><strong id="verifyEmail"></strong></p>
+
+        <div class="field">
+          <label for="verifyCode">Verification code</label>
+          <div class="input-wrap">
+            <input id="verifyCode" class="code-input" type="text" name="code" inputmode="numeric" pattern="[0-9]*"
+                   maxlength="6" placeholder="000000" autocomplete="one-time-code" required>
+          </div>
+        </div>
+
+        <div class="verify-links">
+          <button type="button" class="link-btn" id="resendBtn">Resend code</button>
+          <button type="button" class="link-btn" id="verifyBack">Back</button>
+        </div>
+
+        <div class="form-bottom">
+          <hr>
+          <button class="submit" type="submit">Verify</button>
+        </div>
+      </form>
+
       <!-- Error messages appear here -->
       <p class="error" id="authError" role="alert"></p>
     </div>
   </main>
 
   <script src="common.js"></script>
-  <script src="login.js"></script>
+  <script src="login.js?v=verify1"></script>
 </body>
 </html>

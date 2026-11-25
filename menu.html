@@ -7,11 +7,11 @@
   <title>Menu · MCC Canteen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Itim&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="common.css?v=3">
   <!-- landing.css has the header (the red bar) that this page shares with landing.html -->
-  <link rel="stylesheet" href="landing.css">
-  <link rel="stylesheet" href="menu.css">
-  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="landing.css?v=3">
+  <link rel="stylesheet" href="menu.css?v=3">
+  <link rel="stylesheet" href="pages.css?v=3">
 </head>
 <body>
 
@@ -30,17 +30,20 @@
     <!-- ============ HEADER: logo, search box, Back to Home ============ -->
     <header class="header">
       <a href="landing.html" class="brand">
-        <img class="brand-logo" src="img/logo.png" alt="Mabalacat City College logo">
+        <img class="brand-logo" src="logo.png" alt="Mabalacat City College logo">
         <span class="brand-name">MCC CANTEEN</span>
       </a>
-      <div class="menu-tools">
-        <input type="search" id="menuSearch" class="menu-search" placeholder="Search food" aria-label="Search the menu">
-        <!-- menu.js sends a logged-in person to their own home page instead -->
-        <a href="landing.html" class="back-pill" id="backHome">Back to Home <img src="img/icons/arrow-right.svg" alt=""></a>
-      </div>
+      <nav class="nav">
+        <a href="offers.html" class="nav-link active">Offers</a>
+        <a href="contact.html" class="nav-link">Contact us</a>
+        <!-- common.js turns Login into a Back button once you are logged in; menu.js hides Sign up -->
+        <a href="login.html" class="nav-link" data-auth-link="back">Login</a>
+        <a href="login.html?tab=signup" class="nav-link" id="signupLink" data-auth-link="hide">Sign up</a>
+      </nav>
     </header>
 
     <main class="menu-page">
+     <div class="menu-main">
       <p class="menu-eyebrow">Menu</p>
       <h1 class="menu-heading">Browse our Menu</h1>
 
@@ -59,126 +62,145 @@
         <figure class="dish" data-cat="rice">
           <img src="img/Crispy Pork Kare- Kare.jpg" alt="Kare-kare">
           <figcaption>Kare-kare</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" data-id="5">Order Now</button>
         </figure>
         <figure class="dish" data-cat="rice">
           <img src="img/sisig.jpg" alt="Sisig">
           <figcaption>Sisig</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
         <figure class="dish" data-cat="rice">
           <img src="img/bicol-express.jpg" alt="Bicol Express">
           <figcaption>Bicol Express</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
         <figure class="dish" data-cat="rice">
           <img src="img/sinigang.jpg" alt="Sinigang">
           <figcaption>Sinigang</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
         <figure class="dish" data-cat="rice">
           <img src="img/tinola.jpg" alt="Tinola">
           <figcaption>Tinola</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
         <figure class="dish" data-cat="rice">
           <img src="img/cheesy-chicken-katsu.jpg" alt="Cheesy Chicken Katsu">
           <figcaption>Cheesy Chicken Katsu</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" data-id="4">Order Now</button>
         </figure>
         <figure class="dish" data-cat="rice">
           <img src="img/pork-adobo.jpg" alt="Pork Adobo">
           <figcaption>Pork Adobo</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
         <figure class="dish" data-cat="rice">
           <img src="img/menudo.jpg" alt="Menudo">
           <figcaption>Menudo</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
 
         <!-- ---------- Meryenda ---------- -->
         <figure class="dish" data-cat="meryenda" hidden>
           <img src="img/lumpiang-gulay.jpg" alt="Lumpiang Gulay">
           <figcaption>Lumpiang Gulay</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
         <figure class="dish" data-cat="meryenda" hidden>
           <img src="img/Turon(Banana Wrapped in Lumpia Wrapper).jpg" alt="Turon">
           <figcaption>Turon</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" data-id="2">Order Now</button>
         </figure>
         <figure class="dish" data-cat="meryenda" hidden>
           <img src="img/maruya.jpg" alt="Maruya">
           <figcaption>Maruya</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
         <figure class="dish" data-cat="meryenda" hidden>
           <img src="img/muffin.jpg" alt="Muffin">
           <figcaption>Muffin</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
         <figure class="dish" data-cat="meryenda" hidden>
           <img src="img/ham-and-cheese.jpg" alt="Ham &amp; Cheese">
           <figcaption>Ham &amp; Cheese</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" data-id="6">Order Now</button>
         </figure>
         <figure class="dish" data-cat="meryenda" hidden>
           <img src="img/cheese-stick.jpg" alt="Cheese Stick">
           <figcaption>Cheese Stick</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
 
         <!-- ---------- Tusok-tusok ---------- -->
         <figure class="dish" data-cat="tusok" hidden>
           <img src="img/Kwek-kwek.jpg" alt="Kwek-kwek">
           <figcaption>Kwek-kwek</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" data-id="1">Order Now</button>
         </figure>
         <figure class="dish" data-cat="tusok" hidden>
           <img src="img/fried-isaw.jpg" alt="Fried isaw">
           <figcaption>Fried isaw</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
         <figure class="dish" data-cat="tusok" hidden>
           <img src="img/fried-tokwa.jpg" alt="Fried Tokwa">
           <figcaption>Fried Tokwa</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
         <figure class="dish" data-cat="tusok" hidden>
           <img src="img/fried-siomai.jpg" alt="Fried Siomai">
           <figcaption>Fried Siomai</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
 
         <!-- ---------- Drinks ---------- -->
         <figure class="dish" data-cat="drinks" hidden>
           <img src="img/iced tea.jpg" alt="Iced Tea">
           <figcaption>Iced Tea</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" data-id="3">Order Now</button>
         </figure>
         <figure class="dish" data-cat="drinks" hidden>
           <img src="img/redtea.jpg" alt="Red Tea">
           <figcaption>Red Tea</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" data-id="7">Order Now</button>
         </figure>
         <figure class="dish" data-cat="drinks" hidden>
           <img src="img/sago at gulaman.jpg" alt="Gulaman">
           <figcaption>Gulaman</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
         <figure class="dish" data-cat="drinks" hidden>
           <img src="img/melon.jpg" alt="Melon">
           <figcaption>Melon</figcaption>
-          <a class="order-btn" href="index.html">Order Now</a>
+          <button class="order-btn" type="button" disabled title="Not available for ordering yet">Order Now</button>
         </figure>
 
       </div>
-      <p class="menu-empty" id="menuEmpty" hidden>No food found.</p>
+     </div>
+
+      <!-- ============ ORDER SUMMARY (right side). menu.js fills it and keeps it up to date ============ -->
+      <aside class="order-summary" id="orderSummary">
+        <h2 class="os-title">Order Summary <span id="osCount">(0)</span></h2>
+        <ul class="os-items" id="osItems"></ul>
+        <p class="os-empty" id="osEmpty">No items yet.<br>Tap Order Now on a food to add it.</p>
+
+        <div class="os-bottom">
+          <div class="os-fields">
+            <input id="osRoom" type="text" placeholder="Deliver to room (e.g. MB 101)" maxlength="9" autocomplete="off" aria-label="Room">
+            <select id="osFloor" aria-label="Floor"></select>   <!-- menu.js fills it from api.php -->
+          </div>
+          <div class="os-row"><span>Subtotal</span><span id="osSubtotal">Php0.00</span></div>
+          <div class="os-row os-discount" id="osDiscountRow" hidden><span id="osDiscountLabel">First-order discount</span><span id="osDiscount">-Php0.00</span></div>
+          <div class="os-row"><span>Delivery fee</span><span id="osFee">Php0.00</span></div>
+          <div class="os-row os-total"><span>Grand total</span><span id="osTotal">Php0.00</span></div>
+          <button class="os-confirm" id="osConfirm" type="button" disabled>Confirm Order</button>
+        </div>
+      </aside>
     </main>
   </div>
 
-  <script src="common.js"></script>
-  <script src="menu.js?v=2"></script>
+  <script src="common.js?v=3"></script>
+  <script src="menu.js?v=5"></script>
 </body>
 </html>

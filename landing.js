@@ -16,11 +16,12 @@ const dropdown = document.querySelector("#dropdown");
 
 // Opens or closes the dropdown
 function toggleDropdown(open) {
+  if (!dropdown) return;
   dropdown.hidden = !open;                         // hidden = true hides it
-  menuBtn.setAttribute("aria-expanded", open);     // helps screen readers
+  if (menuBtn) menuBtn.setAttribute("aria-expanded", open);   // helps screen readers
 }
 
-menuBtn.addEventListener("click", function (event) {
+if (menuBtn && dropdown) menuBtn.addEventListener("click", function (event) {
   event.stopPropagation();   // stops this click from also reaching the "click anywhere" code below
   toggleDropdown(dropdown.hidden);                 // if hidden -> open, if open -> close
 });
@@ -85,7 +86,7 @@ document.querySelectorAll('.quick-card[href^="#"], .dropdown a[href^="#"]').forE
    4. TOAST  (small message, used by the "Get app" button)
    Any element with data-toast="message" shows that message.
    --------------------------------------------------------- */
-const toast = document.querySelector("#toast");
+const toast = document.querySelector("#toast") || document.createElement("div");
 let landingToastTimer;                                    // remembers the timer so we can reset it
 
 document.querySelectorAll("[data-toast]").forEach(function (item) {

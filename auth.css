@@ -204,6 +204,27 @@ hr {
   text-align: center;
 }
 
+/* ----- verify-email step ----- */
+.verify-text { margin: 6px 8px 14px; text-align: center; font-size: 0.92rem; line-height: 1.5; }
+.verify-text strong { word-break: break-all; }
+.input-wrap input.code-input {
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.45em;
+  padding-left: 0.45em;          /* keeps the digits centered despite the letter-spacing */
+}
+.verify-links { display: flex; justify-content: space-between; margin: 4px 8px 0; }
+.link-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: 0.85rem;
+  text-decoration: underline;
+}
+.link-btn:disabled { opacity: 0.6; cursor: default; text-decoration: none; }
+
 @media (max-width: 420px) {
   .brand { font-size: 1.25rem; }
   .tabs { gap: 10px; }

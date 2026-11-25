@@ -352,7 +352,7 @@ async function checkNotificationDot() {
    --------------------------------------------------------- */
 const FAQ = [
   ["How do I place an order?", "Tap the foods you want on the main menu. In the Your Order panel type your room (for example MB 101), then press Confirm Order."],
-  ["How do I get the 10% first-order discount?", "Open Offers, choose 10% off for new customers, answer Yes to First-Time Customer and press Submit. We check your account: it only works if you have no order yet. The discount is then taken off your first order automatically."],
+  ["How do I get the first-order discount?", "Open Offers, choose the offer for new customers, answer Yes to First-Time Customer and press Submit. We check your account: it only works if you have no order yet. The discount is then taken off your first order automatically."],
   ["Can I cancel my order?", "Yes, while it is still Preparing. Open My Orders and press Cancel this order. Once the kitchen marks it Ready it can no longer be cancelled."],
   ["How do I know my order is ready?", "Open Delivery to follow your order step by step: Preparing, Ready, Delivered. Notification also tells you when something changes."],
   ["How do I save my favorite foods?", "Tap the heart on a food. Your saved foods are listed under Favorites, where you can add them to your order again with one tap."],
@@ -385,6 +385,7 @@ function buildHelp(box) {
    7. START  (script.js calls this once it knows who is logged in)
    --------------------------------------------------------- */
 function initPanels() {
-  favorites = JSON.parse(loadFromBrowser("mcc_fav_" + currentUser.id, "[]")) || [];
+  favorites = loadJsonFromBrowser("mcc_fav_" + currentUser.id, []);
+  if (!Array.isArray(favorites)) favorites = [];
   addHearts();
 }

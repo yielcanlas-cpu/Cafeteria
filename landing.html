@@ -13,13 +13,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="landing.css">
-  <link rel="stylesheet" href="pages.css">
+  <link rel="stylesheet" href="landing.css?v=3">
+  <link rel="stylesheet" href="pages.css?v=3">
 
   <!-- Lets phones "install" the website as an app (see the Get app window below) -->
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#bf1e2e">
-  <link rel="apple-touch-icon" href="img/mcc_logo.png">
+  <link rel="apple-touch-icon" href="img/icon-192.png">
 </head>
 <body>
 
@@ -36,7 +36,7 @@
     <!-- ============ HEADER ============ -->
     <header class="header">
       <a href="landing.html" class="brand">
-        <img class="brand-logo" src="img/logo.png" alt="Mabalacat City College logo">
+        <img class="brand-logo" src="logo.png" alt="Mabalacat City College logo">
         <span class="brand-name">MCC CANTEEN</span>
       </a>
 
@@ -46,17 +46,20 @@
         <a href="contact.html" class="nav-link">Contact us</a>
         <!-- common.js turns this into "Home" once you are logged in -->
         <a href="login.html" class="nav-link" data-auth-link="home">Login</a>
-        <a href="signup.html" class="nav-link" data-auth-link="home">Sign up</a>
+        <a href="login.html?tab=signup" class="nav-link" data-auth-link="hide">Sign up</a>
         
 
       </nav>
+
+      <!-- Round button: opens the dropdown below (landing.js) -->
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false"><img src="img/icons/menu.svg" alt="" style="filter:invert(1)"></button>
 
       <!-- Dropdown menu (hidden until the round button is pressed) -->
       <div class="dropdown" id="dropdown" hidden>
         <a href="menu.html">Menu</a>
         <a href="index.html">Order Now</a>
         <a href="profile.html">My Profile</a>
-        <a href="staff.html">Canteen Staff</a>
+        <a href="admin.html">Staff</a>
         <!-- These 5 only show on phones, where the top links are hidden -->
         <a href="offers.html" class="phone-only">Offers</a>
         <a href="#updates" class="phone-only">Updates</a>
@@ -171,8 +174,8 @@
   <div class="toast" id="toast" hidden></div>
 
   <!-- Load the JavaScript LAST so the elements above already exist -->
-  <script src="common.js"></script>
-  <script src="landing.js"></script>
+  <script src="common.js?v=3"></script>
+  <script src="landing.js?v=3"></script>
   <script>setupPublicHeader();</script>
 </body>
 </html>

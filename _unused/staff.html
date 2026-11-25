@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Canteen Staff · MCC Canteen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Itim&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="staff.css">
+</head>
+<!-- "checking" hides the page until we know the staff account is logged in -->
+<body class="checking">
+<!-- ============ HEADER (red bar at the top, same as the student home page) ============ -->
+<header class="header">
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Toggle menu"><img class="icon" src="img/icons/menu.svg" alt="Menu"></button>
+  <h1 class="logo"><a href="staff.html">MCC CANTEEN</a></h1>
+  <div class="search" id="headerSearch">
+    <input type="search" id="searchOrders" class="menu-search" placeholder="Search order, name or room" aria-label="Search orders">
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- ============ SIDEBAR: name chip (with Log out), the two pages ============ -->
+  <aside class="side">
+    <!-- Name chip: click it to open the menu with Log out (same as the student page) -->
+    <div class="user-menu">
+      <button class="user-chip" id="userChip" type="button" aria-haspopup="true" aria-expanded="false">
+        <span class="who-av" id="adminInitial"></span>
+        <span class="user-name"><span id="adminName">&nbsp;</span> <img class="inline-icon" src="img/icons/chevron.svg" alt=""></span>
+      </button>
+      <div class="user-dropdown" id="userDropdown" hidden>
+        <span class="dd-label">Canteen Staff</span>
+        <button type="button" id="logoutBtn">Log out</button>
+      </div>
+    </div>
+
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-tab="orders" data-title="Orders" type="button"><img src="img/icons/orders.svg" alt=""> Orders</button>
+      <button class="tab" data-tab="messages" data-title="Messages" type="button"><img src="img/icons/messages.svg" alt=""> Messages <span class="tab-count" id="msgCount" hidden>0</span></button>
+    </nav>
+
+  </aside>
+
+  <main class="main">
+
+    <!-- ============ TITLE + TODAY'S DATE ============ -->
+    <header class="main-head">
+      <h1 id="pageTitle">Orders</h1>
+      <span class="today" id="today"></span>
+    </header>
+
+    <!-- ============ NUMBERS AT A GLANCE ============ -->
+    <section class="stats">
+      <div class="stat"><b id="countPreparing">0</b><span>Preparing</span></div>
+      <div class="stat"><b id="countReady">0</b><span>Ready</span></div>
+      <div class="stat"><b id="countDelivered">0</b><span>Delivered</span></div>
+      <div class="stat"><b id="countCancelled">0</b><span>Cancelled</span></div>
+      <div class="stat sales"><b id="salesToday">Php0.00</b><span>Sales today</span></div>
+    </section>
+
+    <div id="ordersTab">
+    <!-- ============ FILTERS + SEARCH ============ -->
+    <section class="toolbar">
+      <div class="filters" id="filters">
+        <!-- "Active" = Preparing + Ready, the orders that still need work -->
+        <button class="filter active" data-filter="Active">Active</button>
+        <button class="filter" data-filter="Preparing">Preparing</button>
+        <button class="filter" data-filter="Ready">Ready</button>
+        <button class="filter" data-filter="Delivered">Delivered</button>
+        <button class="filter" data-filter="Cancelled">Cancelled</button>
+        <button class="filter" data-filter="All">All</button>
+      </div>
+    </section>
+    <p class="updated" id="updated"></p>
+
+    <!-- staff.js fills this with one card per order -->
+    <section class="orders" id="orders"></section>
+    <p class="empty" id="empty" hidden>No orders to show.</p>
+    </div>
+
+    <!-- ============ MESSAGES FROM STUDENTS (staff.js fills it) ============ -->
+    <div id="messagesTab" hidden>
+      <p class="updated">Messages from the contact page and the students' Messages window. Unanswered ones come first.</p>
+      <section class="messages" id="messages"></section>
+      <p class="empty" id="emptyMessages" hidden>No messages yet.</p>
+    </div>
+
+  </main>
+</div>
+
+  <script src="common.js"></script>
+  <script src="staff.js"></script>
+</body>
+</html>

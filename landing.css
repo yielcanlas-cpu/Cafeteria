@@ -58,10 +58,10 @@ button { font-family: inherit; cursor: pointer; }
   margin-right: auto;        /* pushes everything else to the right */
 }
 .brand-logo {
-    width: 46px;
-    height: 46px;
-    object-fit: contain;
-    background: transparent;
+  width: 54px; height: 54px;
+  border-radius: 12px;
+  object-fit: contain;       /* shows the whole logo without cropping */
+  background: #fff;
 }
 .brand-name { font-size: 1.05rem; font-weight: bold; letter-spacing: 0.5px; }
 
@@ -183,7 +183,7 @@ button { font-family: inherit; cursor: pointer; }
 /* =========================================================
    4. OVERVIEW
    ========================================================= */
-.o verview {
+.overview {
   margin-top: 40px;
   padding: 14px 4px 0;
   border-top: 1px solid #999;                /* the thin gray line */
