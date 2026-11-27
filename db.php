@@ -126,6 +126,8 @@ function setup_database(PDO $pdo): void {
     if (!column_exists($pdo, 'users', 'location')) $pdo->exec("ALTER TABLE users ADD COLUMN location VARCHAR(80) NOT NULL DEFAULT ''");
     if (!column_exists($pdo, 'users', 'bio'))      $pdo->exec("ALTER TABLE users ADD COLUMN bio VARCHAR(200) NOT NULL DEFAULT ''");
 
+    if (!column_exists($pdo, 'messages', 'images')) $pdo->exec('ALTER TABLE messages ADD COLUMN images VARCHAR(400) NULL DEFAULT NULL');   // JSON list of proof photo names
+
     // First-order promo: when the student passed the "first-time customer" check,
     // and how much was taken off each order
     if (!column_exists($pdo, 'users', 'promo_claimed_at')) $pdo->exec('ALTER TABLE users ADD COLUMN promo_claimed_at TIMESTAMP NULL DEFAULT NULL');

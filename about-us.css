@@ -1,11 +1,11 @@
 html { scroll-behavior: smooth; }
-  body { margin: 0; font-family: Arial, sans-serif; }
+  body { margin: 0; font-family: "Google Sans", sans-serif; }
 
   header { position: sticky; top: 0; z-index: 10; display: flex; align-items: center;
            justify-content: space-between; padding: 0 24px; height: 58px; background: #c01f2f; color: #fff; }
-  .brand { display: flex; align-items: center; gap: 12px; font-family: serif; font-weight: bold; }
+  .brand { display: flex; align-items: center; gap: 12px; font-family: "Google Sans", sans-serif; font-weight: bold; }
   .brand img { width: 40px; height: 40px; border-radius: 50%; }
-  nav { display: flex; gap: 16px; font-family: serif; }
+  nav { display: flex; gap: 16px; font-family: "Google Sans", sans-serif; }
   nav a { color: #fff; text-decoration: none; padding: 10px 24px; border-radius: 20px; }
   nav a.active, nav a:hover { background: rgba(255,255,255,.35); }
 
@@ -14,7 +14,7 @@ html { scroll-behavior: smooth; }
   #about-us h2 { margin: 8px 0 16px; font-size: 22px; }
 
   .carousel { display: flex; align-items: center; gap: 8px; }
-  .arrow { border: 0; background: none; font-size: 18px; font-weight: bold; cursor: pointer; }
+  .arrow { font-family: inherit; border: 0; background: none; font-size: 18px; font-weight: bold; cursor: pointer; }
   .track { flex: 1; display: flex; gap: 100px; overflow-x: auto; scroll-snap-type: x mandatory;
            scrollbar-width: none; padding: 16px 8px 24px; }
   .track::-webkit-scrollbar { display: none; }

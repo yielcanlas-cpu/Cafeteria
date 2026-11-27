@@ -31,6 +31,7 @@ const MCCSEC_LOGIN_MAX_IP        = 30;   // failed logins per computer per windo
 const MCCSEC_REGISTER_MAX        = 30;   // sign-ups per computer per hour
 const MCCSEC_CONTACT_MAX         = 10;   // contact/messages per computer per 10 minutes
 const MCCSEC_MAX_BODY_BYTES      = 65536;
+const MCCSEC_MAX_CONTACT_BYTES   = 1500000;   // the contact form may carry up to 3 small photos
 
 // ---------------------------------------------------------------- helpers
 function mccsec_ip(): string { return (string)($_SERVER['REMOTE_ADDR'] ?? '0.0.0.0'); }
@@ -151,7 +152,7 @@ if ($method !== 'GET' && $method !== 'POST') {
 if ($isChanging && $method !== 'POST' && !in_array($action, $getAllowed, true)) {
     mccsec_deny(405, 'Use POST for this action.', true, ['Allow: POST']);
 }
-if ((int)($_SERVER['CONTENT_LENGTH'] ?? 0) > MCCSEC_MAX_BODY_BYTES) {
+if ((int)($_SERVER['CONTENT_LENGTH'] ?? 0) > ($action === 'contact' ? MCCSEC_MAX_CONTACT_BYTES : MCCSEC_MAX_BODY_BYTES)) {
     mccsec_deny(413, 'Request too large.', true);
 }
 

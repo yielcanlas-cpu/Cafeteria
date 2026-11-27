@@ -20,7 +20,7 @@ body.checking { visibility: hidden; }
   border-radius: 30px;
   background: #222;
   color: #fff;
-  font: 1rem Arial, Helvetica, sans-serif;
+  font: 1rem "Google Sans", sans-serif;
   text-align: center;
   z-index: 100;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
@@ -31,7 +31,7 @@ body.checking { visibility: hidden; }
   display: inline-block;
   padding: 2px 12px;
   border-radius: 999px;
-  font: bold 0.8rem Arial, Helvetica, sans-serif;
+  font: bold 0.8rem "Google Sans", sans-serif;
   background: #fff3cd;           /* Preparing = yellow */
   color: #7a5a00;
 }

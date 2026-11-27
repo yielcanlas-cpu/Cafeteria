@@ -6,8 +6,8 @@
 :root {
   --red: #bf1e2e;
   --gray: #8c8785;
-  --font-title: "Chewy", "Comic Sans MS", cursive;
-  --font-body: "Itim", "Comic Sans MS", cursive;
+  --font-title: "Google Sans", sans-serif;
+  --font-body: "Google Sans", sans-serif;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: #fff; color: #000; font-family: var(--font-body); }

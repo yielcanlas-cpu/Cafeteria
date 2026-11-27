@@ -10,8 +10,8 @@
   --text: #2b1b1a;
   --muted: #7a6663;
   --line: #e6dcda;
-  --font-title: "Chewy", "Comic Sans MS", cursive;
-  --font-body: "Itim", "Comic Sans MS", cursive;
+  --font-title: "Google Sans", sans-serif;
+  --font-body: "Google Sans", sans-serif;
   --header-h: 80px;
   --sidebar-w: 240px;
 }
@@ -190,3 +190,6 @@ h1, p { margin: 0; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .stat.sales { grid-column: span 2; }
 }
+
+.msg-photos { display: flex; flex-wrap: wrap; gap: 8px; }
+.msg-photos img { width: 96px; height: 96px; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); }

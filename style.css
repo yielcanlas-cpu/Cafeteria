@@ -10,8 +10,8 @@
   --header-h: 80px;      /* height of the red header */
   --sidebar-w: 240px;    /* width of the sidebar */
   --cart-w: 280px;       /* width of the cart panel on the right */
-  --font-title: "Chewy", "Comic Sans MS", cursive;
-  --font-body: "Itim", "Comic Sans MS", cursive;
+  --font-title: "Google Sans", sans-serif;
+  --font-body: "Google Sans", sans-serif;
 }
 
 /* border-box = padding and border are counted INSIDE an element's width.

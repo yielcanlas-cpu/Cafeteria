@@ -1,7 +1,7 @@
 /* members.html - the manager's Members page. Change --brand to recolour it. */
 :root { --brand: #c8333f; --brand-dark: #8e0000; --bg: #f7f7f9; --text: #2b2b3a; --muted: #7a7a8c; --line: #ececf1; }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.4 "Google Sans", sans-serif; }
 body.checking { visibility: hidden; }
 button, input, select { font: inherit; }
 .top { display: flex; align-items: center; gap: 24px; padding: 0 28px; height: 56px; background: var(--brand-dark); color: #fff; }

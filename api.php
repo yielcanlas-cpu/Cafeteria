@@ -69,6 +69,37 @@ function body(): array {
     return is_array($data) ? $data : [];
 }
 
+// Saves the proof photos sent with a message (data URLs, already shrunk by contact.js).
+// Only real jpeg/png/webp pictures up to 500 KB each, at most 3. Returns the saved file names.
+function save_proof_images($list): array {
+    if (!is_array($list)) return [];
+    if (count($list) > 3) out(['error' => 'You can add up to 3 photos.'], 422);
+    $dir = __DIR__ . '/uploads';
+    if (!is_dir($dir) && !mkdir($dir, 0755, true)) out(['error' => 'Could not save the photo (uploads folder).'], 500);
+    $types = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+    $names = [];
+    foreach ($list as $url) {
+        if (!is_string($url) || !preg_match('#^data:image/(?:jpeg|png|webp);base64,([A-Za-z0-9+/=]+)$#', $url, $m)) out(['error' => 'Only JPG, PNG or WebP photos are allowed.'], 422);
+        $bin = base64_decode($m[1], true);
+        if ($bin === false || strlen($bin) > 500000) out(['error' => 'Each photo must be under 500 KB.'], 422);
+        $info = @getimagesizefromstring($bin);
+        if (!$info || !isset($types[$info['mime']])) out(['error' => 'That file is not a valid photo.'], 422);
+        $name = bin2hex(random_bytes(16)) . '.' . $types[$info['mime']];
+        file_put_contents($dir . '/' . $name, $bin);
+        $names[] = $name;
+    }
+    return $names;
+}
+
+// messages.images (JSON list of names) -> list of urls the pages can show
+function proof_urls(array $rows): array {
+    foreach ($rows as &$r) {
+        $names = json_decode((string)($r['images'] ?? ''), true);
+        $r['images'] = is_array($names) ? array_map(fn($n) => 'uploads/' . $n, $names) : [];
+    }
+    return $rows;
+}
+
 // The "Email or Number" box: turns what the person typed into the value we store and look up.
 //   an email           -> lowercase email
 //   a mobile number    -> 09xxxxxxxxx  (09123456789, 9123456789, +63 912 345 6789 all become 09123456789)
@@ -448,17 +479,18 @@ try {
             // Slow down spam: one message every 20 seconds per visitor
             if (time() - (int)($_SESSION['last_message_at'] ?? 0) < 20) out(['error' => 'Please wait a few seconds before sending another message.'], 429);
 
-            db()->prepare('INSERT INTO messages (user_id, name, email, subject, message) VALUES (?, ?, ?, ?, ?)')
-                ->execute([$u ? $u['id'] : null, $name, $email, $subject, $text]);
+            $photos = save_proof_images($b['images'] ?? []);
+            db()->prepare('INSERT INTO messages (user_id, name, email, subject, message, images) VALUES (?, ?, ?, ?, ?, ?)')
+                ->execute([$u ? $u['id'] : null, $name, $email, $subject, $text, $photos ? json_encode($photos) : null]);
             $_SESSION['last_message_at'] = time();
             out(['ok' => true]);
         }
 
         case 'my_messages': {
             $user = require_login();
-            $st = db()->prepare('SELECT id, subject, message, reply, replied_at, created_at FROM messages WHERE user_id = ? ORDER BY id DESC LIMIT 30');
+            $st = db()->prepare('SELECT id, subject, message, images, reply, replied_at, created_at FROM messages WHERE user_id = ? ORDER BY id DESC LIMIT 30');
             $st->execute([$user['id']]);
-            out(['messages' => $st->fetchAll()]);
+            out(['messages' => proof_urls($st->fetchAll())]);
         }
 
         // ----- student orders -----
@@ -596,9 +628,9 @@ try {
         // ----- staff: messages from students -----
         case 'admin_messages': {
             require_admin();
-            $rows = db()->query('SELECT id, name, email, subject, message, reply, replied_at, created_at
+            $rows = db()->query('SELECT id, name, email, subject, message, images, reply, replied_at, created_at
                                  FROM messages ORDER BY (reply IS NULL) DESC, id DESC LIMIT 100')->fetchAll();
-            out(['messages' => $rows]);
+            out(['messages' => proof_urls($rows)]);
         }
 
         case 'admin_reply_message': {

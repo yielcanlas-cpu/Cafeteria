@@ -10,8 +10,8 @@
   --text: #2b1b1a;
   --muted: #7a6663;
   --line: #e6dcda;
-  --font-title: "Chewy", "Comic Sans MS", cursive;
-  --font-body: "Itim", "Comic Sans MS", cursive;
+  --font-title: "Google Sans", sans-serif;
+  --font-body: "Google Sans", sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -172,3 +172,6 @@ h1, p { margin: 0; }
   .stat.sales { grid-column: span 2; }
   #searchOrders { width: 100%; }
 }
+
+.msg-photos { display: flex; flex-wrap: wrap; gap: 8px; }
+.msg-photos img { width: 96px; height: 96px; object-fit: cover; border-radius: 10px; border: 1px solid var(--line); }

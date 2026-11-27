@@ -294,6 +294,16 @@ function buildMessageCard(m) {
   card.append(el("strong", "", m.subject || "(no subject)"));
   card.append(el("div", "msg-meta", m.name + " · " + m.email + " · " + formatDate(m.created_at)));
   card.append(el("p", "msg-text", m.message));
+  if (m.images && m.images.length) {
+    const row = el("div", "msg-photos");
+    m.images.forEach(function (src) {
+      const link = el("a");
+      link.href = src; link.target = "_blank"; link.rel = "noopener";
+      const pic = el("img"); pic.src = src; pic.alt = "Proof photo";
+      link.append(pic); row.append(link);
+    });
+    card.append(row);
+  }
 
   if (m.reply) card.append(el("div", "msg-reply", "Your reply: " + m.reply));
 

@@ -7,8 +7,8 @@
   /* The dark red tint over the campus photo (img/login-bg.jpg is the plain photo).
      To change how strong the red is, change the two 0.xx numbers. */
   --tint: linear-gradient(rgba(150, 20, 45, 0.55), rgba(70, 5, 25, 0.65));
-  --font-title: "Playfair Display", Georgia, serif;
-  --font-body: "Lexend", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-title: "Google Sans", sans-serif;
+  --font-body: "Google Sans", sans-serif;
 }
 
 * { box-sizing: border-box; }

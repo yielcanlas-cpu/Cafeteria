@@ -47,6 +47,7 @@ async function openPanel(name) {
   if (!panel) return;
 
   openPanelName = name;
+  if (name === "notifications") document.querySelector("#notifDot").hidden = true;   // gone at the click; saved as seen once the list loads
   panelTitle.textContent = panel.title;
   panelBody.innerHTML = "";
   panelBody.append(emptyNote("Loading..."));
@@ -274,6 +275,11 @@ async function buildMessages(box) {
   messages.forEach(function (m) {
     const card = node("div", "msg-card");
     card.append(node("strong", "", m.subject || "(no subject)"), node("div", "order-meta", formatDate(m.created_at)), node("p", "", m.message));
+    (m.images || []).forEach(function (src) {
+      const pic = document.createElement("img");
+      pic.src = src; pic.alt = "Proof photo"; pic.style.cssText = "width:64px;height:64px;object-fit:cover;border-radius:8px;margin-right:6px";
+      card.append(pic);
+    });
     if (m.reply) {
       const reply = node("div", "msg-reply");
       reply.append(node("b", "", "Staff reply"), node("p", "", m.reply));
@@ -319,6 +325,7 @@ async function collectNotifications() {
 
 async function buildNotifications(box) {
   const list = await collectNotifications();
+  markNotificationsSeen();
   if (list.length === 0) { box.append(emptyNote("Nothing new yet.")); return; }
 
   list.forEach(function (item) {
@@ -336,13 +343,33 @@ async function buildNotifications(box) {
   });
 }
 
-// A red dot next to "Notification" when there is an order that is Ready or a staff reply
+// Things that deserve the red dot: a Ready order, a staff reply, the unused first-order offer.
+// Each has a key; the keys you have already seen are kept in this browser (like favorites).
+async function newsKeys() {
+  const [{ orders }, { messages }] = await Promise.all([api("my_orders"), api("my_messages")]);
+  const keys = [];
+  orders.forEach(function (o) { if (o.status === "Ready") keys.push("ready:" + o.id); });
+  messages.forEach(function (m) { if (m.reply) keys.push("reply:" + m.id); });
+  if (promo.eligible && !promo.claimed) keys.push("promo");
+  return keys;
+}
+
+const seenKey = function () { return "mcc_seen_" + currentUser.id; };
+
+// Red dot next to "Notification" while there is news you have not opened yet
 async function checkNotificationDot() {
   try {
-    const [{ orders }, { messages }] = await Promise.all([api("my_orders"), api("my_messages")]);
-    const news = orders.some(function (o) { return o.status === "Ready"; }) ||
-                 messages.some(function (m) { return m.reply; });
-    document.querySelector("#notifDot").hidden = !(news || (promo.eligible && !promo.claimed));
+    const seen = loadJsonFromBrowser(seenKey(), []);
+    const unread = (await newsKeys()).some(function (key) { return !seen.includes(key); });
+    document.querySelector("#notifDot").hidden = !unread;
+  } catch (err) { /* the dot is just a hint */ }
+}
+
+// Called when the Notification window shows: everything in it counts as seen
+async function markNotificationsSeen() {
+  try {
+    saveToBrowser(seenKey(), JSON.stringify(await newsKeys()));
+    document.querySelector("#notifDot").hidden = true;
   } catch (err) { /* the dot is just a hint */ }
 }
 
@@ -369,8 +396,8 @@ function buildHelp(box) {
   const contact = node("div", "help-contact");
   contact.append(
     node("strong", "", "Still need help?"),
-    node("div", "", "Email: mcccanteen@gmail.com"),
-    node("div", "", "Phone: 09123344556"),
+    node("div", "", "Email: mcccanteen28@gmail.com"),
+    node("div", "", "Phone: 09517524322"),
     node("div", "", "Dolores, Mabalacat City, Pampanga.")
   );
   const write = node("button", "mini-btn", "Send us a message");
@@ -388,4 +415,6 @@ function initPanels() {
   favorites = loadJsonFromBrowser("mcc_fav_" + currentUser.id, []);
   if (!Array.isArray(favorites)) favorites = [];
   addHearts();
+  // look for new news every 15 seconds (the open Notification window marks it seen itself)
+  setInterval(function () { if (!document.hidden && openPanelName !== "notifications") checkNotificationDot(); }, 15000);
 }

@@ -14,8 +14,8 @@
   --line: #e6dcda;
   --ok: #11672b; --ok-soft: #e4f4e8;
   --warn: #8a5a00; --warn-soft: #fff3d6;
-  --font-title: "Chewy", "Comic Sans MS", cursive;
-  --font-body: "Itim", "Comic Sans MS", cursive;
+  --font-title: "Google Sans", sans-serif;
+  --font-body: "Google Sans", sans-serif;
   --bar-h: 64px; --side-w: 230px;
 }
 * { box-sizing: border-box; }

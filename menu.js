@@ -191,11 +191,62 @@ function syncOrderButtons(menu) {
   });
 }
 
+/* ---------------------------------------------------------
+   4. FAVORITES: a heart on every food
+   Same list as the dashboard (mcc_fav_<id> in the browser), so hearts here show up under Favorites there.
+   --------------------------------------------------------- */
+let favorites = [];
+
+function paintHearts() {
+  dishes.forEach(function (dish) {
+    const heart = dish.querySelector(".fav");
+    const saved = favorites.includes(Number(dish.querySelector(".order-btn").dataset.id));
+    heart.textContent = saved ? "\u2665" : "\u2661";
+    heart.classList.toggle("on", saved);
+    heart.setAttribute("aria-pressed", saved);
+  });
+}
+
+function toggleFavorite(dish) {
+  if (!me) { location.href = "login.html?next=menu.html"; return; }
+  const id = Number(dish.querySelector(".order-btn").dataset.id);
+  const name = dish.querySelector("figcaption").textContent.trim();
+  if (!id) { showToast(name + " is not available right now."); return; }
+  if (favorites.includes(id)) {
+    favorites = favorites.filter(function (other) { return other !== id; });
+    showToast(name + " removed from favorites.");
+  } else {
+    favorites.push(id);
+    showToast(name + " added to favorites.");
+  }
+  saveToBrowser("mcc_fav_" + me.id, JSON.stringify(favorites));
+  paintHearts();
+}
+
+dishes.forEach(function (dish) {
+  const img = dish.querySelector("img");
+  const pic = document.createElement("span");
+  pic.className = "dish-pic";
+  img.replaceWith(pic);
+  const heart = document.createElement("span");
+  heart.className = "fav";
+  heart.setAttribute("role", "button");
+  heart.tabIndex = 0;
+  heart.setAttribute("aria-label", "Favorite " + img.alt);
+  heart.addEventListener("click", function () { toggleFavorite(dish); });
+  heart.addEventListener("keydown", function (event) {
+    if (event.key === "Enter" || event.key === " ") { event.preventDefault(); toggleFavorite(dish); }
+  });
+  pic.append(img, heart);
+});
+paintHearts();
+
 // Start: prices + fees from the server, then the saved cart of this customer
 renderSummary();
 api("menu").then(function (data) {
   data.menu.forEach(function (item) { menuById[item.id] = item; });
   syncOrderButtons(data.menu);
+  paintHearts();
   deliveryFees = data.delivery_fees;
   fillFloorSelect(osFloor, deliveryFees);
   return getCurrentUser();
@@ -204,6 +255,9 @@ api("menu").then(function (data) {
   if (!me) return;
   osRoom.value = loadFromBrowser("mcc_room_" + me.id, "");
   osFloor.value = loadFromBrowser("mcc_floor_" + me.id, "");
+  favorites = loadJsonFromBrowser("mcc_fav_" + me.id, []);
+  if (!Array.isArray(favorites)) favorites = [];
+  paintHearts();
   cart = loadJsonFromBrowser("mcc_cart_" + me.id, []);
   if (!Array.isArray(cart)) cart = [];
   // use the server's current prices and drop foods that are gone
